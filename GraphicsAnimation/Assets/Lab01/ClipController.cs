@@ -8,15 +8,16 @@ public class ClipController : MonoBehaviour
     Clip clip;
     string controllerName;
 
-    int clipIndex;
+    static int clipIndex; // stays static
     float clipTime; // time that has passed since start
     float clipParameter;
     
-    int frameIndex;
+    int frameIndex; //changes throughout the update
     float frameTime;
     float frameParameter;
 
     uint playDirection;
+    float frameOvershoot;
 
     public ClipController()
     {
@@ -24,6 +25,7 @@ public class ClipController : MonoBehaviour
         clipIndex = 0;
         clipTime = 0.0f;
         clipParameter = 0.0f;
+        clip = pool.clipPool[clipIndex];
 
         frameIndex = 0;
         frameTime = 0.0f;
@@ -32,11 +34,11 @@ public class ClipController : MonoBehaviour
         playDirection = 1;
     }
 
-    public ClipController(int clipIndex, int frameIndex, uint playState)
+    public ClipController(int startIndex, int startFrame, uint playState)
     {
-        this.clipIndex = clipIndex;
+        clipIndex = startIndex;
         
-        this.frameIndex = frameIndex;
+        frameIndex = startFrame;
         playDirection = playState;
     }
 
@@ -47,12 +49,29 @@ public class ClipController : MonoBehaviour
         frameTime += Time.deltaTime;
 
         // resolve time 
+        //what does a clip do: scrolls through keyframes
+        if(frameParameter >= 1.0)
+        {
+            if(frameIndex < clip.frameCount)
+            {
+                frameIndex++;
+                // determine overshhot algorithm
+                //frameOvershoot = c
+            }
+            else
+            {
+                frameIndex = 0;
+                //loop
+                //determine overshoot
+            }
+        }
 
         // post
-        clipParameter = 
+        clipParameter = clipTime * clip.durationInv;
+        frameParameter = frameTime * clip.framePool[frameIndex].durationInv;
 
         // create looping feature
 
-        // realtime, clip time, and 
+        //clip time, and frametime
     }
 }

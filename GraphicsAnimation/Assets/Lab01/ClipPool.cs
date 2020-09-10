@@ -21,7 +21,7 @@ public class ClipPool : MonoBehaviour
 
     public ClipPool()
     {
-
+        clipCount = 0;
     }
 
     public ClipPool(Clip[] clipRef, int newClipCount)

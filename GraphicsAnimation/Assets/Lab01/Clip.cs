@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Clip : MonoBehaviour
 {
-    string clipName;
-    int clipIndex;
-    float clipDuration; // can be calc. as a sum of frames or set at start
-    float durationInv;
-    int frameCount;
-    int firstIndex;//first and last frames
-    int lastIndex;
-    Keyframe[] framePool;
+    public string clipName;
+    public int clipIndex;
+    public float clipDuration; // can be calc. as a sum of frames or set at start
+    public float durationInv;
+    public int frameCount;
+    public int firstIndex;//first and last frames
+    public int lastIndex;
+    public Keyframe[] framePool;
 
     public Clip()
     {
