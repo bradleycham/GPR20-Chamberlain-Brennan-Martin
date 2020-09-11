@@ -8,7 +8,7 @@ public class ClipController : MonoBehaviour
     public Clip clip;
     public string controllerName;
 
-    public static int clipIndex; // stays static
+    public int clipIndex; // stays static
     float clipTime; // time that has passed since start
     float clipParameter;
     
@@ -53,6 +53,8 @@ public class ClipController : MonoBehaviour
         //what does a clip do: scrolls through keyframes
         if(frameParameter >= 1.0)
         {
+            Debug.Log(frameIndex);
+
             frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.keyframePool[frameIndex].duration;
             if(frameIndex < clip.frameCount)
             {
@@ -74,8 +76,9 @@ public class ClipController : MonoBehaviour
         }
 
         // post
-        clipParameter = clipTime * clip.durationInv;
-        frameParameter = frameTime * clip.keyframePool.keyframePool[frameIndex].durationInv;
+        clipParameter = clipTime / clip.clipDuration;
+        float v = frameTime / clip.keyframePool.keyframePool[frameIndex].duration;
+        frameParameter = v;
 
         // create looping feature
 

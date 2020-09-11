@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 2
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &39805714
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &42919128
@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 3
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &405580186
@@ -362,7 +362,7 @@ MonoBehaviour:
   clipName: Clip0
   clipIndex: 0
   clipTime: 0
-  clipDuration: 0
+  clipDuration: 12
   durationInv: 0
   frameCount: 0
   firstIndex: 0
@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 7
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &446163152
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 1
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &516878893
@@ -507,9 +507,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clipName: Clip3
-  clipIndex: 0
+  clipIndex: 3
   clipTime: 0
-  clipDuration: 0
+  clipDuration: 12
   durationInv: 0
   frameCount: 0
   firstIndex: 0
@@ -684,7 +684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 6
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &963194225
@@ -814,15 +814,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clipName: Clip4
-  clipIndex: 0
+  clipIndex: 4
   clipTime: 0
-  clipDuration: 0
+  clipDuration: 12
   durationInv: 0
-  frameCount: 0
+  frameCount: 5
   firstIndex: 0
   lastIndex: 0
-  frameSequence: 
-  keyframePool: {fileID: 0}
+  frameSequence: 0200000004000000020000000600000001000000
+  keyframePool: {fileID: 42919130}
 --- !u!1 &1087349462
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,7 +867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 8
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &1199332532
@@ -947,7 +947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 9
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &1283717434
@@ -994,7 +994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 4
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &1462363197
@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 5
-  duration: 0.01
+  duration: 2
   durationInv: 100
   data: 1
 --- !u!1 &1858637912
@@ -1213,8 +1213,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 1858637914}
-  clip: {fileID: 405580188}
+  clip: {fileID: 975576104}
   controllerName: Spaghetti
+  clipIndex: 5
 --- !u!1 &2099852416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,9 +1260,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clipName: Clip1
-  clipIndex: 0
+  clipIndex: 1
   clipTime: 0
-  clipDuration: 0
+  clipDuration: 12
   durationInv: 0
   frameCount: 0
   firstIndex: 0
@@ -1312,9 +1313,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clipName: Clip2
-  clipIndex: 0
+  clipIndex: 2
   clipTime: 0
-  clipDuration: 0
+  clipDuration: 12
   durationInv: 0
   frameCount: 0
   firstIndex: 0
