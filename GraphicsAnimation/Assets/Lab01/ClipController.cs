@@ -17,17 +17,18 @@ public class ClipController : MonoBehaviour
 
     public int clipIndex; // stays static
     public float clipDuration;
-    float clipTime; // time that has passed since start
+    public float clipTime; // time that has passed since start
     float clipParameter;
     
-    int frameIndex; //changes throughout the update
-    float frameTime;
+    public int frameIndex; //changes throughout the update
+    public float frameTime;
     float frameParameter;
 
     public int playDirection;
     float frameOvershoot;
+
     float clipOvershoot;
-    float timeScalar;
+    public float timeScalar = 1.0f;
 
     public ClipController()
     {
@@ -122,8 +123,8 @@ public class ClipController : MonoBehaviour
         if(playDirection > 0)
         {
             // forward
-            clipTime += Time.deltaTime;
-            frameTime += Time.deltaTime;
+            clipTime += Time.deltaTime * timeScalar;
+            frameTime += Time.deltaTime * timeScalar;
         }
         else if(playDirection == 0)
         {
@@ -134,8 +135,8 @@ public class ClipController : MonoBehaviour
             // rewind
             if(playDirection < 0)
             {
-                clipTime -= Time.deltaTime;
-                frameTime -= Time.deltaTime;
+                clipTime -= Time.deltaTime * timeScalar;
+                frameTime -= Time.deltaTime * timeScalar;
             }     
         }
         
@@ -145,6 +146,14 @@ public class ClipController : MonoBehaviour
     {
         playDirection = newDirection;
         timeScalar = newTimeScalar;
+    }
+    
+    public void IncTimeScalar(bool increase)
+    {
+        if (increase)
+            timeScalar *= 1.25f; // 25% up
+        else
+            timeScalar *= 0.75f; // 25% down
     }
 
     public void DebugList()

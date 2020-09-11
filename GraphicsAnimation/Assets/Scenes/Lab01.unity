@@ -1218,6 +1218,7 @@ MonoBehaviour:
   clipIndex: 4
   clipDuration: 10
   playDirection: -1
+  timeScalar: 1
 --- !u!1 &2099852416
 GameObject:
   m_ObjectHideFlags: 0
