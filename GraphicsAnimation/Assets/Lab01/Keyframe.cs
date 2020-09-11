@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+File name: KeyframePool.cs
+Purpose: Data of a keyframe 
+Contributors: Nick Brennan-Martin and Bradley Chamberlain
+Collaborated on one PC
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

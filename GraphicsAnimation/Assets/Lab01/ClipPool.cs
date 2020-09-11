@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+File name: ClipPool.cs
+Purpose: Holds an unsorted and unordered collection of clips 
+Contributors: Nick Brennan-Martin and Bradley Chamberlain
+Collaborated on one PC
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
