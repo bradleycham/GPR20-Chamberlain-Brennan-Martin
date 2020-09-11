@@ -1,6 +1,9 @@
 ﻿/*
 File name: ClipController.cs
-Purpose:  
+Purpose:  This data structure is the interface between the user
+and the clip that they are controlling. It allows the user
+to change attributes of the clip such as playback direction, 
+speed, and frame info.
 Contributors: Nick Brennan-Martin and Bradley Chamberlain
 Collaborated on one PC
 */
@@ -30,6 +33,7 @@ public class ClipController : MonoBehaviour
 
     public float timeScalar = 1.0f;
 
+    // Default Contstructor
     public ClipController()
     {
         controllerName = "INACTIVE";
@@ -46,6 +50,7 @@ public class ClipController : MonoBehaviour
         playDirection = 1;
     }
 
+    // Constructor overload
     public ClipController(int newClipIndex, int startFrame, int playState, ClipPool newPool)
     {
         pool = newPool;
@@ -69,11 +74,14 @@ public class ClipController : MonoBehaviour
         // create looping feature
     }
 
+    // determine the current frame and time within
     public void ResolveTime()
     {
         if (frameParameter > 1.0 && playDirection > 0) // moving forward and the frame ended
         {
-            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
+            // this is the amount of time that the dx went over the last keyframe
+            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration; 
+
             if (frameIndex == clip.frameCount - 1)
             {
                 frameIndex = 0;
@@ -81,8 +89,6 @@ public class ClipController : MonoBehaviour
                 clipTime = 0.0f;
                 clipTime += frameOvershoot;
                 frameTime += frameOvershoot;
-                //loop
-                //determine overshoot
             }
             else if (frameIndex < clip.frameCount)
             {
@@ -90,7 +96,7 @@ public class ClipController : MonoBehaviour
                 frameTime = 0.0f; // frame condition fixed
                 frameTime += frameOvershoot;
             }
-            Debug.Log(frameOvershoot);
+            //Debug.Log(frameOvershoot);
         }
 
 
@@ -110,10 +116,11 @@ public class ClipController : MonoBehaviour
                 clipTime = clipDuration;
                 frameTime = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
             }
-            Debug.Log(frameOvershoot);
+            //Debug.Log(frameOvershoot);
         }
     }    
 
+    // Update Function
     private void UpdateTime()
     {
         if(playDirection > 0)
@@ -138,11 +145,15 @@ public class ClipController : MonoBehaviour
         
     }
 
+    // Set the play direction
     public void SetDirection(int newDirection)
     {
         playDirection = newDirection;
     }
 
+
+    // reset the clip to either the start moving forward
+    // or the end moving backwards
     public void ResetToFirstFrame()
     {
         clip.CalculateDuration();
@@ -151,7 +162,6 @@ public class ClipController : MonoBehaviour
         frameTime = 0.0f;
         SetDirection(1);
     }
-
     public void ResetToLastFrame()
     {
         frameIndex = clip.frameCount -1;
@@ -161,6 +171,8 @@ public class ClipController : MonoBehaviour
         SetDirection(-1);
     }
 
+
+    //increment time by 25%
     public void IncTimeScalar(bool increase)
     {
         if (increase)
@@ -169,10 +181,27 @@ public class ClipController : MonoBehaviour
             timeScalar -= 0.25f; // 25% down (from original)
     }
 
+    // Debug frame data
     public void DebugList()
     {
         Debug.Log("FRAME " + frameIndex);
         Debug.Log(frameTime);
         Debug.Log(clipTime);
+    }
+
+    // Change the clip to 'i' as long as 'i' is within the bounds of the clip-list
+    public void ChangeClip(int i)
+    {
+        if(i <= pool.clipCount -1)
+        {
+            clipIndex = i;
+            clip = pool.clipPool[i];
+        }
+        else
+        {
+            clipIndex = 0;
+            clip = pool.clipPool[0];
+        }
+        
     }
 }

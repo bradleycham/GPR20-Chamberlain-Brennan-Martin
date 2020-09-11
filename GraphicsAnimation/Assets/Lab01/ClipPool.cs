@@ -14,6 +14,7 @@ public class ClipPool : MonoBehaviour
     public Clip[] clipPool;
     public int clipCount;
 
+    // return the index of the indended clip
     public int GetClip(string clipName)
     {
         for(int i = 0; i < clipCount; i++)
@@ -25,7 +26,8 @@ public class ClipPool : MonoBehaviour
         }
         return -1;
     }
-
+    
+    // Constructors
     public ClipPool()
     {
         clipCount = 0;

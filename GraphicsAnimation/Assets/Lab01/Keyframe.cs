@@ -16,6 +16,7 @@ public class Keyframe : MonoBehaviour
     public float durationInv;
     public int data;
 
+    // Constructor
     public Keyframe()
     {
         index = 0;
@@ -23,7 +24,7 @@ public class Keyframe : MonoBehaviour
         durationInv = 1 / duration;
         data = 1;
     }
-
+    // Constructor Overload 
     public Keyframe(int newIndex, float newDuration, int newData)
     {
         index = newIndex;
@@ -32,16 +33,19 @@ public class Keyframe : MonoBehaviour
         data = newData;
     }
 
+    // set index in pool
     public void SetIndex(int i)
     {
         index = i;
     }
 
+    // distribute data
     public void SetData(int i)
     {
         data = i;
     }
 
+    // set frame duration
     public void SetDuration(float newDuration)
     {
         duration = newDuration;

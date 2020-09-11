@@ -22,11 +22,13 @@ public class Clip : MonoBehaviour
 
     public int[] frameSequence;
     public KeyframePool keyframePool;
+    // default constructor
     public Clip()
     {
         clipName = "null";
     }
 
+    //constructor overload
     public Clip(string name, int first, int last, KeyframePool pool)
     {
         keyframePool = pool;
@@ -39,11 +41,13 @@ public class Clip : MonoBehaviour
         durationInv = 1.0f / clipDuration;      
     }
 
+    // set the duration of this clip
     public void SetDuration(float newDuration)
     {
         clipDuration = newDuration;
     }
 
+    // calculate the duration of the clip via the frame lengths
     public void CalculateDuration()
     {
         float cumulativeTime = 0.0f;

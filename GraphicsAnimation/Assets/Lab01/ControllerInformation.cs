@@ -25,6 +25,7 @@ public class ControllerInformation : MonoBehaviour
     bool pauseThree;
 
     int currentControllerIndex;
+    int currentClipIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -40,11 +41,13 @@ public class ControllerInformation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // writing to the canvas
         if (pauseOne == false)
         {
 
             controllerInformationOne.text = "Controller 1: " + controllers[0].controllerName;
+            controllerInformationOne.text += "\n";
+            controllerInformationOne.text += "Clip Name: " + controllers[0].clip.clipName;
             controllerInformationOne.text += "\n";
             controllerInformationOne.text += "KeyframeInSequence: " + controllers[0].frameIndex;
             controllerInformationOne.text += "\n";
@@ -52,8 +55,10 @@ public class ControllerInformation : MonoBehaviour
             controllerInformationOne.text += "\n";
             controllerInformationOne.text += "Current Keyframe Data: " + controllers[0].clip.keyframePool.framePool[controllers[0].clip.frameSequence[controllers[0].frameIndex]].data;
             controllerInformationOne.text += "\n";
+
             controllerInformationOne.text += "Time Direction: " + controllers[0].playDirection;
             controllerInformationOne.text += "\n";
+
             controllerInformationOne.text += "Time Scale: " + controllers[0].timeScalar;
             controllerInformationOne.text += "\n";
             controllerInformationOne.text += "Current ClipTime: " + controllers[0].clipTime;
@@ -65,13 +70,16 @@ public class ControllerInformation : MonoBehaviour
         {
             controllerInformationTwo.text = "Controller 2: " + controllers[1].controllerName;
             controllerInformationTwo.text += "\n";
+            controllerInformationTwo.text += "Clip Name: " + controllers[1].clip.clipName;
+            controllerInformationTwo.text += "\n";
             controllerInformationTwo.text += "KeyframeInSequence: " + controllers[1].frameIndex;
             controllerInformationTwo.text += "\n";
             controllerInformationTwo.text += "Current Keyframe Index: " + controllers[1].clip.frameSequence[controllers[1].frameIndex];
             controllerInformationTwo.text += "\n";
             controllerInformationTwo.text += "Current Keyframe Data: " + controllers[1].clip.keyframePool.framePool[controllers[1].clip.frameSequence[controllers[1].frameIndex]].data;
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Time Direction: " + controllers[1].playDirection;
+
+            controllerInformationTwo.text += "Time Direction: " + controllers[1].playDirection;
             controllerInformationTwo.text += "\n";
 
             controllerInformationTwo.text += "Time Scale: " + controllers[1].timeScalar;
@@ -86,14 +94,18 @@ public class ControllerInformation : MonoBehaviour
 
             controllerInformationThree.text = "Controller 3: " + controllers[2].controllerName;
             controllerInformationThree.text += "\n";
+            controllerInformationThree.text += "Clip Name: " + controllers[2].clip.clipName;
+            controllerInformationThree.text += "\n";
             controllerInformationThree.text += "KeyframeInSequence: " + controllers[2].frameIndex;
             controllerInformationThree.text += "\n";
             controllerInformationThree.text += "Current Keyframe Index: " + controllers[2].clip.frameSequence[controllers[2].frameIndex];
             controllerInformationThree.text += "\n";
             controllerInformationThree.text += "Current Keyframe Data: " + controllers[2].clip.keyframePool.framePool[controllers[2].clip.frameSequence[controllers[2].frameIndex]].data;
-            controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Time Direction: " + controllers[2].playDirection;
             controllerInformationThree.text += "\n";
+
+            controllerInformationThree.text += "Time Direction: " + controllers[2].playDirection;
+            controllerInformationThree.text += "\n";
+
             controllerInformationThree.text += "Time Scale: " + controllers[2].timeScalar;
             controllerInformationThree.text += "\n";
             controllerInformationThree.text += "Current ClipTime: " + controllers[2].clipTime;
@@ -138,7 +150,11 @@ public class ControllerInformation : MonoBehaviour
             controllers[currentControllerIndex - 1].IncTimeScalar(true);
         }
 
-
+        // change clip
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+              controllers[currentControllerIndex].ChangeClip(controllers[currentControllerIndex].clipIndex+1);          
+        }
 
         //Choose controller to edit
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -157,7 +173,6 @@ public class ControllerInformation : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-
             currentControllerIndex = 3;
             currentController.text = "Controller 3 active";
         }

@@ -15,12 +15,14 @@ public class KeyframePool : MonoBehaviour
     int frameCount;
     public Keyframe[] framePool;
 
+    // contructor overload
     public KeyframePool(int newFrameCount, Keyframe[] keyframes)
     {
         frameCount = newFrameCount;
         framePool = keyframes;
     }
 
+    //default constructor
     public KeyframePool()
     {
         frameCount = 2;
