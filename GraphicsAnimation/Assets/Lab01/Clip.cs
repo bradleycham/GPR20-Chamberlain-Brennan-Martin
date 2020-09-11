@@ -37,16 +37,11 @@ public class Clip : MonoBehaviour
 
         clipDuration = 1.0f;
         durationInv = 1.0f / clipDuration;
-        frameCount = lastIndex + 1;       
+        frameCount = lastIndex;       
     }
-    // distribute time
-    //
+
     public void SetDuration(float newDuration)
     {
         clipDuration = newDuration;
-    }
-    ~Clip()
-    {
-
     }
 }

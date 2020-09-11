@@ -24,10 +24,10 @@ public class ClipController : MonoBehaviour
     float frameTime;
     float frameParameter;
 
-    uint playDirection;
+    public int playDirection;
     float frameOvershoot;
     float clipOvershoot;
-    float newTimeScalar;
+    float timeScalar;
 
     public ClipController()
     {
@@ -45,7 +45,7 @@ public class ClipController : MonoBehaviour
         playDirection = 1;
     }
 
-    public ClipController(int startIndex, int startFrame, uint playState, ClipPool newPool)
+    public ClipController(int startIndex, int startFrame, int playState, ClipPool newPool)
     {
         pool = newPool;
         clipIndex = startIndex;
@@ -57,43 +57,63 @@ public class ClipController : MonoBehaviour
     {
         // apply time step
         UpdateTime();
-        resolveTime();
+        ResolveTime();
 
         // resolve time 
         //what does a clip do: scrolls through keyframes
         
-        DebugList();
 
         // post
         clipParameter = clipTime / clip.clipDuration;
-        float v = frameTime / clip.keyframePool.keyframePool[frameIndex].duration;
+        float v = frameTime / clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration;
         frameParameter = v;
+        //DebugList();
+        Debug.Log(frameIndex);
 
         // create looping feature
     }
 
-    public void resolveTime()
+    public void ResolveTime()
     {
-        if (frameParameter >= 1.0 && playDirection > 0) // moving forward and the frame ended
+        if (frameParameter > 1.0 && playDirection > 0) // moving forward and the frame ended
         {
-            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.keyframePool[frameIndex].duration;
-            if (frameIndex < clip.frameCount)
+            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration;
+            if (frameIndex < clip.frameCount && frameParameter > 1.0)
             {
                 frameIndex++;
                 frameTime = 0.0f; // frame condition fixed
                 // determine overshhot algorithm
                 //frameOvershoot = c
             }
-            else
+            if(frameIndex == clip.frameCount)
             {
-                clipOvershoot = clipTime - clipDuration;
                 frameIndex = 0;
-                clipTime = 0.0f;
+                frameTime = 0.0f;
+                clipTime = clipDuration;
 
                 //loop
                 //determine overshoot
             }
-            frameTime += frameOvershoot; // one frame condition fixed
+            //frameTime += frameOvershoot; // one frame condition fixed
+        }
+
+
+        if (frameParameter < 0.0 && playDirection < 0) // moving backwards and the frame ended
+        {
+            frameOvershoot = (0.0f - frameParameter) * clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration;
+            if (frameIndex > 0)
+            {       
+                frameIndex--;
+                frameTime = clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration; // frame condition fixed
+                frameTime += frameOvershoot; // one frame condition fixed
+            }
+            if (frameIndex == 0)
+            {                             
+                //clipOvershoot = clipTime - clipDuration;
+                frameIndex = clip.frameCount-1;
+                clipTime = clipDuration;
+                frameTime = clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration;
+            }
         }
     }    
 
@@ -112,7 +132,7 @@ public class ClipController : MonoBehaviour
         else
         {
             // rewind
-            if(clipTime > 0)
+            if(playDirection < 0)
             {
                 clipTime -= Time.deltaTime;
                 frameTime -= Time.deltaTime;
@@ -121,9 +141,10 @@ public class ClipController : MonoBehaviour
         
     }
 
-    public void setDirection(uint newDirection, float newTimeScalar)
+    public void SetDirection(int newDirection, float newTimeScalar)
     {
         playDirection = newDirection;
+        timeScalar = newTimeScalar;
     }
 
     public void DebugList()

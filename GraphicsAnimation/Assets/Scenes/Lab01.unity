@@ -820,7 +820,7 @@ MonoBehaviour:
   durationInv: 0
   frameCount: 5
   firstIndex: 0
-  lastIndex: 0
+  lastIndex: 4
   frameSequence: 0200000004000000020000000600000001000000
   keyframePool: {fileID: 42919130}
 --- !u!1 &1087349462
@@ -1215,7 +1215,9 @@ MonoBehaviour:
   pool: {fileID: 1858637914}
   clip: {fileID: 975576104}
   controllerName: Spaghetti
-  clipIndex: 5
+  clipIndex: 4
+  clipDuration: 10
+  playDirection: -1
 --- !u!1 &2099852416
 GameObject:
   m_ObjectHideFlags: 0
