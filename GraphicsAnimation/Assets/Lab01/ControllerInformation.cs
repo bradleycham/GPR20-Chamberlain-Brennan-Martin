@@ -153,7 +153,7 @@ public class ControllerInformation : MonoBehaviour
         // change clip
         if (Input.GetKeyDown(KeyCode.Space))
         {
-              controllers[currentControllerIndex].ChangeClip(controllers[currentControllerIndex].clipIndex+1);          
+              //controllers[currentControllerIndex].ChangeClip(controllers[currentControllerIndex].clipIndex+1);          
         }
 
         //Choose controller to edit

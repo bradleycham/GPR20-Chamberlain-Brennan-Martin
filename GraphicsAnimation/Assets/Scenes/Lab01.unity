@@ -1408,7 +1408,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Select Controller (1/2/3)\t\nPlay Direction:  Q = Rewind    W = Pause   
     E = Play\t\nalter Time Scale: LeftArrow = reduce scale     RightArrow = increase
-    scale\n\nSet to First/Last Frame (F/L)\nChange Clip (,)"
+    scale\n\nSet to First/Last Frame (F/L)\nChange Clip (SPACE) *faulty"
 --- !u!222 &1201390238
 CanvasRenderer:
   m_ObjectHideFlags: 0
