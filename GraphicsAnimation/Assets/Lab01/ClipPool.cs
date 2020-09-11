@@ -5,9 +5,9 @@ using UnityEngine;
 public class ClipPool : MonoBehaviour
 {
     public Clip[] clipPool;
-    int clipCount;
+    public int clipCount;
 
-    public int getClip(string clipName)
+    public int GetClip(string clipName)
     {
         for(int i = 0; i < clipCount; i++)
         {

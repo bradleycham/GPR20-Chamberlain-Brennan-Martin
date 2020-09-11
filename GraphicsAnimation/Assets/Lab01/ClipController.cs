@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ClipController : MonoBehaviour
 {
-    ClipPool pool;
-    Clip clip;
-    string controllerName;
+    public ClipPool pool;
+    public Clip clip;
+    public string controllerName;
 
-    static int clipIndex; // stays static
+    public static int clipIndex; // stays static
     float clipTime; // time that has passed since start
     float clipParameter;
     
@@ -22,10 +22,11 @@ public class ClipController : MonoBehaviour
     public ClipController()
     {
         controllerName = "INACTIVE";
+        pool = null;
         clipIndex = 0;
         clipTime = 0.0f;
         clipParameter = 0.0f;
-        clip = pool.clipPool[clipIndex];
+        clip = null;
 
         frameIndex = 0;
         frameTime = 0.0f;
@@ -34,10 +35,10 @@ public class ClipController : MonoBehaviour
         playDirection = 1;
     }
 
-    public ClipController(int startIndex, int startFrame, uint playState)
+    public ClipController(int startIndex, int startFrame, uint playState, ClipPool newPool)
     {
+        pool = newPool;
         clipIndex = startIndex;
-        
         frameIndex = startFrame;
         playDirection = playState;
     }
@@ -52,23 +53,29 @@ public class ClipController : MonoBehaviour
         //what does a clip do: scrolls through keyframes
         if(frameParameter >= 1.0)
         {
+            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.keyframePool[frameIndex].duration;
             if(frameIndex < clip.frameCount)
             {
                 frameIndex++;
+                frameTime = 0.0f;
                 // determine overshhot algorithm
                 //frameOvershoot = c
             }
             else
             {
                 frameIndex = 0;
+                clipTime = 0.0f;
+
                 //loop
                 //determine overshoot
             }
+            frameTime += frameOvershoot;
+            clipTime += frameOvershoot;
         }
 
         // post
         clipParameter = clipTime * clip.durationInv;
-        frameParameter = frameTime * clip.framePool[frameIndex].durationInv;
+        frameParameter = frameTime * clip.keyframePool.keyframePool[frameIndex].durationInv;
 
         // create looping feature
 

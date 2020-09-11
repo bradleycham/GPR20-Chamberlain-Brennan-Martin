@@ -24,4 +24,22 @@ public class Keyframe : MonoBehaviour
         durationInv = 1 / duration;
         data = newData;
     }
+
+    public void SetIndex(int i)
+    {
+        index = i;
+    }
+
+    public void SetData(int i)
+    {
+        data = i;
+    }
+
+    public void SetDuration(float newDuration)
+    {
+        duration = newDuration;
+        durationInv = 1 / duration;
+    }
+
+
 }

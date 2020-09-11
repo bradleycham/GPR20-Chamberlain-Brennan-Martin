@@ -8,10 +8,10 @@ public class KeyframePool : MonoBehaviour
     int frameCount;
     public Keyframe[] keyframePool;
 
-    public KeyframePool(int newFrameCount)
+    public KeyframePool(int newFrameCount, Keyframe[] keyframes)
     {
         frameCount = newFrameCount;
-        keyframePool = new Keyframe[frameCount];
+        keyframePool = keyframes;
     }
 
     public KeyframePool()

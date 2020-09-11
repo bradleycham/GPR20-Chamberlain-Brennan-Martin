@@ -4,32 +4,40 @@ using UnityEngine;
 
 public class Clip : MonoBehaviour
 {
-    public string clipName;
-    public int clipIndex;
+    public string clipName; // identifies this clip
+    public int clipIndex; // index of this clip in a pool of clips
+    public float clipTime; // current time between 0 and clip duraton
     public float clipDuration; // can be calc. as a sum of frames or set at start
-    public float durationInv;
+    public float durationInv; // 1/duration
     public int frameCount;
     public int firstIndex;//first and last frames
     public int lastIndex;
-    public Keyframe[] framePool;
 
+    public int[] frameSequence;
+    public KeyframePool keyframePool;
     public Clip()
     {
-
+        clipName = "null";
     }
 
-    public Clip(string name, int first, int last)
+    public Clip(string name, int first, int last, KeyframePool pool)
     {
+        keyframePool = pool;
+
         clipName = name;
         firstIndex = first;
         lastIndex = last;
 
         clipDuration = 1.0f;
         durationInv = 1.0f / clipDuration;
-        frameCount = 2;       
+        frameCount = lastIndex + 1;       
     }
     // distribute time
     //
+    public void SetDuration(float newDuration)
+    {
+        clipDuration = newDuration;
+    }
     ~Clip()
     {
 
