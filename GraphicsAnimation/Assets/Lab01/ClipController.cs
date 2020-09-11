@@ -27,6 +27,7 @@ public class ClipController : MonoBehaviour
     uint playDirection;
     float frameOvershoot;
     float clipOvershoot;
+    float newTimeScalar;
 
     public ClipController()
     {
@@ -55,18 +56,31 @@ public class ClipController : MonoBehaviour
     void Update()
     {
         // apply time step
-        clipTime += Time.deltaTime;
-        frameTime += Time.deltaTime;
+        UpdateTime();
+        resolveTime();
 
         // resolve time 
         //what does a clip do: scrolls through keyframes
-        if(frameParameter >= 1.0)
+        
+        DebugList();
+
+        // post
+        clipParameter = clipTime / clip.clipDuration;
+        float v = frameTime / clip.keyframePool.keyframePool[frameIndex].duration;
+        frameParameter = v;
+
+        // create looping feature
+    }
+
+    public void resolveTime()
+    {
+        if (frameParameter >= 1.0 && playDirection > 0) // moving forward and the frame ended
         {
             frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.keyframePool[frameIndex].duration;
-            if(frameIndex < clip.frameCount)
+            if (frameIndex < clip.frameCount)
             {
                 frameIndex++;
-                frameTime = 0.0f;
+                frameTime = 0.0f; // frame condition fixed
                 // determine overshhot algorithm
                 //frameOvershoot = c
             }
@@ -81,16 +95,35 @@ public class ClipController : MonoBehaviour
             }
             frameTime += frameOvershoot; // one frame condition fixed
         }
-        DebugList();
+    }    
 
-        // post
-        clipParameter = clipTime / clip.clipDuration;
-        float v = frameTime / clip.keyframePool.keyframePool[frameIndex].duration;
-        frameParameter = v;
+    private void UpdateTime()
+    {
+        if(playDirection > 0)
+        {
+            // forward
+            clipTime += Time.deltaTime;
+            frameTime += Time.deltaTime;
+        }
+        else if(playDirection == 0)
+        {
+            // stop
+        }
+        else
+        {
+            // rewind
+            if(clipTime > 0)
+            {
+                clipTime -= Time.deltaTime;
+                frameTime -= Time.deltaTime;
+            }     
+        }
+        
+    }
 
-        // create looping feature
-
-        //clip time, and frametime
+    public void setDirection(uint newDirection, float newTimeScalar)
+    {
+        playDirection = newDirection;
     }
 
     public void DebugList()
