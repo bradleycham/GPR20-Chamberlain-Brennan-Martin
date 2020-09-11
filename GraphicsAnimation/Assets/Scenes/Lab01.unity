@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 2
-  duration: 2
+  duration: 1.9
   durationInv: 100
   data: 2
 --- !u!1 &39805714
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05cc65176129d3343bc792d40cf3b171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyframePool:
+  framePool:
   - {fileID: 39805716}
   - {fileID: 446163154}
   - {fileID: 36266907}
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 14
-  duration: 2
+  duration: 1.7
   durationInv: 100
   data: 5
 --- !u!1 &140158906
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 3
-  duration: 2
+  duration: 0.7
   durationInv: 100
   data: 4
 --- !u!1 &405580186
@@ -500,8 +500,8 @@ MonoBehaviour:
   clipDuration: 12
   durationInv: 0
   frameCount: 3
-  firstIndex: 0
-  lastIndex: 0
+  firstIndex: 11
+  lastIndex: 15
   frameSequence: 0b000000030000000f000000
   keyframePool: {fileID: 42919130}
 --- !u!1 &437307106
@@ -548,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 7
-  duration: 2
+  duration: 1.2
   durationInv: 100
   data: 4
 --- !u!1 &446163152
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 1
-  duration: 2
+  duration: 2.3
   durationInv: 100
   data: 3
 --- !u!1 &516878893
@@ -647,8 +647,8 @@ MonoBehaviour:
   clipDuration: 12
   durationInv: 0
   frameCount: 6
-  firstIndex: 0
-  lastIndex: 0
+  firstIndex: 1
+  lastIndex: 17
   frameSequence: 0100000004000000030000000f0000001000000011000000
   keyframePool: {fileID: 42919130}
 --- !u!1 &523870228
@@ -944,7 +944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 6
-  duration: 2
+  duration: 1.3
   durationInv: 100
   data: 1
 --- !u!1 &963194225
@@ -1074,7 +1074,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 10
-  duration: 2
+  duration: 0.4
   durationInv: 100
   data: 7
 --- !u!1 &975576102
@@ -1126,8 +1126,8 @@ MonoBehaviour:
   clipDuration: 12
   durationInv: 0
   frameCount: 5
-  firstIndex: 0
-  lastIndex: 4
+  firstIndex: 2
+  lastIndex: 1
   frameSequence: 0200000004000000020000000600000001000000
   keyframePool: {fileID: 42919130}
 --- !u!1 &1063477039
@@ -1252,7 +1252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 8
-  duration: 2
+  duration: 1.4
   durationInv: 100
   data: 2
 --- !u!1 &1095772004
@@ -1406,9 +1406,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Play Forwards (>)\t\nPlay Backward(<)\t\nSlow Motion (UpArrow)\t\nPause
-    (P)\nSelect Controller (1/2/3)\t\nSet to First/Last Frame (F/L)\nChange Clip
-    (,)"
+  m_Text: "Select Controller (1/2/3)\t\nPlay Direction:  Q = Rewind    W = Pause   
+    E = Play\t\nalter Time Scale: LeftArrow = reduce scale     RightArrow = increase
+    scale\n\nSet to First/Last Frame (F/L)\nChange Clip (,)"
 --- !u!222 &1201390238
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 9
-  duration: 2
+  duration: 1
   durationInv: 100
   data: 6
 --- !u!1 &1221416060
@@ -1508,7 +1508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 17
-  duration: 2
+  duration: 2.1
   durationInv: 100
   data: 4
 --- !u!1 &1283717434
@@ -1555,7 +1555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 4
-  duration: 2
+  duration: 1.1
   durationInv: 100
   data: 5
 --- !u!1 &1305073929
@@ -1602,9 +1602,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 1858637914}
-  clip: {fileID: 975576104}
+  clip: {fileID: 2140379268}
   controllerName: salami
-  clipIndex: 4
+  clipIndex: 2
   clipDuration: 10
   clipTime: 0
   frameIndex: 0
@@ -1655,7 +1655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 15
-  duration: 2
+  duration: 0.8
   durationInv: 100
   data: 6
 --- !u!1 &1462363197
@@ -1702,7 +1702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 5
-  duration: 2
+  duration: 1.5
   durationInv: 100
   data: 6
 --- !u!1 &1858637912
@@ -1826,9 +1826,10 @@ MonoBehaviour:
   controllerInformationTwo: {fileID: 140158907}
   controllerInformationThree: {fileID: 1899580404}
   currentController: {fileID: 1063477040}
-  controllerOne: {fileID: 2070953949}
-  controllerTwo: {fileID: 1305073931}
-  controllerThree: {fileID: 1979056270}
+  controllers:
+  - {fileID: 2070953949}
+  - {fileID: 1305073931}
+  - {fileID: 1979056270}
 --- !u!114 &1896614102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2070,13 +2071,13 @@ MonoBehaviour:
   pool: {fileID: 1858637914}
   clip: {fileID: 2140379268}
   controllerName: cappicola
-  clipIndex: 1
+  clipIndex: 3
   clipDuration: 10
   clipTime: 0
   frameIndex: 0
   frameTime: 0
   playDirection: 1
-  timeScalar: 2
+  timeScalar: 1
 --- !u!4 &1979056271
 Transform:
   m_ObjectHideFlags: 0
@@ -2135,7 +2136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 12
-  duration: 2
+  duration: 0.5
   durationInv: 100
   data: 2
 --- !u!1 &2069366845
@@ -2232,9 +2233,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 1858637914}
-  clip: {fileID: 975576104}
+  clip: {fileID: 2099852418}
   controllerName: Spaghetti
-  clipIndex: 4
+  clipIndex: 1
   clipDuration: 10
   clipTime: 0
   frameIndex: 0
@@ -2284,8 +2285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10364639da22392429cbe56a89602da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 8
-  duration: 2
+  index: 18
+  duration: 1.2
   durationInv: 100
   data: 2
 --- !u!1 &2099852416
@@ -2337,9 +2338,9 @@ MonoBehaviour:
   clipDuration: 12
   durationInv: 0
   frameCount: 7
-  firstIndex: 0
-  lastIndex: 0
-  frameSequence: 0100000002000000080000000c00000010000000020000000d000000
+  firstIndex: 1
+  lastIndex: 13
+  frameSequence: 0300000002000000080000000c00000010000000020000000d000000
   keyframePool: {fileID: 42919130}
 --- !u!1 &2119375530
 GameObject:
@@ -2371,7 +2372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 19
-  duration: 2
+  duration: 1.5
   durationInv: 100
   data: 6
 --- !u!4 &2119375532
@@ -2437,7 +2438,7 @@ MonoBehaviour:
   clipDuration: 12
   durationInv: 0
   frameCount: 4
-  firstIndex: 0
-  lastIndex: 0
+  firstIndex: 1
+  lastIndex: 4
   frameSequence: 01000000020000000300000004000000
   keyframePool: {fileID: 42919130}

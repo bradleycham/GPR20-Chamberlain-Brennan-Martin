@@ -13,18 +13,18 @@ public class KeyframePool : MonoBehaviour
 {
     // Start is called before the first frame update
     int frameCount;
-    public Keyframe[] keyframePool;
+    public Keyframe[] framePool;
 
     public KeyframePool(int newFrameCount, Keyframe[] keyframes)
     {
         frameCount = newFrameCount;
-        keyframePool = keyframes;
+        framePool = keyframes;
     }
 
     public KeyframePool()
     {
-        frameCount = 256;
-        keyframePool = new Keyframe[frameCount];
+        frameCount = 2;
+        framePool = new Keyframe[frameCount];
     }
 
     ~KeyframePool()

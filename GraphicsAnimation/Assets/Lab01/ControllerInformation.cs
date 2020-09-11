@@ -18,9 +18,7 @@ public class ControllerInformation : MonoBehaviour
     public Text controllerInformationThree;
     public Text currentController;
 
-    public ClipController controllerOne;
-    public ClipController controllerTwo;
-    public ClipController controllerThree;
+    public ClipController[] controllers;
 
     bool pauseOne;
     bool pauseTwo;
@@ -46,123 +44,103 @@ public class ControllerInformation : MonoBehaviour
         if (pauseOne == false)
         {
 
-            controllerInformationOne.text = "Controller 1: " + controllerOne.GetComponent<ClipController>().controllerName;
+            controllerInformationOne.text = "Controller 1: " + controllers[0].controllerName;
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current Keyframe Index: " + controllerOne.GetComponent<ClipController>().clip.keyframePool.keyframePool[controllerOne.GetComponent<ClipController>().clip.clipIndex].index;
+            controllerInformationOne.text += "KeyframeInSequence: " + controllers[0].frameIndex;
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current Keyframe Data: " + controllerOne.GetComponent<ClipController>().clip.keyframePool.keyframePool[controllerOne.GetComponent<ClipController>().clip.clipIndex].data;
+            controllerInformationOne.text += "Current Keyframe Index: " + controllers[0].clip.frameSequence[controllers[0].frameIndex];
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Time Scale: " + controllerOne.timeScalar;
+            controllerInformationOne.text += "Current Keyframe Data: " + controllers[0].clip.keyframePool.framePool[controllers[0].clip.frameSequence[controllers[0].frameIndex]].data;
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current ClipTime: " + controllerOne.clipTime;
+            controllerInformationOne.text += "Time Direction: " + controllers[0].playDirection;
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current KeyFrameTime: " + controllerOne.frameTime;
+            controllerInformationOne.text += "Time Scale: " + controllers[0].timeScalar;
+            controllerInformationOne.text += "\n";
+            controllerInformationOne.text += "Current ClipTime: " + controllers[0].clipTime;
+            controllerInformationOne.text += "\n";
+            controllerInformationOne.text += "Current KeyFrameTime: " + controllers[0].frameTime;
         }
 
         if (pauseTwo == false)
         {
-            // THE THIRD TIME SCALE DOESNt REACT
-            controllerInformationTwo.text = "Controller 2: " + controllerTwo.GetComponent<ClipController>().controllerName;
+            controllerInformationTwo.text = "Controller 2: " + controllers[1].controllerName;
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current Keyframe Index: " + controllerTwo.GetComponent<ClipController>().clip.keyframePool.keyframePool[controllerTwo.GetComponent<ClipController>().frameIndex].index;
+            controllerInformationTwo.text += "KeyframeInSequence: " + controllers[1].frameIndex;
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current Keyframe Data: " + controllerTwo.GetComponent<ClipController>().clip.keyframePool.keyframePool[controllerTwo.GetComponent<ClipController>().frameIndex].data;
+            controllerInformationTwo.text += "Current Keyframe Index: " + controllers[1].clip.frameSequence[controllers[1].frameIndex];
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Time Scale: " + controllerTwo.timeScalar;
+            controllerInformationTwo.text += "Current Keyframe Data: " + controllers[1].clip.keyframePool.framePool[controllers[1].clip.frameSequence[controllers[1].frameIndex]].data;
+            controllerInformationOne.text += "\n";
+            controllerInformationOne.text += "Time Direction: " + controllers[1].playDirection;
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current ClipTime: " + controllerTwo.clipTime;
+
+            controllerInformationTwo.text += "Time Scale: " + controllers[1].timeScalar;
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current KeyFrameTime: " + controllerTwo.frameTime;
+            controllerInformationTwo.text += "Current ClipTime: " + controllers[1].clipTime;
+            controllerInformationTwo.text += "\n";
+            controllerInformationTwo.text += "Current KeyFrameTime: " + controllers[1].frameTime;
         }
 
         if (pauseThree == false)
         {
 
-            controllerInformationThree.text = "Controller 1: " + controllerThree.GetComponent<ClipController>().controllerName;
+            controllerInformationThree.text = "Controller 3: " + controllers[2].controllerName;
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current Keyframe Index: " + controllerThree.GetComponent<ClipController>().clip.keyframePool.keyframePool[controllerThree.GetComponent<ClipController>().frameIndex].index;
+            controllerInformationThree.text += "KeyframeInSequence: " + controllers[2].frameIndex;
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current Keyframe Data: " + controllerThree.GetComponent<ClipController>().clip.keyframePool.keyframePool[controllerThree.GetComponent<ClipController>().frameIndex].data;
+            controllerInformationThree.text += "Current Keyframe Index: " + controllers[2].clip.frameSequence[controllers[2].frameIndex];
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Time Scale: " + controllerThree.timeScalar;
+            controllerInformationThree.text += "Current Keyframe Data: " + controllers[2].clip.keyframePool.framePool[controllers[2].clip.frameSequence[controllers[2].frameIndex]].data;
+            controllerInformationOne.text += "\n";
+            controllerInformationOne.text += "Time Direction: " + controllers[2].playDirection;
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current ClipTime: " + controllerThree.clipTime;
+            controllerInformationThree.text += "Time Scale: " + controllers[2].timeScalar;
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current KeyFrameTime: " + controllerThree.frameTime;
+            controllerInformationThree.text += "Current ClipTime: " + controllers[2].clipTime;
+            controllerInformationThree.text += "\n";
+            controllerInformationThree.text += "Current KeyFrameTime: " + controllers[2].frameTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        // play directions
+        if (Input.GetKeyDown(KeyCode.Q)) // rewind
         {
-
-            if(currentControllerIndex == 1)
-            {
-
-                controllerOne.SetDirection(0, 1.0f);
-            }
-
-            if (currentControllerIndex == 2)
-            {
-
-                controllerTwo.SetDirection(0, 1.0f);
-
-            }
-
-            if (currentControllerIndex == 3)
-            {
-
-                controllerTwo.SetDirection(0, 1.0f);
-
-            }
+            controllers[currentControllerIndex - 1].SetDirection(-1);
+        }
+        if (Input.GetKeyDown(KeyCode.W)) // pause
+        {
+            controllers[currentControllerIndex-1].SetDirection(0);   
+        }
+        if (Input.GetKeyDown(KeyCode.E)) // forward
+        {
+            controllers[currentControllerIndex - 1].SetDirection(1);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.F)) // set to first
+        {
+            controllers[currentControllerIndex - 1].ResetToFirstFrame();
+        }
+        if (Input.GetKeyDown(KeyCode.L)) // set to last
+        {
+            controllers[currentControllerIndex - 1].ResetToLastFrame();
+        }
+
+        //Change time scale
+        if (Input.GetKeyDown(KeyCode.LeftArrow) )
         {
 
-            if (currentControllerIndex == 1)
-            {
+            controllers[currentControllerIndex - 1].IncTimeScalar(false);
 
-                controllerOne.IncTimeScalar(false);
-            }
-
-            if (currentControllerIndex == 2)
-            {
-
-                controllerTwo.IncTimeScalar(false);
-
-            }
-
-            if (currentControllerIndex == 3)
-            {
-
-                controllerTwo.IncTimeScalar(false);
-
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
 
-            if (currentControllerIndex == 1)
-            {
-
-                controllerOne.IncTimeScalar(true);
-            }
-
-            if (currentControllerIndex == 2)
-            {
-
-                controllerTwo.IncTimeScalar(true);
-
-            }
-
-            if (currentControllerIndex == 3)
-            {
-
-                controllerTwo.IncTimeScalar(true);
-
-            }
+            controllers[currentControllerIndex - 1].IncTimeScalar(true);
         }
 
+
+
+        //Choose controller to edit
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
 

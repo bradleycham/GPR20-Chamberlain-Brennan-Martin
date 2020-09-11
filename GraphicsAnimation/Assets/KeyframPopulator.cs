@@ -15,14 +15,14 @@ public class KeyframPopulator : MonoBehaviour
 
     private void Update()
     {
-        if(pool.keyframePool.Length == 0)
+        if(pool.framePool.Length == 0)
         {
             newFrames = new Keyframe[count];
             for (int i = 0; i < count; i++)
             {
                 newFrames[i] = new Keyframe(i, Random.Range(1.0f, 3.0f), Random.Range(1, 100));
             }
-            pool.keyframePool = newFrames;
+            pool.framePool = newFrames;
         } 
     }
 }

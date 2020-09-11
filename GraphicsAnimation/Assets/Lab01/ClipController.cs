@@ -13,9 +13,10 @@ public class ClipController : MonoBehaviour
 {
     public ClipPool pool;
     public Clip clip;
+
     public string controllerName;
 
-    public int clipIndex; // stays static
+    public int clipIndex;
     public float clipDuration;
     public float clipTime; // time that has passed since start
     float clipParameter;
@@ -27,7 +28,6 @@ public class ClipController : MonoBehaviour
     public int playDirection;
     float frameOvershoot;
 
-    float clipOvershoot;
     public float timeScalar = 1.0f;
 
     public ClipController()
@@ -46,11 +46,11 @@ public class ClipController : MonoBehaviour
         playDirection = 1;
     }
 
-    public ClipController(int startIndex, int startFrame, int playState, ClipPool newPool)
+    public ClipController(int newClipIndex, int startFrame, int playState, ClipPool newPool)
     {
         pool = newPool;
-        clipIndex = startIndex;
-        frameIndex = startFrame;
+        clipIndex = newClipIndex;
+        //frameIndex = startFrame;
         playDirection = playState;
     }
 
@@ -59,17 +59,12 @@ public class ClipController : MonoBehaviour
         // apply time step
         UpdateTime();
         ResolveTime();
-
-        // resolve time 
-        //what does a clip do: scrolls through keyframes
         
-
         // post
         clipParameter = clipTime / clip.clipDuration;
-        float v = frameTime / clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration;
+        float v = frameTime / clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
         frameParameter = v;
         //DebugList();
-        Debug.Log(frameIndex);
 
         // create looping feature
     }
@@ -78,34 +73,34 @@ public class ClipController : MonoBehaviour
     {
         if (frameParameter > 1.0 && playDirection > 0) // moving forward and the frame ended
         {
-            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration;
-            if (frameIndex < clip.frameCount && frameParameter > 1.0)
-            {
-                frameIndex++;
-                frameTime = 0.0f; // frame condition fixed
-                // determine overshhot algorithm
-                //frameOvershoot = c
-            }
-            if(frameIndex == clip.frameCount)
+            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
+            if (frameIndex == clip.frameCount - 1)
             {
                 frameIndex = 0;
                 frameTime = 0.0f;
-                clipTime = clipDuration;
-
+                clipTime = 0.0f;
+                clipTime += frameOvershoot;
+                frameTime += frameOvershoot;
                 //loop
                 //determine overshoot
             }
-            //frameTime += frameOvershoot; // one frame condition fixed
+            else if (frameIndex < clip.frameCount)
+            {
+                frameIndex++;
+                frameTime = 0.0f; // frame condition fixed
+                frameTime += frameOvershoot;
+            }
+            Debug.Log(frameOvershoot);
         }
 
 
         if (frameParameter < 0.0 && playDirection < 0) // moving backwards and the frame ended
         {
-            frameOvershoot = (0.0f - frameParameter) * clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration;
+            frameOvershoot = (0.0f - frameParameter) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
             if (frameIndex > 0)
             {       
                 frameIndex--;
-                frameTime = clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration; // frame condition fixed
+                frameTime = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration; // frame condition fixed
                 frameTime += frameOvershoot; // one frame condition fixed
             }
             if (frameIndex == 0)
@@ -113,8 +108,9 @@ public class ClipController : MonoBehaviour
                 //clipOvershoot = clipTime - clipDuration;
                 frameIndex = clip.frameCount-1;
                 clipTime = clipDuration;
-                frameTime = clip.keyframePool.keyframePool[clip.frameSequence[frameIndex]].duration;
+                frameTime = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
             }
+            Debug.Log(frameOvershoot);
         }
     }    
 
@@ -142,18 +138,35 @@ public class ClipController : MonoBehaviour
         
     }
 
-    public void SetDirection(int newDirection, float newTimeScalar)
+    public void SetDirection(int newDirection)
     {
         playDirection = newDirection;
-        timeScalar = newTimeScalar;
     }
-    
+
+    public void ResetToFirstFrame()
+    {
+        clip.CalculateDuration();
+        frameIndex = 0;
+        clipTime = 0.0f;
+        frameTime = 0.0f;
+        SetDirection(1);
+    }
+
+    public void ResetToLastFrame()
+    {
+        frameIndex = clip.frameCount -1;
+        clip.CalculateDuration();
+        clipTime = clip.clipDuration;
+        frameTime = clip.keyframePool.framePool[frameIndex].duration;
+        SetDirection(-1);
+    }
+
     public void IncTimeScalar(bool increase)
     {
         if (increase)
-            timeScalar *= 1.25f; // 25% up
+            timeScalar += 0.25f; // 25% up (from original)
         else
-            timeScalar *= 0.75f; // 25% down
+            timeScalar -= 0.25f; // 25% down (from original)
     }
 
     public void DebugList()

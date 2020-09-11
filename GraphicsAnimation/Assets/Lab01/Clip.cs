@@ -36,12 +36,21 @@ public class Clip : MonoBehaviour
         lastIndex = last;
 
         clipDuration = 1.0f;
-        durationInv = 1.0f / clipDuration;
-        frameCount = lastIndex;       
+        durationInv = 1.0f / clipDuration;      
     }
 
     public void SetDuration(float newDuration)
     {
         clipDuration = newDuration;
+    }
+
+    public void CalculateDuration()
+    {
+        float cumulativeTime = 0.0f;
+        for (int i =0; i < frameCount; i++)
+        {
+            cumulativeTime += keyframePool.framePool[frameSequence[i]].duration;
+        }
+        clipDuration = cumulativeTime;
     }
 }
