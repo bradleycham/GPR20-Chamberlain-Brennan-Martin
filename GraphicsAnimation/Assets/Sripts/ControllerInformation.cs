@@ -116,15 +116,15 @@ public class ControllerInformation : MonoBehaviour
         // play directions
         if (Input.GetKeyDown(KeyCode.Q)) // rewind
         {
-            controllers[currentControllerIndex - 1].SetDirection(-1);
+            controllers[currentControllerIndex - 1].SetDirection(Direction.reverse);
         }
         if (Input.GetKeyDown(KeyCode.W)) // pause
         {
-            controllers[currentControllerIndex-1].SetDirection(0);   
+            controllers[currentControllerIndex-1].SetDirection(Direction.pause);   
         }
         if (Input.GetKeyDown(KeyCode.E)) // forward
         {
-            controllers[currentControllerIndex - 1].SetDirection(1);
+            controllers[currentControllerIndex - 1].SetDirection(Direction.forward);
         }
 
         if (Input.GetKeyDown(KeyCode.F)) // set to first

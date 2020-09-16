@@ -12,6 +12,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Direction : int
+{
+    reverse = -1,
+    pause = 0,
+    forward = 1
+}
 public class ClipController : MonoBehaviour
 {
     public ClipPool pool;
@@ -28,7 +34,7 @@ public class ClipController : MonoBehaviour
     public float frameTime;
     float frameParameter;
 
-    public int playDirection;
+    public Direction playDirection;
     float frameOvershoot;
 
     public float timeScalar = 1.0f;
@@ -47,16 +53,30 @@ public class ClipController : MonoBehaviour
         frameTime = 0.0f;
         frameParameter = 0.0f;
 
-        playDirection = 1;
+        playDirection = Direction.forward;
     }
 
     // Constructor overload
-    public ClipController(int newClipIndex, int startFrame, int playState, ClipPool newPool)
+    public ClipController(Clip newClip, int startFrame, Direction newPlayDirection)
     {
-        pool = newPool;
-        clipIndex = newClipIndex;
-        //frameIndex = startFrame;
-        playDirection = playState;
+        //pool = newPool;
+        clip = newClip;
+        clipIndex = clip.clipIndex;
+        frameIndex = startFrame;
+        if (newPlayDirection == Direction.forward)
+        {
+            clipTime = clip.startEndTimes[startFrame].x;
+        }
+        if (newPlayDirection == Direction.pause)
+        {
+            clipTime = clip.startEndTimes[startFrame].x;
+        }
+        if (newPlayDirection == Direction.reverse)
+        {
+            clipTime = clip.startEndTimes[startFrame].y;
+            frameTime = clip.startEndTimes[startFrame].y - clip.startEndTimes[startFrame].x;
+        }
+        playDirection = newPlayDirection;
     }
 
     void Update()
@@ -74,22 +94,50 @@ public class ClipController : MonoBehaviour
         // create looping feature
     }
 
+    public void Transition(bool isEnd)
+    {
+        
+
+        if (isEnd)
+        {
+            ClipTransition Trans;
+            Trans = clip.EndTransition;
+            //set to new clip
+            //set to new clip time
+            //set frame time
+            //set direction
+            //set currentframe
+            //set first and last frames
+            // set clip to the new clip and redo vars
+            clip = Trans.targetClip;
+            frameIndex = clip.EndTransition.startFrame;
+            clipTime = clip.startEndTimes[Trans.startFrame].x;
+            frameTime = 0.0f;
+            playDirection = Trans.playDirection;
+        }
+        else if(!isEnd)
+        {
+
+        }
+            
+    }
+    
     // determine the current frame and time within
     public void ResolveTime()
     {
-        if (frameParameter > 1.0 && playDirection > 0) // moving forward and the frame ended
+        // if yes, the keyframe last (random) just ended in forward
+        if (frameParameter > 1.0 && playDirection == Direction.forward) // moving forward and the frame ended
         {
             // this is the amount of time that the dx went over the last keyframe
             frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration; 
 
+            //transition to new clip
             if (frameIndex == clip.frameCount - 1)
             {
-                frameIndex = 0;
-                frameTime = 0.0f;
-                clipTime = 0.0f;
-                clipTime += frameOvershoot;
-                frameTime += frameOvershoot;
+                //FORWARD TRANSITION
+                Transition(true);
             }
+            // move to next frame
             else if (frameIndex < clip.frameCount)
             {
                 frameIndex++;
@@ -99,8 +147,8 @@ public class ClipController : MonoBehaviour
             //Debug.Log(frameOvershoot);
         }
 
-
-        if (frameParameter < 0.0 && playDirection < 0) // moving backwards and the frame ended
+        // if yes, the keyframe last (random) just ended in reverse
+        if (frameParameter < 0.0 && playDirection == Direction.reverse) // moving backwards and the frame ended
         {
             frameOvershoot = (0.0f - frameParameter) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
             if (frameIndex > 0)
@@ -123,13 +171,13 @@ public class ClipController : MonoBehaviour
     // Update Function
     private void UpdateTime()
     {
-        if(playDirection > 0)
+        if(playDirection == Direction.forward)
         {
             // forward
             clipTime += Time.deltaTime * timeScalar;
             frameTime += Time.deltaTime * timeScalar;
         }
-        else if(playDirection == 0)
+        else if(playDirection == Direction.pause)
         {
             // stop
         }
@@ -146,7 +194,7 @@ public class ClipController : MonoBehaviour
     }
 
     // Set the play direction
-    public void SetDirection(int newDirection)
+    public void SetDirection(Direction newDirection)
     {
         playDirection = newDirection;
     }
@@ -160,7 +208,7 @@ public class ClipController : MonoBehaviour
         frameIndex = 0;
         clipTime = 0.0f;
         frameTime = 0.0f;
-        SetDirection(1);
+        SetDirection(Direction.forward);
     }
     public void ResetToLastFrame()
     {
@@ -168,7 +216,7 @@ public class ClipController : MonoBehaviour
         clip.CalculateDuration();
         clipTime = clip.clipDuration;
         frameTime = clip.keyframePool.framePool[frameIndex].duration;
-        SetDirection(-1);
+        SetDirection(Direction.reverse);
     }
 
 
@@ -202,6 +250,5 @@ public class ClipController : MonoBehaviour
             clipIndex = 0;
             clip = pool.clipPool[0];
         }
-        
     }
 }
