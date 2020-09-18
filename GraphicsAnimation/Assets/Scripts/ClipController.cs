@@ -22,16 +22,17 @@ public class ClipController : MonoBehaviour
 {
     public ClipPool pool;
     public Clip clip;
+    new SpriteRenderer renderer;
 
     public string controllerName;
 
-    public int clipIndex;
-    public float clipDuration;
-    public float clipTime; // time that has passed since start
+    //int clipIndex;
+    //float clipDuration;
+    float clipTime; // time that has passed since start
     float clipParameter;
     
-    public int frameIndex; //changes throughout the update
-    public float frameTime;
+    int frameIndex; //changes throughout the update
+    float frameTime;
     float frameParameter;
 
     public Direction playDirection;
@@ -39,12 +40,37 @@ public class ClipController : MonoBehaviour
 
     public float timeScalar = 1.0f;
 
+    // return non-public variables
+    /*
+    public int GetClipIndex()
+    {
+        return clipIndex;
+    }
+    */
+    public float GetClipTime()
+    {
+        return clipTime;
+    }
+    /*
+    public float GetClipDuration()
+    {
+        return clipDuration;
+    }
+    */
+    public float GetFrameTime()
+    {
+        return frameTime;
+    }
+    public int GetFrameIndex()
+    {
+        return frameIndex;
+    }
     // Default Contstructor
     public ClipController()
     {
         controllerName = "INACTIVE";
         pool = null;
-        clipIndex = 0;
+        //clipIndex = 0;
         clipTime = 0.0f;
         clipParameter = 0.0f;
         clip = null;
@@ -61,7 +87,7 @@ public class ClipController : MonoBehaviour
     {
         //pool = newPool;
         clip = newClip;
-        clipIndex = clip.clipIndex;
+        //clipIndex = clip.GetClipIndex();
         frameIndex = startFrame;
         if (newPlayDirection == Direction.forward)
         {
@@ -79,14 +105,20 @@ public class ClipController : MonoBehaviour
         playDirection = newPlayDirection;
     }
 
+    private void Start()
+    {
+        renderer = new SpriteRenderer();
+        renderer = this.GetComponent<SpriteRenderer>();
+    }
+
     void Update()
     {
         // apply time step
         UpdateTime();
         ResolveTime();
-        
+        DisplayFrame();
         // post
-        clipParameter = clipTime / clip.clipDuration;
+        clipParameter = clipTime / clip.GetClipDuration();
         float v = frameTime / clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
         frameParameter = v;
         //DebugList();
@@ -94,32 +126,62 @@ public class ClipController : MonoBehaviour
         // create looping feature
     }
 
+    //set sprite renderer to the current keyframe
+    void DisplayFrame()
+    {
+        renderer.sprite = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].data;
+    }
     public void Transition(bool isEnd)
     {
-        
-
+        ClipTransition Trans;
+        // transition forward
         if (isEnd)
         {
-            ClipTransition Trans;
             Trans = clip.EndTransition;
-            //set to new clip
-            //set to new clip time
-            //set frame time
-            //set direction
-            //set currentframe
-            //set first and last frames
-            // set clip to the new clip and redo vars
-            clip = Trans.targetClip;
-            frameIndex = clip.EndTransition.startFrame;
-            clipTime = clip.startEndTimes[Trans.startFrame].x;
-            frameTime = 0.0f;
-            playDirection = Trans.playDirection;
         }
-        else if(!isEnd)
+        else // transition backwards
         {
-
+            Trans = clip.ReverseTransition;
         }
+
+        // set controlled clip to transition clip
+        clip = Trans.targetClip;
+
+        // recalculate the time stamps for the clip
+        Trans.targetClip.CalculateDuration();
+
+        // forward Transition
+        if (Trans.playDirection == Direction.forward)
+        {
+            // input new clip data to clip controller
+            frameIndex = Trans.startFrame;
+            clipTime = Trans.targetClip.startEndTimes[Trans.startFrame].x;
+            frameTime = 0.0f;
+            frameParameter = 0.0f;
+            playDirection = Trans.playDirection;
             
+        }
+        // reverse Transition
+        else if (Trans.playDirection == Direction.reverse)
+        {
+            // input new clip data to clip controller
+            frameIndex = Trans.startFrame;
+            clipTime = Trans.targetClip.startEndTimes[Trans.startFrame].y;
+            frameTime = Trans.targetClip.startEndTimes[Trans.startFrame].y - clip.startEndTimes[Trans.startFrame].x;
+            frameParameter = 1.0f;
+            playDirection = Trans.playDirection;
+            
+        }
+        else // Pause Transition
+        {
+            // input new clip data to clip controller
+            frameIndex = Trans.startFrame;
+            clipTime = Trans.targetClip.startEndTimes[Trans.startFrame].x;
+            frameTime = 0.0f;
+            frameParameter = 0.0f;
+            playDirection = Trans.playDirection;
+          
+        }
     }
     
     // determine the current frame and time within
@@ -129,12 +191,14 @@ public class ClipController : MonoBehaviour
         if (frameParameter > 1.0 && playDirection == Direction.forward) // moving forward and the frame ended
         {
             // this is the amount of time that the dx went over the last keyframe
-            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration; 
+            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
 
             //transition to new clip
-            if (frameIndex == clip.frameCount - 1)
+            if (frameIndex == clip.frameCount-1)
             {
                 //FORWARD TRANSITION
+                //Debug.Log(clipTime);
+                //Debug.Log(frameIndex);
                 Transition(true);
             }
             // move to next frame
@@ -158,11 +222,10 @@ public class ClipController : MonoBehaviour
                 frameTime += frameOvershoot; // one frame condition fixed
             }
             if (frameIndex == 0)
-            {                             
-                //clipOvershoot = clipTime - clipDuration;
-                frameIndex = clip.frameCount-1;
-                clipTime = clipDuration;
-                frameTime = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
+            {
+                //REVERSE TRANSITION
+                Transition(false);
+                //Debug.Log(clipTime);
             }
             //Debug.Log(frameOvershoot);
         }
@@ -214,7 +277,7 @@ public class ClipController : MonoBehaviour
     {
         frameIndex = clip.frameCount -1;
         clip.CalculateDuration();
-        clipTime = clip.clipDuration;
+        clipTime = clip.GetClipDuration();
         frameTime = clip.keyframePool.framePool[frameIndex].duration;
         SetDirection(Direction.reverse);
     }
@@ -238,6 +301,7 @@ public class ClipController : MonoBehaviour
     }
 
     // Change the clip to 'i' as long as 'i' is within the bounds of the clip-list
+    /*
     public void ChangeClip(int i)
     {
         if(i <= pool.clipCount -1)
@@ -251,4 +315,5 @@ public class ClipController : MonoBehaviour
             clip = pool.clipPool[0];
         }
     }
+    */
 }

@@ -14,7 +14,7 @@ public class Keyframe : MonoBehaviour
     public int index;
     public float duration;
     public float durationInv;
-    public int data;
+    public Sprite data;
 
     // Constructor
     public Keyframe()
@@ -22,10 +22,10 @@ public class Keyframe : MonoBehaviour
         index = 0;
         duration = 0.01f;
         durationInv = 1 / duration;
-        data = 1;
+        data = null;
     }
     // Constructor Overload 
-    public Keyframe(int newIndex, float newDuration, int newData)
+    public Keyframe(int newIndex, float newDuration, Sprite newData)
     {
         index = newIndex;
         duration = newDuration;
@@ -40,7 +40,7 @@ public class Keyframe : MonoBehaviour
     }
 
     // distribute data
-    public void SetData(int i)
+    public void SetData(Sprite i)
     {
         data = i;
     }

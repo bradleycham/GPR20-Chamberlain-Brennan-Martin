@@ -49,11 +49,11 @@ public class ControllerInformation : MonoBehaviour
             controllerInformationOne.text += "\n";
             controllerInformationOne.text += "Clip Name: " + controllers[0].clip.clipName;
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "KeyframeInSequence: " + controllers[0].frameIndex;
+            controllerInformationOne.text += "KeyframeInSequence: " + controllers[0].GetFrameIndex();
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current Keyframe Index: " + controllers[0].clip.frameSequence[controllers[0].frameIndex];
+            controllerInformationOne.text += "Current Keyframe Index: " + controllers[0].clip.frameSequence[controllers[0].GetFrameIndex()];
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current Keyframe Data: " + controllers[0].clip.keyframePool.framePool[controllers[0].clip.frameSequence[controllers[0].frameIndex]].data;
+            controllerInformationOne.text += "Current Keyframe Data: " + controllers[0].clip.keyframePool.framePool[controllers[0].clip.frameSequence[controllers[0].GetFrameIndex()]].data;
             controllerInformationOne.text += "\n";
 
             controllerInformationOne.text += "Time Direction: " + controllers[0].playDirection;
@@ -61,9 +61,9 @@ public class ControllerInformation : MonoBehaviour
 
             controllerInformationOne.text += "Time Scale: " + controllers[0].timeScalar;
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current ClipTime: " + controllers[0].clipTime;
+            controllerInformationOne.text += "Current ClipTime: " + controllers[0].GetClipTime();
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current KeyFrameTime: " + controllers[0].frameTime;
+            controllerInformationOne.text += "Current KeyFrameTime: " + controllers[0].GetFrameTime();
         }
 
         if (pauseTwo == false)
@@ -72,11 +72,11 @@ public class ControllerInformation : MonoBehaviour
             controllerInformationTwo.text += "\n";
             controllerInformationTwo.text += "Clip Name: " + controllers[1].clip.clipName;
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "KeyframeInSequence: " + controllers[1].frameIndex;
+            controllerInformationTwo.text += "KeyframeInSequence: " + controllers[1].GetFrameIndex();
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current Keyframe Index: " + controllers[1].clip.frameSequence[controllers[1].frameIndex];
+            controllerInformationTwo.text += "Current Keyframe Index: " + controllers[1].clip.frameSequence[controllers[1].GetFrameIndex()];
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current Keyframe Data: " + controllers[1].clip.keyframePool.framePool[controllers[1].clip.frameSequence[controllers[1].frameIndex]].data;
+            controllerInformationTwo.text += "Current Keyframe Data: " + controllers[1].clip.keyframePool.framePool[controllers[1].clip.frameSequence[controllers[1].GetFrameIndex()]].data;
             controllerInformationOne.text += "\n";
 
             controllerInformationTwo.text += "Time Direction: " + controllers[1].playDirection;
@@ -84,9 +84,9 @@ public class ControllerInformation : MonoBehaviour
 
             controllerInformationTwo.text += "Time Scale: " + controllers[1].timeScalar;
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current ClipTime: " + controllers[1].clipTime;
+            controllerInformationTwo.text += "Current ClipTime: " + controllers[1].GetClipTime();
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current KeyFrameTime: " + controllers[1].frameTime;
+            controllerInformationTwo.text += "Current KeyFrameTime: " + controllers[1].GetFrameTime();
         }
 
         if (pauseThree == false)
@@ -96,11 +96,11 @@ public class ControllerInformation : MonoBehaviour
             controllerInformationThree.text += "\n";
             controllerInformationThree.text += "Clip Name: " + controllers[2].clip.clipName;
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "KeyframeInSequence: " + controllers[2].frameIndex;
+            controllerInformationThree.text += "KeyframeInSequence: " + controllers[2].GetFrameIndex();
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current Keyframe Index: " + controllers[2].clip.frameSequence[controllers[2].frameIndex];
+            controllerInformationThree.text += "Current Keyframe Index: " + controllers[2].clip.frameSequence[controllers[2].GetFrameIndex()];
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current Keyframe Data: " + controllers[2].clip.keyframePool.framePool[controllers[2].clip.frameSequence[controllers[2].frameIndex]].data;
+            controllerInformationThree.text += "Current Keyframe Data: " + controllers[2].clip.keyframePool.framePool[controllers[2].clip.frameSequence[controllers[2].GetFrameIndex()]].data;
             controllerInformationThree.text += "\n";
 
             controllerInformationThree.text += "Time Direction: " + controllers[2].playDirection;
@@ -108,9 +108,9 @@ public class ControllerInformation : MonoBehaviour
 
             controllerInformationThree.text += "Time Scale: " + controllers[2].timeScalar;
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current ClipTime: " + controllers[2].clipTime;
+            controllerInformationThree.text += "Current ClipTime: " + controllers[2].GetClipTime();
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current KeyFrameTime: " + controllers[2].frameTime;
+            controllerInformationThree.text += "Current KeyFrameTime: " + controllers[2].GetFrameTime();
         }
 
         // play directions

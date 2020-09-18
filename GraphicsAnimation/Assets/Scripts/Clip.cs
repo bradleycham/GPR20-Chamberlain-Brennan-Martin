@@ -14,14 +14,14 @@ public class Clip : MonoBehaviour
     public string clipName; // identifies this clip
     
     public int clipIndex; // index of this clip in a pool of clips
-    public float clipTime; // current time between 0 and clip duraton
-    public float clipDuration; // can be calc. as a sum of frames or set at start
-    public float durationInv; // 1/duration
+    float clipTime; // current time between 0 and clip duraton
+    float clipDuration; // can be calc. as a sum of frames or set at start
+    float durationInv; // 1/duration
     
     public int frameCount;
 
-    public int firstIndex;//first and last frames
-    public int lastIndex;
+    int firstIndex;//first and last frames
+    int lastIndex;
 
     public Vector2[] startEndTimes;
 
@@ -31,6 +31,14 @@ public class Clip : MonoBehaviour
     public int[] frameSequence;
     public KeyframePool keyframePool;
 
+    public float GetClipDuration()
+    {
+        return clipDuration;
+    }
+    public int GetClipIndex()
+    {
+        return clipIndex;
+    }
     void Start()
     {
         CalculateDuration();
@@ -52,8 +60,7 @@ public class Clip : MonoBehaviour
 
         clipDuration = 1.0f;
         durationInv = 1.0f / clipDuration;
-        
-        
+              
     }
 
     // set the duration of this clip
