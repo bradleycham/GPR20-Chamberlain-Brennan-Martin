@@ -2,17 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HierarchicalPose : MonoBehaviour
+public class ForwardKinematic : MonoBehaviour
 {
-
-    public SpatialPose[] currentPose;
-
-    HierarchicalPose(SpatialPose[] cp)
-    {
-
-        currentPose = cp;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -24,4 +15,6 @@ public class HierarchicalPose : MonoBehaviour
     {
         
     }
+
+
 }

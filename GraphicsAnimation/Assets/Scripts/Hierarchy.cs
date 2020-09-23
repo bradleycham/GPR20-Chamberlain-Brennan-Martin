@@ -5,8 +5,8 @@ using UnityEngine;
 public class Hierarchy : MonoBehaviour
 {
 
-    HierarchyNode[] treeDepth;
-    int nodeCount;
+    public HierarchyNode[] treeDepth;
+    public int nodeCount;
 
     Hierarchy(HierarchyNode[] list, int count)
     {

@@ -5,9 +5,9 @@ using UnityEngine;
 public class HierarchyNode : MonoBehaviour
 {
 
-    string name;
-    int index;
-    int parentIndex;//-1 if this is the root node
+    public string name;
+    public int index;
+    public int parentIndex;//-1 if this is the root node
 
     HierarchyNode(string s, int i, int pI)
     {

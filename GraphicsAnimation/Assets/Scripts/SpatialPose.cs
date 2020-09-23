@@ -5,10 +5,10 @@ using UnityEngine;
 public class SpatialPose : MonoBehaviour
 {
 
-    Transform pose; //relative to parent
-    Vector3 orientation;
-    Vector3 scale;
-    Vector3 translation;
+    public Transform pose; //relative to parent
+    public Vector3 orientation;
+    public Vector3 scale;
+    public Vector3 translation;
 
     //defualt
     SpatialPose()

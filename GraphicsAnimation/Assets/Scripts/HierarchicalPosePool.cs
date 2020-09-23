@@ -12,12 +12,12 @@ enum Channel
 public class HierarchicalPosePool : MonoBehaviour
 {
 
-    Hierarchy nodePool;
-    SpatialPose[] spatialPoses;
-    HierarchicalPose[] hierarchicalPoses;
+    public Hierarchy nodePool;
+    public SpatialPose[] spatialPoses;
+    public HierarchicalPose[] hierarchicalPoses;
     //Euler order - global flag
-    int hierarchicalPoseCount;
-    int spatialPoseCount;
+    public int hierarchicalPoseCount;
+    public int spatialPoseCount;
 
     HierarchicalPosePool(Hierarchy h, SpatialPose[] sp, HierarchicalPose[] hp, int hCount, int sCount)
     {
