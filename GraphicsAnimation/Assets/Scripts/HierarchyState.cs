@@ -5,10 +5,10 @@ using UnityEngine;
 public class HierarchyState : MonoBehaviour
 {
 
-    Hierarchy hierarchy;
-    HierarchicalPose samplePose;
-    HierarchicalPose localSpacePose;
-    HierarchicalPose objectSpacePose;
+    public Hierarchy hierarchy;
+    public HierarchicalPose samplePose;
+    public HierarchicalPose localSpacePose;
+    public HierarchicalPose objectSpacePose;
 
     HierarchyState(Hierarchy h, HierarchicalPose sp, HierarchicalPose lsp, HierarchicalPose osp)
     {
@@ -17,26 +17,6 @@ public class HierarchyState : MonoBehaviour
         samplePose = sp;
         localSpacePose = lsp;
         objectSpacePose = osp;
-    }
-
-    public void ForwwardKinematic(HierarchyState hs)
-    {
-
-        for(int i = 0; i < hs.hierarchy.nodeCount; i++)
-        {
-
-            if(hs.hierarchy.treeDepth[i].parentIndex == -1)
-            {
-
-                objectSpacePose = localSpacePose;
-            }
-
-            else
-            {
-
-                //objectSpacePose = hs.hierarchy.treeDepth[i].parentIndex
-            }
-        }
     }
 
     // Start is called before the first frame update
