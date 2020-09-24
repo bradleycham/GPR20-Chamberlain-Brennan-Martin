@@ -24,6 +24,8 @@ public class ForwardKinematic : MonoBehaviour
                     (hState.objectSpacePose.currentPose[hState.hierarchy.treeDepth[i].parentIndex].scale.z * hState.localSpacePose.currentPose[i].scale.z));
             }
         }
+
+        Debug.Log("hello");
     }
 
 

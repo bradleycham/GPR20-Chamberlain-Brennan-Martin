@@ -30,4 +30,33 @@ public class HierarchyState : MonoBehaviour
     {
         
     }
+
+    public void Interpolation(HierarchicalPosePool hpp)
+    {
+
+        samplePose.currentPose = hpp.spatialPoses;
+    }
+
+    public void Concatentation()
+    {
+
+        for(int i = 0; i < localSpacePose.currentPose.Length; i++)
+        {
+
+            localSpacePose.currentPose[i].translation += samplePose.currentPose[i].translation;
+        }
+    }
+
+    public void Conversion()
+    {
+
+        Matrix4x4 trans = Matrix4x4.TRS(localSpacePose.currentPose[0].translation, Quaternion.identity, localSpacePose.currentPose[0].scale);
+    }
+
+    public void Kinematic()
+    {
+
+        ForwardKinematic ks = new ForwardKinematic();
+        ks.KinematicsSolveForwardPartial(this, 0, 12);
+    }
 }
