@@ -13,17 +13,16 @@ public class HierarchicalPosePool : MonoBehaviour
 {
 
     public Hierarchy nodePool;
-    public SpatialPose[] spatialPoses;
+    //public SpatialPose[] spatialPoses; // do we need a list of all poses when we dont use pointers?
     public HierarchicalPose[] hierarchicalPoses;
     //Euler order - global flag
     public int hierarchicalPoseCount;
     public int spatialPoseCount;
 
-    HierarchicalPosePool(Hierarchy h, SpatialPose[] sp, HierarchicalPose[] hp, int hCount, int sCount)
+    HierarchicalPosePool(Hierarchy h, /*SpatialPose[] sp,*/ HierarchicalPose[] hp, int hCount, int sCount)
     {
-
         nodePool = h;
-        spatialPoses = sp;
+        //spatialPoses = sp;
         hierarchicalPoses = hp;
         hierarchicalPoseCount = hCount;
         spatialPoseCount = sCount;

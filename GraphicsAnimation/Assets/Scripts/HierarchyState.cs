@@ -31,32 +31,44 @@ public class HierarchyState : MonoBehaviour
         
     }
 
-    public void Interpolation(HierarchicalPosePool hpp)
+    public void Interpolation(HierarchyState hs, HierarchicalPose hp)
     {
-
-        samplePose.currentPose = hpp.spatialPoses;
+        // step function, no dt involved
+        hs.samplePose = hp;
     }
 
-    public void Concatentation()
+    public void Concatentation(HierarchicalPose lhs, HierarchicalPose rhs)
     {
-
-        for(int i = 0; i < localSpacePose.currentPose.Length; i++)
-        {
-
-            localSpacePose.currentPose[i].translation += samplePose.currentPose[i].translation;
-        }
+        if(lhs.currentPose.Length == rhs.currentPose.Length)
+            for(int i = 0; i < lhs.currentPose.Length; i++)
+            {
+                lhs.currentPose[i].translation += rhs.currentPose[i].translation;           
+                lhs.currentPose[i].orientation += rhs.currentPose[i].orientation;
+                lhs.currentPose[i].scale = new Vector3
+                    (lhs.currentPose[i].scale.x * rhs.currentPose[i].scale.x,
+                     lhs.currentPose[i].scale.y * rhs.currentPose[i].scale.y,
+                     lhs.currentPose[i].scale.z * rhs.currentPose[i].scale.z);
+            }
+        else
+            Debug.Log("ERROR: Imbalanced hierarchy lengths"); 
     }
 
     public void Conversion()
     {
 
-        Matrix4x4 trans = Matrix4x4.TRS(localSpacePose.currentPose[0].translation, Quaternion.identity, localSpacePose.currentPose[0].scale);
+        for(int i = 0; i < samplePose.currentPose.Length; i ++)
+        {
+            samplePose.currentPose[i].pose = Matrix4x4.TRS(
+                samplePose.currentPose[i].translation,
+                Quaternion.Euler(samplePose.currentPose[i].orientation.x, samplePose.currentPose[i].orientation.y, samplePose.currentPose[i].orientation.z),
+                samplePose.currentPose[i].scale);
+        }
     }
 
     public void Kinematic()
     {
-
+     
         ForwardKinematic ks = new ForwardKinematic();
-        ks.KinematicsSolveForwardPartial(this, 0, 12);
+        ks.KinematicsSolveForwardPartial(this);
     }
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public class SpatialPose : MonoBehaviour
 {
 
-    public Transform pose; //relative to parent
+    public Matrix4x4 pose; //local
+    
+    //object
     public Vector3 orientation;
     public Vector3 scale;
     public Vector3 translation;
@@ -14,13 +16,13 @@ public class SpatialPose : MonoBehaviour
     SpatialPose()
     {
 
-        pose = null;//should be pose = Transform.Identity
+        pose = Matrix4x4.identity;//should be pose = Transform.Identity
         orientation = new Vector3(0f, 0f, 0f);
         scale = new Vector3(1f, 1f, 1f);
         translation = new Vector3(0f, 0f, 0f);
     }
 
-    SpatialPose(Transform p, Vector3 o, Vector3 s, Vector3 t)
+    SpatialPose(Matrix4x4 p, Vector3 o, Vector3 s, Vector3 t)
     {
 
         pose = p;

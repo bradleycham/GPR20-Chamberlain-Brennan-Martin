@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ForwardKinematic : MonoBehaviour
 {
-    public void KinematicsSolveForwardPartial(HierarchyState hState, int first, int nodeCount)
+    public void KinematicsSolveForwardPartial(HierarchyState hState/*, int first, int nodeCount*/)
     {
         for(int i = 0; i < hState.samplePose.currentPose.Length; i ++)
         {

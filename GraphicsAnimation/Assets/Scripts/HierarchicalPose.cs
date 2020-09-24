@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class HierarchicalPose : MonoBehaviour
 {
-
     public SpatialPose[] currentPose;
 
     HierarchicalPose(SpatialPose[] cp)
     {
-
         currentPose = cp;
     }
 
