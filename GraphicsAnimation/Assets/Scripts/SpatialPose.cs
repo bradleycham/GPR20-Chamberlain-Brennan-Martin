@@ -13,7 +13,8 @@ public class SpatialPose : MonoBehaviour
 {
 
     public Matrix4x4 worldPose; //World Space
-    //Local Space
+    
+    //object space
     public Vector3 orientation;
     public Vector3 scale;
     public Vector3 translation;
@@ -45,8 +46,8 @@ public class SpatialPose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector3(worldPose.GetColumn(3).x, worldPose.GetColumn(3).y, worldPose.GetColumn(3).z);
+        //this.transform.position = new Vector3(worldPose.GetColumn(3).x, worldPose.GetColumn(3).y, worldPose.GetColumn(3).z);
         //this.transform.rotation = ;
-        this.transform.localScale = new Vector3(worldPose.GetRow(3).x, worldPose.GetRow(3).y, worldPose.GetRow(3).z);
+        //this.transform.localScale = new Vector3(worldPose.GetRow(3).x, worldPose.GetRow(3).y, worldPose.GetRow(3).z);
     }
 }

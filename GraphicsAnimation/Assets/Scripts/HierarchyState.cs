@@ -15,21 +15,23 @@ public class HierarchyState : MonoBehaviour
     public Hierarchy hierarchy;
 
     public HierarchicalPose samplePose;
-    public HierarchicalPose localSpacePose;
-    public HierarchicalPose objectSpacePose;
+    public Matrix4x4[] objectTransformList;
+    public Matrix4x4[] localTransformList;
+    //public HierarchicalPose localSpacePose;
+    //public HierarchicalPose objectSpacePose;
 
     public HierarchicalPose basePose;
     public HierarchicalPose newPose;
 
     public bool isKinematic = false;
 
-    HierarchyState(Hierarchy h, HierarchicalPose sp, HierarchicalPose lsp, HierarchicalPose osp)
+    HierarchyState(Hierarchy h, HierarchicalPose sp, Matrix4x4[] lsp, Matrix4x4[] osp)
     {
 
         hierarchy = h;
         samplePose = sp;
-        localSpacePose = lsp;
-        objectSpacePose = osp;
+        localTransformList = lsp;
+        objectTransformList = osp;
     }
 
     // Start is called before the first frame update
@@ -44,54 +46,85 @@ public class HierarchyState : MonoBehaviour
         if(isKinematic)
         {
             Interpolation(newPose);
-            Concatenation();
-            Conversion();
+            ConcatenationConversion();
             Kinematic();
         }
+        
     }
 
     public void Interpolation(HierarchicalPose hp)
     {
         // step function, no dt involved
-        samplePose = hp;
+        for(int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+            samplePose.currentPose[i].translation = hp.currentPose[i].translation;
+            samplePose.currentPose[i].orientation = hp.currentPose[i].orientation;
+            samplePose.currentPose[i].scale = hp.currentPose[i].scale;
+
+        }
     }
 
-    public void Concatenation()
+    public void ConcatenationConversion()
     {
+        /*
         localSpacePose = new HierarchicalPose(samplePose.currentPose.Length);
         for(int j = 0; j < samplePose.currentPose.Length; j++)
         {
             samplePose.currentPose[j] = new SpatialPose();
         }
-        if (basePose.currentPose.Length == localSpacePose.currentPose.Length)
-            for(int i = 0; i < localSpacePose.currentPose.Length; i++)
+        */
+        if (basePose.currentPose.Length == samplePose.currentPose.Length)
+            for(int i = 0; i < samplePose.currentPose.Length; i++)
             {
-                localSpacePose.currentPose[i].translation = basePose.currentPose[i].translation + samplePose.currentPose[i].translation;
-                localSpacePose.currentPose[i].orientation = basePose.currentPose[i].orientation + samplePose.currentPose[i].orientation;
-                localSpacePose.currentPose[i].scale = new Vector3
+                localTransformList[i] = Matrix4x4.TRS(basePose.currentPose[i].translation + samplePose.currentPose[i].translation,
+                    Quaternion.Euler(basePose.currentPose[i].orientation.x + samplePose.currentPose[i].orientation.x,
+                    basePose.currentPose[i].orientation.y + samplePose.currentPose[i].orientation.y,
+                    basePose.currentPose[i].orientation.z + samplePose.currentPose[i].orientation.z),
+                    new Vector3
                     (samplePose.currentPose[i].scale.x * basePose.currentPose[i].scale.x,
                      samplePose.currentPose[i].scale.y * basePose.currentPose[i].scale.y,
-                     samplePose.currentPose[i].scale.z * basePose.currentPose[i].scale.z);
+                     samplePose.currentPose[i].scale.z * basePose.currentPose[i].scale.z));
             }
         else
             Debug.Log("ERROR: Imbalanced hierarchy lengths"); 
     }
 
+    /*
     public void Conversion()
     {
 
         for(int i = 0; i < samplePose.currentPose.Length; i ++)
         {
-            samplePose.currentPose[i].worldPose = Matrix4x4.TRS(
-                samplePose.currentPose[i].translation,
-                Quaternion.Euler(samplePose.currentPose[i].orientation.x, samplePose.currentPose[i].orientation.y, samplePose.currentPose[i].orientation.z),
-                samplePose.currentPose[i].scale);
+            localSpacePose.currentPose[i].worldPose = Matrix4x4.TRS(
+                localSpacePose.currentPose[i].translation,
+                Quaternion.Euler(localSpacePose.currentPose[i].orientation.x, localSpacePose.currentPose[i].orientation.y, localSpacePose.currentPose[i].orientation.z),
+                localSpacePose.currentPose[i].scale);
         }
     }
+    */
 
     public void Kinematic()
     {
-        ForwardKinematic ks = new ForwardKinematic();
-        ks.KinematicsSolveForwardPartial(this);
+        // 2 bodies
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+            if (hierarchy.treeDepth[i].parentIndex < 0)
+            {
+                // this is the root node
+                objectTransformList[i] = localTransformList[i];
+            }
+            else // forward kinematics
+            {
+                objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i];
+            }
+        }
+        Debug.Log("hello");
+        
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+
+            samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation;   
+           
+        }
     }
 }
