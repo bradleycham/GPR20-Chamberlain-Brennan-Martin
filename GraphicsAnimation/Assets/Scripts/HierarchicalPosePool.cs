@@ -12,7 +12,7 @@ using UnityEngine;
 //Euler Channels
 enum Channel
 {
-
+    //for future implementaiton
     rotation,
     translation
 }
