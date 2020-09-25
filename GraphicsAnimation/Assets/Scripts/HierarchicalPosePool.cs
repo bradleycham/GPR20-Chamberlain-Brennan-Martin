@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Euler Channels
 enum Channel
 {
 
@@ -19,6 +20,7 @@ enum Channel
 public class HierarchicalPosePool : MonoBehaviour
 {
 
+    //elements of a hierarchicalPosePool
     public Hierarchy nodePool;
     //public SpatialPose[] spatialPoses; // do we need a list of all poses when we dont use pointers?
     public HierarchicalPose[] hierarchicalPoses;
@@ -26,6 +28,7 @@ public class HierarchicalPosePool : MonoBehaviour
     public int hierarchicalPoseCount;
     public int spatialPoseCount;
 
+    //constructors
     HierarchicalPosePool(Hierarchy h, /*SpatialPose[] sp,*/ HierarchicalPose[] hp, int hCount, int sCount)
     {
         nodePool = h;

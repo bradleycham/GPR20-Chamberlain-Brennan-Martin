@@ -12,6 +12,7 @@ using UnityEngine;
 public class HierarchyState : MonoBehaviour
 {
 
+    //elements of a hierarchyState
     public Hierarchy hierarchy;
 
     public HierarchicalPose samplePose;
@@ -23,8 +24,10 @@ public class HierarchyState : MonoBehaviour
     public HierarchicalPose basePose;
     public HierarchicalPose newPose;
 
+    //check which kinematic is used
     public bool isKinematic = false;
 
+    //constructor
     HierarchyState(Hierarchy h, HierarchicalPose sp, Matrix4x4[] lsp, Matrix4x4[] osp)
     {
 
@@ -52,6 +55,7 @@ public class HierarchyState : MonoBehaviour
         
     }
 
+    //interpolation
     public void Interpolation(HierarchicalPose hp)
     {
         // step function, no dt involved
@@ -64,6 +68,7 @@ public class HierarchyState : MonoBehaviour
         }
     }
 
+    //concatentation and conversion of the matrices
     public void ConcatenationConversion()
     {
         /*
@@ -103,6 +108,7 @@ public class HierarchyState : MonoBehaviour
     }
     */
 
+    //forward kinematic
     public void Kinematic()
     {
         // 2 bodies
@@ -118,8 +124,8 @@ public class HierarchyState : MonoBehaviour
                 objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i];
             }
         }
-        Debug.Log("hello");
-        
+        //Debug.Log("hello");
+        //set the new position
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
 

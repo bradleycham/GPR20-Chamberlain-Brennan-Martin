@@ -11,7 +11,11 @@ using UnityEngine;
 
 public class HierarchicalPose : MonoBehaviour
 {
+
+    //array of spatialPoses
     public SpatialPose[] currentPose;
+
+    //concstructors
     HierarchicalPose(SpatialPose[] cp)
     {
         currentPose = cp;
@@ -20,6 +24,7 @@ public class HierarchicalPose : MonoBehaviour
     {
         currentPose = new SpatialPose[length];
     }
+
     // Start is called before the first frame update
     void Start()
     {

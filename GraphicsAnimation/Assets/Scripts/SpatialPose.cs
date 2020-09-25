@@ -28,6 +28,7 @@ public class SpatialPose : MonoBehaviour
         translation = new Vector3(0f, 0f, 0f);
     }
 
+    //constructor
     SpatialPose(Matrix4x4 p, Vector3 o, Vector3 s, Vector3 t)
     {
 

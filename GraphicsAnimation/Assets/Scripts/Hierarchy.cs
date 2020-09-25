@@ -13,9 +13,11 @@ using UnityEngine;
 public class Hierarchy : MonoBehaviour
 {
 
+    //node tree length and count
     public HierarchyNode[] treeDepth;
     public int nodeCount;
 
+    //constructor
     Hierarchy(HierarchyNode[] list, int count)
     {
 

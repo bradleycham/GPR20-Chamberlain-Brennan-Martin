@@ -12,10 +12,11 @@ using UnityEngine;
 public class HierarchyNode : MonoBehaviour
 {
 
-    public string name;
-    public int index;
+    public string name; //name of node
+    public int index; //index of node
     public int parentIndex;//-1 if this is the root node
 
+    //constructor
     HierarchyNode(string s, int i, int pI)
     {
 
@@ -27,7 +28,8 @@ public class HierarchyNode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        name = "node";
     }
 
     // Update is called once per frame
