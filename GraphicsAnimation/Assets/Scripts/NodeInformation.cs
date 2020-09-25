@@ -1,5 +1,5 @@
 ﻿/*
-File name: HStateController.cs
+File name: NodeInformation.cs
 Purpose: Displays information of the hierarchy 
 Contributors: Nick Brennan-Martin and Bradley Chamberlain
 Collaborated on one PC
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HStateController: MonoBehaviour
+public class NodeInformation : MonoBehaviour
 {
 
     public Text nodeInformationOne;
@@ -27,8 +27,6 @@ public class HStateController: MonoBehaviour
     int currentHierarchyIndex;
     int currentClipIndex;
 
-    public int nodeIndex;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +35,6 @@ public class HStateController: MonoBehaviour
         pauseTwo = false;
         pauseThree = false;
         currentHierarchyIndex = 1;
-        nodeIndex = 0;
         currentHierarchy.text = "Hierarchy 1 active";
     }
 
@@ -50,8 +47,8 @@ public class HStateController: MonoBehaviour
 
             nodeInformationOne.text = "Controller 1: ";
             nodeInformationOne.text += "\n";
-
-            for (int i = 0; i < controllers[0].hierarchy.treeDepth.Length; i++)
+            
+            for(int i = 0; i < controllers[0].hierarchy.treeDepth.Length; i++)
             {
 
                 nodeInformationOne.text += "Node " + i + ": \n";
@@ -95,50 +92,38 @@ public class HStateController: MonoBehaviour
         // play directions
         if (Input.GetKeyDown(KeyCode.Q)) // rewind
         {
-            // controllers[currentHierarchyIndex - 1].SetDirection(Direction.reverse);
+           // controllers[currentHierarchyIndex - 1].SetDirection(Direction.reverse);
         }
         if (Input.GetKeyDown(KeyCode.W)) // pause
         {
-            // controllers[currentHierarchyIndex - 1].SetDirection(Direction.pause);
+           // controllers[currentHierarchyIndex - 1].SetDirection(Direction.pause);
         }
         if (Input.GetKeyDown(KeyCode.E)) // forward
         {
-            // controllers[currentHierarchyIndex - 1].SetDirection(Direction.forward);
+           // controllers[currentHierarchyIndex - 1].SetDirection(Direction.forward);
         }
 
         if (Input.GetKeyDown(KeyCode.F)) // set to first
         {
-            // controllers[currentHierarchyIndex - 1].ResetToFirstFrame();
+           // controllers[currentHierarchyIndex - 1].ResetToFirstFrame();
         }
         if (Input.GetKeyDown(KeyCode.L)) // set to last
         {
-            // controllers[currentHierarchyIndex - 1].ResetToLastFrame();
+           // controllers[currentHierarchyIndex - 1].ResetToLastFrame();
         }
 
-        //Change node index editing
+        //Change time scale
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
 
-            nodeIndex--;
-
-            if(nodeIndex < 0)
-            {
-
-                nodeIndex = 0;
-            }
+           // controllers[currentHierarchyIndex - 1].IncTimeScalar(false);
 
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
 
-            nodeIndex++;
-
-            if (nodeIndex > controllers[currentHierarchyIndex].hierarchy.treeDepth.Length)
-            {
-
-                nodeIndex = 0;
-            }
+            //controllers[currentHierarchyIndex - 1].IncTimeScalar(true);
         }
 
         // change clip
@@ -153,8 +138,6 @@ public class HStateController: MonoBehaviour
 
             currentHierarchyIndex = 1;
             currentHierarchy.text = "Hierarchy 1 active";
-            currentHierarchy.text += "\n";
-            currentHierarchy.text += "Current node: " + nodeIndex;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -162,16 +145,12 @@ public class HStateController: MonoBehaviour
 
             currentHierarchyIndex = 2;
             currentHierarchy.text = "Hierarchy 2 active";
-            currentHierarchy.text += "\n";
-            currentHierarchy.text += "Current node: " + nodeIndex;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             currentHierarchyIndex = 3;
             currentHierarchy.text = "Hierarchy 3 active";
-            currentHierarchy.text += "\n";
-            currentHierarchy.text += "Current node: " + nodeIndex;
         }
 
     }
