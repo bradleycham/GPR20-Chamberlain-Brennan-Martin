@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+File name: HierarchyState.cs
+Purpose:  This data structure contains an index and parent index
+as it represents a node in a tree data structure.
+Contributors: Nick Brennan-Martin and Bradley Chamberlain
+Collaborated on one PC
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

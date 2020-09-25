@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿
+/*
+File name: HierarchyState.cs
+Purpose:  This data structure uses a tree algorithm to sort 
+nodes by relation to their parent
+Contributors: Nick Brennan-Martin and Bradley Chamberlain
+Collaborated on one PC
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

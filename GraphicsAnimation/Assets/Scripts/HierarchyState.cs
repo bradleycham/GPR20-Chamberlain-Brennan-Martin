@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+File name: HierarchyState.cs
+Purpose:  This is a controller-type data stucture that allows for manipulating
+Hierarchical Poses
+Contributors: Nick Brennan-Martin and Bradley Chamberlain
+Collaborated on one PC
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +13,15 @@ public class HierarchyState : MonoBehaviour
 {
 
     public Hierarchy hierarchy;
+
     public HierarchicalPose samplePose;
     public HierarchicalPose localSpacePose;
     public HierarchicalPose objectSpacePose;
+
+    public HierarchicalPose basePose;
+    public HierarchicalPose newPose;
+
+    public bool isKinematic = false;
 
     HierarchyState(Hierarchy h, HierarchicalPose sp, HierarchicalPose lsp, HierarchicalPose osp)
     {
@@ -28,26 +41,37 @@ public class HierarchyState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(isKinematic)
+        {
+            Interpolation(newPose);
+            Concatenation();
+            Conversion();
+            Kinematic();
+        }
     }
 
-    public void Interpolation(HierarchyState hs, HierarchicalPose hp)
+    public void Interpolation(HierarchicalPose hp)
     {
         // step function, no dt involved
-        hs.samplePose = hp;
+        samplePose = hp;
     }
 
-    public void Concatentation(HierarchicalPose lhs, HierarchicalPose rhs)
+    public void Concatenation()
     {
-        if(lhs.currentPose.Length == rhs.currentPose.Length)
-            for(int i = 0; i < lhs.currentPose.Length; i++)
+        localSpacePose = new HierarchicalPose(samplePose.currentPose.Length);
+        for(int j = 0; j < samplePose.currentPose.Length; j++)
+        {
+            samplePose.currentPose[j] = new SpatialPose();
+        }
+        if (basePose.currentPose.Length == localSpacePose.currentPose.Length)
+            for(int i = 0; i < localSpacePose.currentPose.Length; i++)
             {
-                lhs.currentPose[i].translation += rhs.currentPose[i].translation;           
-                lhs.currentPose[i].orientation += rhs.currentPose[i].orientation;
-                lhs.currentPose[i].scale = new Vector3
-                    (lhs.currentPose[i].scale.x * rhs.currentPose[i].scale.x,
-                     lhs.currentPose[i].scale.y * rhs.currentPose[i].scale.y,
-                     lhs.currentPose[i].scale.z * rhs.currentPose[i].scale.z);
+                localSpacePose.currentPose[i].translation = basePose.currentPose[i].translation + samplePose.currentPose[i].translation;
+                localSpacePose.currentPose[i].orientation = basePose.currentPose[i].orientation + samplePose.currentPose[i].orientation;
+                localSpacePose.currentPose[i].scale = new Vector3
+                    (samplePose.currentPose[i].scale.x * basePose.currentPose[i].scale.x,
+                     samplePose.currentPose[i].scale.y * basePose.currentPose[i].scale.y,
+                     samplePose.currentPose[i].scale.z * basePose.currentPose[i].scale.z);
             }
         else
             Debug.Log("ERROR: Imbalanced hierarchy lengths"); 
@@ -58,7 +82,7 @@ public class HierarchyState : MonoBehaviour
 
         for(int i = 0; i < samplePose.currentPose.Length; i ++)
         {
-            samplePose.currentPose[i].pose = Matrix4x4.TRS(
+            samplePose.currentPose[i].worldPose = Matrix4x4.TRS(
                 samplePose.currentPose[i].translation,
                 Quaternion.Euler(samplePose.currentPose[i].orientation.x, samplePose.currentPose[i].orientation.y, samplePose.currentPose[i].orientation.z),
                 samplePose.currentPose[i].scale);
@@ -67,7 +91,6 @@ public class HierarchyState : MonoBehaviour
 
     public void Kinematic()
     {
-     
         ForwardKinematic ks = new ForwardKinematic();
         ks.KinematicsSolveForwardPartial(this);
     }

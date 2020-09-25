@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+File name: HierarchicalPosePool.cs
+Purpose:  This data structura is used for pooling together
+hierarchical poses
+Contributors: Nick Brennan-Martin and Bradley Chamberlain
+Collaborated on one PC
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
