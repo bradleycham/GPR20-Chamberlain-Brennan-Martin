@@ -12,7 +12,7 @@ using UnityEngine;
 public class HierarchyNode : MonoBehaviour
 {
 
-    public string name; //name of node
+    //public string name; //name of node
     public int index; //index of node
     public int parentIndex;//-1 if this is the root node
 

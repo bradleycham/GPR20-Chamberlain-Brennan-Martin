@@ -111,17 +111,24 @@ public class HierarchyState : MonoBehaviour
     //forward kinematic
     public void Kinematic()
     {
-        // 2 bodies
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
-            if (hierarchy.treeDepth[i].parentIndex < 0)
+            if (hierarchy.treeDepth[i].parentIndex == -1)
             {
+                Debug.Log("0");
                 // this is the root node
+                localTransformList[i] = Matrix4x4.TRS(samplePose.currentPose[i].translation, Quaternion.Euler(
+                    samplePose.currentPose[i].orientation.x,
+                    samplePose.currentPose[i].orientation.y,
+                    samplePose.currentPose[i].orientation.z)                   
+                    ,samplePose.currentPose[i].scale);
+
                 objectTransformList[i] = localTransformList[i];
             }
             else // forward kinematics
             {
-                objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i];
+                Debug.Log("1");
+                objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i].transpose;
             }
         }
         //Debug.Log("hello");
@@ -129,7 +136,7 @@ public class HierarchyState : MonoBehaviour
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
 
-            samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation;   
+            samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].translation;   
            
         }
     }
