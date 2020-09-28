@@ -49,7 +49,7 @@ public class HierarchyState : MonoBehaviour
         if(isKinematic)
         {
             Interpolation(newPose);
-            ConcatenationConversion();
+            ConcatenationConversion();//2
             Kinematic();
         }
         
