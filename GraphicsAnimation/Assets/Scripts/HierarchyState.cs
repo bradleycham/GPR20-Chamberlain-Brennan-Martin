@@ -116,13 +116,6 @@ public class HierarchyState : MonoBehaviour
             if (hierarchy.treeDepth[i].parentIndex == -1)
             {
                 Debug.Log("0");
-                // this is the root node
-                localTransformList[i] = Matrix4x4.TRS(samplePose.currentPose[i].translation, Quaternion.Euler(
-                    samplePose.currentPose[i].orientation.x,
-                    samplePose.currentPose[i].orientation.y,
-                    samplePose.currentPose[i].orientation.z)                   
-                    ,samplePose.currentPose[i].scale);
-
                 objectTransformList[i] = localTransformList[i];
             }
             else // forward kinematics
