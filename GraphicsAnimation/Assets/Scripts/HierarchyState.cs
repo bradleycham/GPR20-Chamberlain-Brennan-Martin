@@ -71,13 +71,7 @@ public class HierarchyState : MonoBehaviour
     //concatentation and conversion of the matrices
     public void ConcatenationConversion()
     {
-        /*
-        localSpacePose = new HierarchicalPose(samplePose.currentPose.Length);
-        for(int j = 0; j < samplePose.currentPose.Length; j++)
-        {
-            samplePose.currentPose[j] = new SpatialPose();
-        }
-        */
+
         if (basePose.currentPose.Length == samplePose.currentPose.Length)
             for(int i = 0; i < samplePose.currentPose.Length; i++)
             {
@@ -94,19 +88,6 @@ public class HierarchyState : MonoBehaviour
             Debug.Log("ERROR: Imbalanced hierarchy lengths"); 
     }
 
-    /*
-    public void Conversion()
-    {
-
-        for(int i = 0; i < samplePose.currentPose.Length; i ++)
-        {
-            localSpacePose.currentPose[i].worldPose = Matrix4x4.TRS(
-                localSpacePose.currentPose[i].translation,
-                Quaternion.Euler(localSpacePose.currentPose[i].orientation.x, localSpacePose.currentPose[i].orientation.y, localSpacePose.currentPose[i].orientation.z),
-                localSpacePose.currentPose[i].scale);
-        }
-    }
-    */
 
     //forward kinematic
     public void Kinematic()
@@ -128,9 +109,8 @@ public class HierarchyState : MonoBehaviour
         //set the new position
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
-
-            samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].translation;   
-           
+            samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].translation;
+            Debug.Log(hierarchy.treeDepth[i].parentIndex);
         }
     }
 }
