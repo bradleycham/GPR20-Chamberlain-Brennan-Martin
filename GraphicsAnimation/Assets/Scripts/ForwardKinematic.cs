@@ -37,6 +37,7 @@ public class ForwardKinematic : MonoBehaviour
         }
     }
 
+    //lerp
     public void Linear(HierarchicalPose hp, HierarchicalPose hp2, float t)
     {
 
