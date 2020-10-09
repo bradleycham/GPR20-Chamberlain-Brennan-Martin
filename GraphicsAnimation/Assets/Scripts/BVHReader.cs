@@ -15,12 +15,11 @@ public class BVHReader : MonoBehaviour
     public static StreamReader reader;
     public Hierarchy skeletonH;
     public HierarchicalPose skeletonPose;
-
+    public string assetPath = "Assets/Resources/test.txt";
     private void Start()
     {
-        //skeletonH = new Hierarchy(20);
-        //skeletonPose = new HierarchicalPose(20);
-        ReadString();
+        // open file read in and out
+        ReadString(assetPath);
         
         string read = CreateString(ReturnNextBlock());// hierarchy
         ReadJoint(0, -1);
@@ -28,6 +27,8 @@ public class BVHReader : MonoBehaviour
         ReadJoint(2, 1);
         ReadJoint(3, 2);
     }
+
+    // read through a joint and create thhe appropriate nodes and poses
     void ReadJoint(int index, int parentIndex)
     {
         bool isEnd;
@@ -63,13 +64,17 @@ public class BVHReader : MonoBehaviour
         skeletonH.treeDepth[index] = node.GetComponent<HierarchyNode>();
         skeletonPose.AddNode(poseNode.GetComponent<SpatialPose>(), index);
     }
-    static void ReadString()
+
+    // read the 
+    static void ReadString(string assetPath) 
     {
 
-        string path = "Assets/Resources/test.txt";
+        string path = assetPath;
         //Read the text from directly from the test.txt file
         reader = new StreamReader(path);         
     }
+
+    //return the next group of character that arte not space, returns, or tabs
     private char[] ReturnNextBlock()
     {
         
@@ -105,6 +110,7 @@ public class BVHReader : MonoBehaviour
         return returnChars;
     }
 
+    //return a group of characters as a proper float variable
     private float ReturnFloat(char[] chars)
     {
         int periodPos = 0;
@@ -138,6 +144,8 @@ public class BVHReader : MonoBehaviour
         return returnFloat;
 
     }
+
+    // return a proper interger form a string of numbers
     int ReturnInt(char[] chars)
     {
         int returnInt = 0;
@@ -148,6 +156,7 @@ public class BVHReader : MonoBehaviour
         return returnInt;
     }
     
+    // read the vector 3 offset from the BVH File
     private Vector3 ReadOffset()
     {
         Vector3 returnVec;        
@@ -155,6 +164,7 @@ public class BVHReader : MonoBehaviour
         return returnVec;      
     }
 
+    // Create a proper string form an array of chars
     private string CreateString(char[] chars)
     {
 
