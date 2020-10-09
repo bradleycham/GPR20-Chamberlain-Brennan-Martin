@@ -16,18 +16,32 @@ public class BVHReader : MonoBehaviour
     public Hierarchy skeletonH;
     public HierarchicalPose skeletonPose;
     public string assetPath = "Assets/Resources/test.txt";
+    public bool activate = false;
+    bool activated = false;
     private void Start()
     {
-        // open file read in and out
-        ReadString(assetPath);
         
-        string read = CreateString(ReturnNextBlock());// hierarchy
-        ReadJoint(0, -1);
-        ReadJoint(1, 0);
-        ReadJoint(2, 1);
-        ReadJoint(3, 2);
+        
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            activate = true;
+        }
+        if(activate && !activated)
+        {
+            // open file read in and out
+            ReadString(assetPath);
 
+            string read = CreateString(ReturnNextBlock());// hierarchy
+            ReadJoint(0, -1);
+            ReadJoint(1, 0);
+            ReadJoint(2, 1);
+            ReadJoint(3, 2);
+            activated = true;
+        }
+    }
     // read through a joint and create thhe appropriate nodes and poses
     void ReadJoint(int index, int parentIndex)
     {
