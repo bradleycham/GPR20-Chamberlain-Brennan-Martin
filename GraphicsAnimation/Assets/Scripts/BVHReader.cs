@@ -27,6 +27,7 @@ public class BVHReader : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
+             
             activate = true;
         }
         if(activate && !activated)
