@@ -26,6 +26,12 @@ public class HierarchyState : MonoBehaviour
 
     //check which kinematic is used
     public bool isKinematic = false;
+    [Range(0,1)]
+    public float t;
+    public HierarchicalPose towardPose;
+
+    public enum Interp {step, nearest, linear, smoothstep };
+    public Interp interp;
 
     //constructor
     HierarchyState(Hierarchy h, HierarchicalPose sp, Matrix4x4[] lsp, Matrix4x4[] osp)
@@ -40,7 +46,8 @@ public class HierarchyState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        //towardPose = basePose;
     }
 
     // Update is called once per frame
@@ -48,11 +55,115 @@ public class HierarchyState : MonoBehaviour
     {
         if(isKinematic)
         {
-            Interpolation(newPose);
+            //Interpolation(newPose);
+
+            //still need scale and orientation to work
+
+            if(interp == Interp.nearest)
+            {
+
+                Nearest(towardPose, newPose, t); //translation works
+            }
+
+            if (interp == Interp.smoothstep)
+            {
+
+                Smoothstep(towardPose, newPose, t); //translation backwards
+            }
+
+            if (interp == Interp.step)
+            {
+
+                Step(towardPose, newPose, t); //think translation works
+            }
+
+            if (interp == Interp.linear)
+            {
+
+                Linear(towardPose, newPose, t); // think translation works
+            }
+
+            
             ConcatenationConversion();//2
             Kinematic();
         }
         
+    }
+
+    //lerp
+    public void Linear(HierarchicalPose hp, HierarchicalPose hp2, float t)
+    {
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+
+            samplePose.currentPose[i].translation = (1 - t) * hp.currentPose[i].translation + hp2.currentPose[i].translation * t;
+            samplePose.currentPose[i].orientation = (1 - t) * hp.currentPose[i].orientation + hp2.currentPose[i].orientation * t;
+            samplePose.currentPose[i].scale = (1 - t) * hp.currentPose[i].scale + hp2.currentPose[i].scale * t;
+        }
+    }
+
+
+    public void Nearest(HierarchicalPose hp, HierarchicalPose hp2, float t)
+    {
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+
+            if (t < .5f)
+            {
+
+                samplePose.currentPose[i].translation = hp.currentPose[i].translation;
+                samplePose.currentPose[i].orientation = hp.currentPose[i].orientation;
+                samplePose.currentPose[i].scale = hp.currentPose[i].scale;
+            }
+
+            else
+            {
+
+                samplePose.currentPose[i].translation = hp2.currentPose[i].translation;
+                samplePose.currentPose[i].orientation = hp2.currentPose[i].orientation;
+                samplePose.currentPose[i].scale = hp2.currentPose[i].scale;
+            }
+        }
+    }
+
+    public void Smoothstep(HierarchicalPose hp, HierarchicalPose hp2, float t)
+    {
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+
+            float alpha = t * t * (3 - 2 * t);
+
+            samplePose.currentPose[i].translation = hp.currentPose[i].translation * alpha + (hp2.currentPose[i].translation * (1 - alpha));
+            samplePose.currentPose[i].orientation = hp.currentPose[i].orientation * alpha + (hp2.currentPose[i].orientation * (1 - alpha));
+            samplePose.currentPose[i].scale = hp.currentPose[i].scale * alpha + (hp2.currentPose[i].scale * (1 - alpha));
+        }
+    }
+
+    public void Step(HierarchicalPose hp, HierarchicalPose hp2, float t)
+    {
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+
+            if (t < 1)
+            {
+                samplePose.currentPose[i].translation = hp.currentPose[i].translation;
+                samplePose.currentPose[i].orientation = hp.currentPose[i].orientation;
+                samplePose.currentPose[i].scale = hp.currentPose[i].scale;
+            }
+
+            else
+            {
+
+                samplePose.currentPose[i].translation = hp2.currentPose[i].translation;
+                samplePose.currentPose[i].orientation = hp2.currentPose[i].orientation;
+                samplePose.currentPose[i].scale = hp2.currentPose[i].scale;
+            }
+
+        }
     }
 
     //interpolation
