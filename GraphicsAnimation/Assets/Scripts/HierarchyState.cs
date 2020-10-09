@@ -26,10 +26,12 @@ public class HierarchyState : MonoBehaviour
 
     //check which kinematic is used
     public bool isKinematic = false;
+    //set time and what pose is coming from
     [Range(0,1)]
     public float t;
     public HierarchicalPose towardPose;
 
+    //set which interpolation is used
     public enum Interp {step, nearest, linear, smoothstep };
     public Interp interp;
 
@@ -57,30 +59,28 @@ public class HierarchyState : MonoBehaviour
         {
             //Interpolation(newPose);
 
-            //still need scale and orientation to work
-
             if(interp == Interp.nearest)
             {
 
-                Nearest(towardPose, newPose, t); //translation works
+                Nearest(towardPose, newPose, t);
             }
 
             if (interp == Interp.smoothstep)
             {
 
-                Smoothstep(towardPose, newPose, t); //translation backwards
+                Smoothstep(newPose, towardPose, t);
             }
 
             if (interp == Interp.step)
             {
 
-                Step(towardPose, newPose, t); //think translation works
+                Step(towardPose, newPose, t); 
             }
 
             if (interp == Interp.linear)
             {
 
-                Linear(towardPose, newPose, t); // think translation works
+                Linear(towardPose, newPose, t);
             }
 
             
@@ -90,7 +90,7 @@ public class HierarchyState : MonoBehaviour
         
     }
 
-    //lerp
+    //lerp interpolation
     public void Linear(HierarchicalPose hp, HierarchicalPose hp2, float t)
     {
 
@@ -103,7 +103,7 @@ public class HierarchyState : MonoBehaviour
         }
     }
 
-
+    //nearest interpolation
     public void Nearest(HierarchicalPose hp, HierarchicalPose hp2, float t)
     {
 
@@ -128,6 +128,7 @@ public class HierarchyState : MonoBehaviour
         }
     }
 
+    //smoothstep interpolation
     public void Smoothstep(HierarchicalPose hp, HierarchicalPose hp2, float t)
     {
 
@@ -142,6 +143,7 @@ public class HierarchyState : MonoBehaviour
         }
     }
 
+    //step interpolation
     public void Step(HierarchicalPose hp, HierarchicalPose hp2, float t)
     {
 
