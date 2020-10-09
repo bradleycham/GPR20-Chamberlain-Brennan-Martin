@@ -17,7 +17,7 @@ public class HierarchyNode : MonoBehaviour
     public int parentIndex;//-1 if this is the root node
 
     //constructor
-    HierarchyNode(string s, int i, int pI)
+    public HierarchyNode(string s, int i, int pI)
     {
 
         name = s;

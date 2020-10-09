@@ -18,10 +18,14 @@ public class Hierarchy : MonoBehaviour
     public int nodeCount;
 
     //constructor
-    Hierarchy(HierarchyNode[] list, int count)
+    public Hierarchy(HierarchyNode[] list, int count)
     {
 
         treeDepth = list;
+        nodeCount = count;
+    }
+    public Hierarchy(int count)
+    {
         nodeCount = count;
     }
 

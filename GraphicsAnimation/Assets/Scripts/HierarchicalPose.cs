@@ -24,7 +24,10 @@ public class HierarchicalPose : MonoBehaviour
     {
         currentPose = new SpatialPose[length];
     }
-
+    public void AddNode(SpatialPose pose, int index)
+    {
+        currentPose[index] = pose;
+    }
     // Start is called before the first frame update
     void Start()
     {
