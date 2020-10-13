@@ -13,25 +13,21 @@ using System.IO;
 public class BVHReader : MonoBehaviour
 {
     public static StreamReader reader;
-    public Hierarchy skeletonH;
-    public HierarchicalPose skeletonPose;
+    public Hierarchy skeletonHierarchy;
+    public HierarchicalPose hierarchicalPose;
     public string assetPath = "Assets/Resources/test.txt";
     public bool activate = false;
     bool activated = false;
-    private void Start()
-    {
-        
-        
-    }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
-        {
-             
+        {           
             activate = true;
         }
         if(activate && !activated)
         {
+            activated = true;
             // open file read in and out
             ReadString(assetPath);
 
@@ -39,14 +35,14 @@ public class BVHReader : MonoBehaviour
             ReadJoint(0, -1);
             ReadJoint(1, 0);
             ReadJoint(2, 1);
-            ReadJoint(3, 2);
-            activated = true;
+            ReadJoint(3, 2);          
+            ReadJoint(4, 3);          
         }
     }
     // read through a joint and create thhe appropriate nodes and poses
     void ReadJoint(int index, int parentIndex)
     {
-        bool isEnd;
+        //bool isEnd;
         string Name = CreateString(ReturnNextBlock());
         string jointType = CreateString(ReturnNextBlock());
         string brackets = CreateString(ReturnNextBlock());
@@ -67,8 +63,9 @@ public class BVHReader : MonoBehaviour
         node.AddComponent<HierarchyNode>();
         node.name = Name;
         node.GetComponent<HierarchyNode>().index = index;
-        node.GetComponent<HierarchyNode>().index = parentIndex;
+        node.GetComponent<HierarchyNode>().parentIndex = parentIndex;
         node.transform.position = offsetVec;
+        skeletonHierarchy.treeDepth[index] = node.GetComponent<HierarchyNode>();
 
         GameObject poseNode = new GameObject();
         poseNode.AddComponent<SpatialPose>();
@@ -76,8 +73,8 @@ public class BVHReader : MonoBehaviour
         poseNode.GetComponent<SpatialPose>().translation = offsetVec;
         poseNode.transform.position = offsetVec;
 
-        skeletonH.treeDepth[index] = node.GetComponent<HierarchyNode>();
-        skeletonPose.AddNode(poseNode.GetComponent<SpatialPose>(), index);
+
+        hierarchicalPose.AddNode(poseNode.GetComponent<SpatialPose>(), index);
     }
 
     // read the 
