@@ -226,4 +226,6 @@ public class HierarchyState : MonoBehaviour
             Debug.Log(hierarchy.treeDepth[i].parentIndex);
         }
     }
+
+    
 }

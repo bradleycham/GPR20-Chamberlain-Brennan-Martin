@@ -47,8 +47,35 @@ public class SpatialPose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //this.transform.position = new Vector3(worldPose.GetColumn(3).x, worldPose.GetColumn(3).y, worldPose.GetColumn(3).z);
-        //this.transform.rotation = ;
-        //this.transform.localScale = new Vector3(worldPose.GetRow(3).x, worldPose.GetRow(3).y, worldPose.GetRow(3).z);
+    }
+
+    public SpatialPose Identity()
+    {
+        SpatialPose newIdentPose = new SpatialPose(Matrix4x4.identity, Vector3.one, Vector3.one, Vector3.zero);
+        return newIdentPose;
+    }
+
+    public void Construct(SpatialPose controlPose, SpatialPose plusPose)
+    {
+        controlPose.orientation += plusPose.orientation;
+        controlPose.translation += plusPose.translation;
+        controlPose.scale += plusPose.scale;
+        //controlPose.worldPose += plusPose.worldPose;
+    }
+
+    public SpatialPose Copy(SpatialPose copy)
+    {
+        SpatialPose poseCopy = new SpatialPose();
+        poseCopy = copy;
+        return copy;
+    }
+
+    public SpatialPose InvertPose(SpatialPose inPose)
+    {
+        SpatialPose poseInv = new SpatialPose();
+        poseInv.scale = -inPose.scale;
+        poseInv.translation = -inPose.translation;
+        poseInv.orientation = -inPose.orientation;
+        return poseInv;
     }
 }
