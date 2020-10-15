@@ -264,7 +264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &89899885
 Transform:
   m_ObjectHideFlags: 0
@@ -4176,7 +4176,7 @@ MonoBehaviour:
     e33: 1
   orientation: {x: 0, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}
-  translation: {x: -1, y: 0, z: 0}
+  translation: {x: -1, y: 2, z: 0}
 --- !u!1 &797808386
 GameObject:
   m_ObjectHideFlags: 0
@@ -4595,11 +4595,13 @@ MonoBehaviour:
     e32: 0
     e33: 0
   basePose: {fileID: 120367115719382983}
-  newPose: {fileID: 1860577861}
+  newPose: {fileID: 1371872642}
   isKinematic: 1
   t: 0
   towardPose: {fileID: 1271532723}
   interp: 0
+  blend: 0
+  direction: 0
 --- !u!4 &797808388
 Transform:
   m_ObjectHideFlags: 0
@@ -5540,7 +5542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &941953577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8822,7 +8824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1667718141
 Transform:
   m_ObjectHideFlags: 0
@@ -9118,7 +9120,7 @@ PrefabInstance:
     - target: {fileID: 2471286045689199387, guid: 8aa503c09efc2b64ca4133ba1c6d3f3e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4509988936351948832, guid: 8aa503c09efc2b64ca4133ba1c6d3f3e,
         type: 3}
