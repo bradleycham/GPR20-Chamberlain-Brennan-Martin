@@ -55,12 +55,13 @@ public class SpatialPose : MonoBehaviour
         return newIdentPose;
     }
 
-    public void Construct(SpatialPose controlPose, SpatialPose plusPose)
+    public SpatialPose Construct(SpatialPose controlPose, SpatialPose plusPose)
     {
         controlPose.orientation += plusPose.orientation;
         controlPose.translation += plusPose.translation;
         controlPose.scale += plusPose.scale;
         //controlPose.worldPose += plusPose.worldPose;
+        return controlPose;
     }
 
     public SpatialPose Copy(SpatialPose copy)

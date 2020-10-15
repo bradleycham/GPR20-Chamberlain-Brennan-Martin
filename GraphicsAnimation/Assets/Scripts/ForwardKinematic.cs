@@ -204,4 +204,22 @@ public class ForwardKinematic : MonoBehaviour
 
         return samplePose;
     }
+
+
+    public HierarchicalPose Cubic2(HierarchicalPose preInit, HierarchicalPose init, HierarchicalPose final, HierarchicalPose postFinal, float u)
+    {
+        // ((-1/2)preInit + (3/2)init - (3/2)final + (1/2)postFinal)x^3 
+        //  + (preInit - (5/2)init + 2final - 1/2postFinal)x^2
+        //  + (-1/2 preInit + 1/2 final)x + init
+        for (int i =0; i< init.currentPose.Length; i++)
+        {
+            Vector3 translation = (1 / 2 * preInit.currentPose[i].translation + 3 / 2 * init.currentPose[i].translation + 1 / 2 * postFinal.currentPose[i].translation) * Mathf.Pow(u, 3)
+                                + (preInit.currentPose[i].translation - 2 * final.currentPose[i].translation - 1 / 2 * final.currentPose[i].translation) * Mathf.Pow(u, 2)
+                                + (-1 / 2 * preInit.currentPose[i].translation + 1 / 2 * final.currentPose[i].translation) * u + init.currentPose[i].translation;
+            Vector3 Orientation = (1 / 2 * preInit.currentPose[i].orientation + 3 / 2 * init.currentPose[i].orientation + 1 / 2 * postFinal.currentPose[i].orientation) * Mathf.Pow(u, 3)
+                                + (preInit.currentPose[i].orientation - 2 * final.currentPose[i].orientation - 1 / 2 * final.currentPose[i].orientation) * Mathf.Pow(u, 2)
+                                + (-1 / 2 * preInit.currentPose[i].orientation + 1 / 2 * final.currentPose[i].orientation) * u + init.currentPose[i].orientation;
+        }
+        return init;
+    }
 }
