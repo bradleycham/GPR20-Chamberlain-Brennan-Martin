@@ -47,7 +47,7 @@ public class lab03testing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //play forward
         if(direction == Direction.play)
         {
 
@@ -68,6 +68,7 @@ public class lab03testing : MonoBehaviour
             Debug.Log(direction);
         }
 
+        //play backward
         if (direction == Direction.reverse)
         {
 
@@ -86,6 +87,7 @@ public class lab03testing : MonoBehaviour
             }
         }
 
+        //pause
         if (direction == Direction.pause)
         {
 
@@ -96,6 +98,7 @@ public class lab03testing : MonoBehaviour
             }
         }
 
+        //change blend
         if (Input.GetKeyUp(KeyCode.Space))
         {
 
@@ -112,6 +115,7 @@ public class lab03testing : MonoBehaviour
             }
         }
 
+        //set control active
         if (displayControl1)
         {
 
