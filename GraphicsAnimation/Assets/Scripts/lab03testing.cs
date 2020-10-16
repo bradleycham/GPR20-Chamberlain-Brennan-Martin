@@ -83,6 +83,7 @@ public class lab03testing : MonoBehaviour
                 direction = Direction.pause;
             }
         }
+        }
 
         //pause
         if (direction == Direction.pause)
