@@ -126,7 +126,52 @@ public class ForwardKinematic : MonoBehaviour
 
         return samplePose;
     }
+    public HierarchicalPose BiNearest(HierarchicalPose hI0, HierarchicalPose hT0, HierarchicalPose hI1, HierarchicalPose hT1, float t)
+    {
 
+        for (int i = 0; i < hI1.currentPose.Length; i++)
+        {
+            SpatialPose pose0 = new SpatialPose();
+            if (t < .5f)
+            {
+                pose0.orientation = hI0.currentPose[i].orientation;
+                pose0.translation = hI0.currentPose[i].translation;
+                pose0.scale = hI0.currentPose[i].scale;
+               
+            }
+
+            else
+            {
+
+                pose0.orientation = hT0.currentPose[i].orientation;
+                pose0.translation = hT0.currentPose[i].translation;
+                pose0.scale = hT0.currentPose[i].scale;
+            }
+        }
+
+        SpatialPose pose1 = new SpatialPose();
+        for (int i = 0; i < hI1.currentPose.Length; i++)
+        {
+            if (t < .5f)
+            {
+
+                pose1.orientation = hI1.currentPose[i].orientation;
+                pose1.translation = hI1.currentPose[i].translation;
+                pose1.scale = hI1.currentPose[i].scale;
+            }
+            else
+            {
+
+                pose1.orientation = hT1.currentPose[i].orientation;
+                pose1.translation = hT1.currentPose[i].translation;
+                pose1.scale = hT1.currentPose[i].scale;
+            }
+        }
+        
+        
+
+        return samplePose;
+    }
     public HierarchicalPose Lerp(float t)
     {
 
@@ -211,15 +256,33 @@ public class ForwardKinematic : MonoBehaviour
         // ((-1/2)preInit + (3/2)init - (3/2)final + (1/2)postFinal)x^3 
         //  + (preInit - (5/2)init + 2final - 1/2postFinal)x^2
         //  + (-1/2 preInit + 1/2 final)x + init
+        HierarchicalPose hPose = new HierarchicalPose(init.currentPose.Length);
+        
         for (int i =0; i< init.currentPose.Length; i++)
         {
             Vector3 translation = (1 / 2 * preInit.currentPose[i].translation + 3 / 2 * init.currentPose[i].translation + 1 / 2 * postFinal.currentPose[i].translation) * Mathf.Pow(u, 3)
                                 + (preInit.currentPose[i].translation - 2 * final.currentPose[i].translation - 1 / 2 * final.currentPose[i].translation) * Mathf.Pow(u, 2)
                                 + (-1 / 2 * preInit.currentPose[i].translation + 1 / 2 * final.currentPose[i].translation) * u + init.currentPose[i].translation;
-            Vector3 Orientation = (1 / 2 * preInit.currentPose[i].orientation + 3 / 2 * init.currentPose[i].orientation + 1 / 2 * postFinal.currentPose[i].orientation) * Mathf.Pow(u, 3)
+            Vector3 orientation = (1 / 2 * preInit.currentPose[i].orientation + 3 / 2 * init.currentPose[i].orientation + 1 / 2 * postFinal.currentPose[i].orientation) * Mathf.Pow(u, 3)
                                 + (preInit.currentPose[i].orientation - 2 * final.currentPose[i].orientation - 1 / 2 * final.currentPose[i].orientation) * Mathf.Pow(u, 2)
                                 + (-1 / 2 * preInit.currentPose[i].orientation + 1 / 2 * final.currentPose[i].orientation) * u + init.currentPose[i].orientation;
+            float scaleX =      (1 / 2 * preInit.currentPose[i].scale.x * 3 / 2 * init.currentPose[i].scale.x * 1 / 2 * postFinal.currentPose[i].scale.x) * Mathf.Pow(u, 3)
+                                * (preInit.currentPose[i].scale.x - 2 * final.currentPose[i].scale.x / 1 / 2 * final.currentPose[i].scale.x) * Mathf.Pow(u, 2)
+                                * (-1 / 2 * preInit.currentPose[i].scale.x * 1 / 2 * final.currentPose[i].scale.x) * u + init.currentPose[i].scale.x;
+            float scaleY = (1 / 2 * preInit.currentPose[i].scale.y * 3 / 2 * init.currentPose[i].scale.y * 1 / 2 * postFinal.currentPose[i].scale.y) * Mathf.Pow(u, 3)
+                                * (preInit.currentPose[i].scale.y - 2 * final.currentPose[i].scale.y / 1 / 2 * final.currentPose[i].scale.y) * Mathf.Pow(u, 2)
+                                * (-1 / 2 * preInit.currentPose[i].scale.y * 1 / 2 * final.currentPose[i].scale.y) * u + init.currentPose[i].scale.y;
+            float scaleZ = (1 / 2 * preInit.currentPose[i].scale.z * 3 / 2 * init.currentPose[i].scale.z * 1 / 2 * postFinal.currentPose[i].scale.z) * Mathf.Pow(u, 3)
+                                * (preInit.currentPose[i].scale.z - 2 * final.currentPose[i].scale.z / 1 / 2 * final.currentPose[i].scale.z) * Mathf.Pow(u, 2)
+                                * (-1 / 2 * preInit.currentPose[i].scale.z * 1 / 2 * final.currentPose[i].scale.z) * u + init.currentPose[i].scale.z;
+            Vector3 scale = new Vector3(scaleX, scaleY, scaleZ);
+            SpatialPose newPose = new SpatialPose();
+            newPose.translation = translation;
+            newPose.orientation = orientation;
+            newPose.scale = scale;
+            hPose.currentPose[i] = newPose;
         }
-        return init;
+        Debug.Log("cubic");
+        return hPose;
     }
 }
