@@ -273,7 +273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89899884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.8052702, y: -0.19878578, z: -0.75469065}
+  m_LocalPosition: {x: 5.93, y: -0.19878578, z: -0.75469065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 317830713}
@@ -1406,7 +1406,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353583154}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.78, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 505309631}
@@ -1553,11 +1553,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Select Controller (1/2/3)\t\nEdit Node(not done):  Q = rotate node left   
-    W = rotate node right    E = increase scale R = decrease scale \tT = move left
-    U = move right I = move up O = move down\nalter Time Scale: LeftArrow = reduce
-    node index     RightArrow = increase node index\n\nSwitch key Frames (F/L)\nChange
-    Clip (SPACE) *faulty"
+  m_Text: "Select Controller (1/2/3)\t\nReverse (P)  Pause(O)  Play(I) Toggle Blend
+    (SPACE)\nSwitch key Frames (F/L)\n"
 --- !u!222 &367029463
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4600,8 +4597,6 @@ MonoBehaviour:
   t: 0
   towardPose: {fileID: 1271532723}
   interp: 0
-  blend: 0
-  direction: 0
 --- !u!4 &797808388
 Transform:
   m_ObjectHideFlags: 0
@@ -7794,7 +7789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1478351327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9265,7 +9260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1769113524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10890,13 +10885,14 @@ GameObject:
   - component: {fileID: 1948224660}
   - component: {fileID: 1948224659}
   - component: {fileID: 1948224658}
+  - component: {fileID: 1948224663}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1948224658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11000,6 +10996,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1948224663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948224657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4671bd584339aee439fa114df8258aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlText: {fileID: 0}
+  controlText2: {fileID: 0}
+  baseText: {fileID: 0}
+  outPutText: {fileID: 0}
+  displayControl1: 1
+  displayControl2: 1
+  displayControl3: 1
+  displayControl4: 1
+  control1: {fileID: 1743535355}
+  control2: {fileID: 353583154}
+  control3: {fileID: 1667718140}
+  control4: {fileID: 89899884}
+  blend: 0
+  direction: 0
+  t: 0
 --- !u!1 &1954988620
 GameObject:
   m_ObjectHideFlags: 0

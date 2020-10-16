@@ -30,7 +30,7 @@ public class SpatialPose : MonoBehaviour
     }
 
     //constructor
-    SpatialPose(Matrix4x4 p, Vector3 o, Vector3 s, Vector3 t)
+    public SpatialPose(Matrix4x4 p, Vector3 o, Vector3 s, Vector3 t)
     {
 
         worldPose = p;
@@ -51,12 +51,14 @@ public class SpatialPose : MonoBehaviour
         //transform.position = translation;
     }
 
+    //identity blend
     public SpatialPose Identity()
     {
         SpatialPose newIdentPose = new SpatialPose(Matrix4x4.identity, Vector3.one, Vector3.one, Vector3.zero);
         return newIdentPose;
     }
 
+    //construct blend
     public SpatialPose Construct(SpatialPose controlPose, SpatialPose plusPose)
     {
         controlPose.orientation += plusPose.orientation;
@@ -66,6 +68,7 @@ public class SpatialPose : MonoBehaviour
         return controlPose;
     }
 
+    //copy blend
     public SpatialPose Copy(SpatialPose copy)
     {
         SpatialPose poseCopy = new SpatialPose();
@@ -73,6 +76,7 @@ public class SpatialPose : MonoBehaviour
         return copy;
     }
 
+    //invert blend
     public SpatialPose InvertPose(SpatialPose inPose)
     {
         SpatialPose poseInv = new SpatialPose();

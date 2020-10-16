@@ -21,71 +21,8 @@ public class ForwardKinematic : MonoBehaviour
     public HierarchicalPose previousPose;
     public HierarchicalPose nextNextPose;
 
-    //public void Nearest(HierarchicalPose hp, HierarchicalPose hp2, float t)
-    //{
-
-    //    for (int i = 0; i < samplePose.currentPose.Length; i++)
-    //    {
-
-    //        if (t < .5f)
-    //        {
-
-    //            samplePose.currentPose[i].translation = hp.currentPose[i].translation;
-    //            samplePose.currentPose[i].orientation = hp.currentPose[i].orientation;
-    //            samplePose.currentPose[i].scale = hp.currentPose[i].scale;
-    //        }
-
-    //        else
-    //        {
-
-    //            samplePose.currentPose[i].translation = hp2.currentPose[i].translation;
-    //            samplePose.currentPose[i].orientation = hp2.currentPose[i].orientation;
-    //            samplePose.currentPose[i].scale = hp2.currentPose[i].scale;
-    //        }
-    //    }
-    //}
-
-    ////lerp
-    //public void Linear(HierarchicalPose hp, HierarchicalPose hp2, float t)
-    //{
-
-    //    for (int i = 0; i < samplePose.currentPose.Length; i++)
-    //    {
-
-    //            samplePose.currentPose[i].translation = (1 - t) * hp.currentPose[i].translation + hp2.currentPose[i].translation * t;
-    //            samplePose.currentPose[i].orientation = (1 - t) * hp.currentPose[i].orientation + hp2.currentPose[i].orientation * t;
-    //            samplePose.currentPose[i].scale = (1 - t) * hp.currentPose[i].scale + hp2.currentPose[i].scale * t;
-    //    }
-    //}
-
-    //public void Step(HierarchicalPose hp, HierarchicalPose hp2, float t)
-    //{
-
-    //    for (int i = 0; i < samplePose.currentPose.Length; i++)
-    //    {
-
-    //        samplePose.currentPose[i].translation = hp.currentPose[i].translation;
-    //        samplePose.currentPose[i].orientation = hp.currentPose[i].orientation;
-    //        samplePose.currentPose[i].scale = hp.currentPose[i].scale;
-
-    //    }
-    //}
-
-    //public void Smoothstep(HierarchicalPose hp, HierarchicalPose hp2, float t)
-    //{
-
-    //    for (int i = 0; i < samplePose.currentPose.Length; i++)
-    //    {
-
-    //        float alpha = t * t * (3 - 2 * t);
-
-    //        samplePose.currentPose[i].translation = hp.currentPose[i].translation * alpha + (hp2.currentPose[i].translation * (1 - alpha));
-    //        samplePose.currentPose[i].orientation = hp.currentPose[i].orientation * alpha + (hp2.currentPose[i].orientation * (1 - alpha));
-    //        samplePose.currentPose[i].scale = hp.currentPose[i].scale * alpha + (hp2.currentPose[i].scale * (1 - alpha));
-    //    }
-    //}
-
-    public HierarchicalPose Concat()
+    //concat blend
+    public HierarchicalPose Concat(HierarchicalPose lhs, HierarchicalPose rhs)
     {
 
         for (int i = 0; i < samplePose.currentPose.Length; i++)
@@ -101,7 +38,8 @@ public class ForwardKinematic : MonoBehaviour
         return samplePose;
     }
 
-    public HierarchicalPose Near(float t)
+    //near blend
+    public HierarchicalPose Near(HierarchicalPose samplePose, HierarchicalPose currentPose, float t)
     {
 
         for (int i = 0; i < samplePose.currentPose.Length; i++)
@@ -128,6 +66,7 @@ public class ForwardKinematic : MonoBehaviour
     }
 
 
+    //binearest blend
     public HierarchicalPose BiNearest(HierarchicalPose hI0, HierarchicalPose hT0, HierarchicalPose hI1, HierarchicalPose hT1, float t, float t2)
     {
         HierarchicalPose hPose = new HierarchicalPose(hT0.currentPose.Length);
@@ -215,12 +154,15 @@ public class ForwardKinematic : MonoBehaviour
         }
         return newPose;
     }
+
+    //bilinear blend
     public HierarchicalPose BiLinear(HierarchicalPose pose0, HierarchicalPose pose1, HierarchicalPose pose2, HierarchicalPose pose3, float u, float u2)
     {
         return Lerp(Lerp(pose0, pose1, u), Lerp(pose2, pose3, u), u2);
     }
 
-    public HierarchicalPose Split()
+    //split blend
+    public HierarchicalPose Split(HierarchicalPose samplePose, HierarchicalPose lhs, HierarchicalPose rhs)
     {
 
         for (int i = 0; i < samplePose.currentPose.Length; i++)
@@ -236,7 +178,8 @@ public class ForwardKinematic : MonoBehaviour
         return samplePose;
     }
 
-    public HierarchicalPose Scale(float t)
+    //scale blend
+    public HierarchicalPose Scale(HierarchicalPose samplePose, HierarchicalPose nextPose, float t)
     {
 
         for (int i = 0; i < samplePose.currentPose.Length; i++)
@@ -248,7 +191,8 @@ public class ForwardKinematic : MonoBehaviour
         return samplePose;
     }
 
-    public HierarchicalPose Trianglular(float t1, float t2)
+    //triangular blend
+    public HierarchicalPose Trianglular(HierarchicalPose samplePose, HierarchicalPose currentPose, HierarchicalPose nextPose, HierarchicalPose nextNextPose, float t1, float t2)
     {
 
         float t0 = 1 - t1 - t2;
@@ -264,7 +208,7 @@ public class ForwardKinematic : MonoBehaviour
         return samplePose;
     }
 
-
+    //cubic blend
     public HierarchicalPose Cubic(HierarchicalPose preInit, HierarchicalPose init, HierarchicalPose final, HierarchicalPose postFinal, float u)
     {
         // ((-1/2)preInit + (3/2)init - (3/2)final + (1/2)postFinal)x^3 
@@ -305,6 +249,8 @@ public class ForwardKinematic : MonoBehaviour
         Debug.Log("cubic");
         return hPose;
     }
+
+    //bicubic blend
     public HierarchicalPose BiCubic(HierarchicalPose preInit, HierarchicalPose init, HierarchicalPose final, HierarchicalPose postFinal, float u)
     {
         // ((-1/2)preInit + (3/2)init - (3/2)final + (1/2)postFinal)x^3 
@@ -337,6 +283,60 @@ public class ForwardKinematic : MonoBehaviour
             hPose.currentPose[i] = newPose;
         }
         return hPose;
+    }
+
+    //identity blend
+    public HierarchicalPose Identity()
+    {
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+            SpatialPose temp = new SpatialPose(Matrix4x4.identity, Vector3.one, Vector3.one, Vector3.zero); 
+            samplePose.currentPose[i] = temp;
+        }
+
+        return samplePose;
+    }
+
+    //construct blend
+    public HierarchicalPose Construct(HierarchicalPose controlPose, HierarchicalPose plusPose)
+    {
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+            samplePose.currentPose[i].translation = controlPose.currentPose[i].translation + plusPose.currentPose[i].translation;
+            samplePose.currentPose[i].orientation = controlPose.currentPose[i].orientation + plusPose.currentPose[i].orientation;
+            samplePose.currentPose[i].scale = controlPose.currentPose[i].scale + plusPose.currentPose[i].scale;
+        }
+
+        //controlPose.worldPose += plusPose.worldPose;
+        return samplePose;
+    }
+
+    //copy blend
+    public HierarchicalPose Copy(HierarchicalPose copy)
+    {
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+            samplePose.currentPose[i] = copy.currentPose[i];
+        }
+        
+        return samplePose;
+    }
+
+    //invert blend
+    public HierarchicalPose InvertPose(HierarchicalPose inPose)
+    {
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+            samplePose.currentPose[i].translation = inPose.currentPose[i].translation * -1;
+            samplePose.currentPose[i].orientation = inPose.currentPose[i].orientation * -1;
+            samplePose.currentPose[i].scale = inPose.currentPose[i].scale * -1;
+        }
+        
+        return samplePose;
     }
     /*
     public HierarchicalPose Cubic(float t)

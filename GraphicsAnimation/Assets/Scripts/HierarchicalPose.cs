@@ -16,7 +16,7 @@ public class HierarchicalPose : MonoBehaviour
     public SpatialPose[] currentPose;
 
     //concstructors
-    HierarchicalPose(SpatialPose[] cp)
+    public HierarchicalPose(SpatialPose[] cp)
     {
         currentPose = cp;
     }
