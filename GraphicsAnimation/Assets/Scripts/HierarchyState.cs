@@ -328,8 +328,8 @@ public class HierarchyState : MonoBehaviour
         //set the new position
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
-            samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].translation;
-            Debug.Log(hierarchy.treeDepth[i].parentIndex);
+            //samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].translation;
+            //Debug.Log(hierarchy.treeDepth[i].parentIndex);
         }
     }
 
