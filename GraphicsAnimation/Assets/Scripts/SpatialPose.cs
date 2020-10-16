@@ -19,6 +19,7 @@ public class SpatialPose : MonoBehaviour
     public Vector3 scale;
     public Vector3 translation;
 
+    
     //defualt
     public SpatialPose()
     {
@@ -47,6 +48,7 @@ public class SpatialPose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //transform.position = translation;
     }
 
     public SpatialPose Identity()
