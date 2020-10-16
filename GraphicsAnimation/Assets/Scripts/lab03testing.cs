@@ -36,7 +36,7 @@ public class lab03testing : MonoBehaviour
     public enum Direction { play, reverse, pause };
     public Direction direction;
 
-    public float t = 0;
+    public static float t = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -64,9 +64,6 @@ public class lab03testing : MonoBehaviour
 
                 direction = Direction.reverse;
             }
-
-            Debug.Log(direction);
-        }
 
         //play backward
         if (direction == Direction.reverse)

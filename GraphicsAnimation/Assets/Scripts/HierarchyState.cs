@@ -66,6 +66,9 @@ public class HierarchyState : MonoBehaviour
     {
         if(isKinematic)
         {
+
+            t = lab03testing.t;
+
             //Interpolation(newPose);
 
             //if(interp == Interp.nearest)
@@ -508,9 +511,11 @@ public class HierarchyState : MonoBehaviour
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
 
-            samplePose.currentPose[i].translation = t0 * currentPose.currentPose[i].translation + nextPose.currentPose[i].translation * t1 + nextNextPose.currentPose[i].translation * t2;
-            samplePose.currentPose[i].orientation = t0 * currentPose.currentPose[i].orientation + nextPose.currentPose[i].orientation * t1 + nextNextPose.currentPose[i].orientation * t2;
-            samplePose.currentPose[i].scale = t0 * currentPose.currentPose[i].scale + nextPose.currentPose[i].scale * t1 + nextNextPose.currentPose[i].scale * t2;
+            samplePose = Concat(Concat(Scale(samplePose, currentPose, t0), Scale(currentPose, nextPose, t1)), Scale(nextPose, nextNextPose, t2));
+
+            //samplePose.currentPose[i].translation = t0 * currentPose.currentPose[i].translation + nextPose.currentPose[i].translation * t1 + nextNextPose.currentPose[i].translation * t2;
+            //samplePose.currentPose[i].orientation = t0 * currentPose.currentPose[i].orientation + nextPose.currentPose[i].orientation * t1 + nextNextPose.currentPose[i].orientation * t2;
+            //samplePose.currentPose[i].scale = t0 * currentPose.currentPose[i].scale + nextPose.currentPose[i].scale * t1 + nextNextPose.currentPose[i].scale * t2;
         }
 
         return samplePose;
