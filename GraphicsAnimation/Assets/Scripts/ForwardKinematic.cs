@@ -122,21 +122,44 @@ public class ForwardKinematic : MonoBehaviour
 
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
-            samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hier.treeDepth[i].parentIndex].translation;
-        }
-
-        for (int i = 0; i < samplePose.currentPose.Length; i++)
-        {
             if (hier.treeDepth[i].parentIndex == -1)
             {
 
-                objectTransform[i] = localTransform[i];
+                localTransform[i] = objectTransform[i];
             }
-            else
+            else // forward kinematics
             {
 
-                objectTransform[i] = objectTransform[hier.treeDepth[i].parentIndex] * localTransform[i].transpose;
+                localTransform[hier.treeDepth[i].parentIndex] = localTransform[i] * objectTransform[i].transpose;
             }
+        }
+
+        for (int i = samplePose.currentPose.Length; i > 0; i--)
+        {
+
+            temp.currentPose[hier.treeDepth[i].parentIndex].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hier.treeDepth[i].parentIndex].translation;
+        }
+
+        return temp;
+    }
+
+    public HierarchicalPose CubicHermite(HierarchicalPose p0, HierarchicalPose p1, float t)
+    {
+
+        HierarchicalPose temp = p0;
+
+        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        {
+
+            float h1 = 2 * t * t * t - 3 * t * t + 1;
+            float h2 = -2 * t * t * t + 3 * t * t;
+            float h3 = t * t * t - 2 * t * t + t;
+            float h4 = t * t * t - t * t;
+
+            HierarchicalPose t1 = Cubic(previousPose, currentPose, nextPose, nextNextPose, t);
+            HierarchicalPose t2 = Cubic(currentPose, nextPose, nextNextPose, previousPose, t);
+
+            temp.currentPose[i].translation = h1 * p0.currentPose[i].translation + h2 * p1.currentPose[i].translation + h3 * t1.currentPose[i].translation + h4 * t2.currentPose[i].translation;
         }
 
         return temp;
