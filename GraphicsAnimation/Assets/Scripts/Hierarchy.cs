@@ -47,6 +47,7 @@ public class Hierarchy : MonoBehaviour
 
     public void AddNode(HierarchyNode node, int index)
     {
+
         for( int i = 0; i < treeDepth.Length; ++i)
         {
             if(i == index)
