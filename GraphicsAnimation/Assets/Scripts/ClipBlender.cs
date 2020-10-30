@@ -7,6 +7,7 @@ Collaborated on one PC
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BlendType
 {
@@ -26,6 +27,21 @@ public class ClipBlender : MonoBehaviour
     [Range(0, 1)]
     public float u;
     public BlendType type;
+
+    public Text treeLeef1;
+    public Text treeLeef2;
+    public Text treeLeefFinal;
+    public Text operation;
+    public Text treeLeefU;
+    public Text arrow1;
+    public Text arrow2;
+    public Text arrow3;
+    public Text arrow4;
+
+    public GameObject node0;
+    public GameObject node1;
+    public GameObject nodef;
+
     // Blend the current pose of two clips using a Lerp Function
     void BlendCLipsLerp()
     {
@@ -63,14 +79,38 @@ public class ClipBlender : MonoBehaviour
         if(type == BlendType.Lerp)
         {
             BlendCLipsLerp();
+            arrow2.enabled = true;
+            treeLeef2.enabled = true;
+            operation.text = " LERP ";
+            arrow4.enabled = true;
+            treeLeefU.enabled = true;
+            treeLeef1.text = node0.name;
+            treeLeef2.text = node1.name;
+            treeLeefFinal.text = nodef.name;
         }
         if (type == BlendType.Concat)
         {
             BlendClipsAdd();
+            arrow2.enabled = true;
+            treeLeef2.enabled = true;
+            operation.text = " + ";
+            arrow4.enabled = false;
+            treeLeefU.enabled = false;
+            treeLeef1.text = node0.name;
+            treeLeef2.text = node1.name;
+            treeLeefFinal.text = nodef.name;
         }
         if (type == BlendType.Scale)
         {
             BlendClipsScale();
+            arrow2.enabled = false;
+            treeLeef2.enabled = false;
+            operation.text = " x ";
+            arrow4.enabled = true;
+            treeLeefU.enabled = true;
+            treeLeef1.text = node0.name;
+            treeLeef2.text = node1.name;
+            treeLeefFinal.text = nodef.name;
         }
             
     }

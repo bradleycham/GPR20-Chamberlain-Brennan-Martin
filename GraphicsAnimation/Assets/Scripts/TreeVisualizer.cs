@@ -40,6 +40,7 @@ public class TreeVisualizer : MonoBehaviour
     void Update()
     {
         
+        //shows tree depending on blendOperation
         if(op == blendOperation.scale)
         {
 
