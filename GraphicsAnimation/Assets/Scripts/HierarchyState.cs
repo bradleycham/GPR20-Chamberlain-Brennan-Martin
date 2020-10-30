@@ -170,7 +170,7 @@ public class HierarchyState : MonoBehaviour
     
     public HierarchicalPose Lerp2(HierarchicalPose pose0, HierarchicalPose pose1, float u)
     {
-        HierarchicalPose newPose = new HierarchicalPose(pose1.currentPose.Length);
+        HierarchicalPose newPose = pose0;
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
             newPose.currentPose[i].translation = (1 - u) * pose0.currentPose[i].translation + pose1.currentPose[i].translation * u;

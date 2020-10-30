@@ -12,7 +12,7 @@ using UnityEngine;
 public class KeyframePool : MonoBehaviour
 {
     // Start is called before the first frame update
-    int frameCount;
+    public int frameCount;
     public Keyframe[] framePool;
 
     // contructor overload

@@ -201,12 +201,14 @@ public class ClipController : MonoBehaviour
             {
                 //FORWARD TRANSITION
                 //Debug.Log(clipTime);
-                //Debug.Log(frameIndex);
+                Debug.Log(frameIndex);
                 Transition(true);
             }
             // move to next frame
             else if (frameIndex < clip.frameCount)
             {
+              Debug.Log(frameIndex);
+
                 frameIndex++;
                 frameTime = 0.0f; // frame condition fixed
                 frameTime += frameOvershoot;
