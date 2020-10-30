@@ -201,6 +201,10 @@ public class HierarchyState : MonoBehaviour
         //return newPose;
     }
     */
+    public void SetTime(float time)
+    {
+        t = time;
+    }
     public void/*HierarchicalPose*/ Lerp(float u)
     {
         //HierarchicalPose newPose = new HierarchicalPose(hp.currentPose.Length);

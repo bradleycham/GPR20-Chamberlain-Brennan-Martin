@@ -26,8 +26,8 @@ public class ClipController : MonoBehaviour
 
     public string controllerName;
 
-    //int clipIndex;
-    //float clipDuration;
+    int clipIndex;
+    float clipDuration;
     float clipTime; // time that has passed since start
     float clipParameter;
     
@@ -41,22 +41,22 @@ public class ClipController : MonoBehaviour
     public float timeScalar = 1.0f;
 
     // return non-public variables
-    /*
+    
     public int GetClipIndex()
     {
         return clipIndex;
     }
-    */
+    
     public float GetClipTime()
     {
         return clipTime;
     }
-    /*
+    
     public float GetClipDuration()
     {
         return clipDuration;
     }
-    */
+    
     public float GetFrameTime()
     {
         return frameTime;
@@ -69,11 +69,11 @@ public class ClipController : MonoBehaviour
     public ClipController()
     {
         controllerName = "INACTIVE";
-        pool = null;
+        //pool = null;
         //clipIndex = 0;
         clipTime = 0.0f;
         clipParameter = 0.0f;
-        clip = null;
+        //clip = null;
 
         frameIndex = 0;
         frameTime = 0.0f;
@@ -125,11 +125,14 @@ public class ClipController : MonoBehaviour
 
         // create looping feature
     }
-
     //set sprite renderer to the current keyframe
     void DisplayFrame()
     {
-        //renderer.sprite = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].data;
+        HierarchyState state;
+        float frameTime;
+        frameTime = clip.keyframePool.framePool[frameIndex].GetDuration();
+        state = clip.keyframePool.framePool[frameIndex].GetHierarchyState();
+        state.SetTime(frameParameter);
     }
     public void Transition(bool isEnd)
     {
@@ -301,7 +304,7 @@ public class ClipController : MonoBehaviour
     }
 
     // Change the clip to 'i' as long as 'i' is within the bounds of the clip-list
-    /*
+    
     public void ChangeClip(int i)
     {
         if(i <= pool.clipCount -1)
@@ -315,5 +318,5 @@ public class ClipController : MonoBehaviour
             clip = pool.clipPool[0];
         }
     }
-    */
+    
 }
