@@ -14,7 +14,8 @@ public class Keyframe : MonoBehaviour
     public int index;
     public float duration;
     public float durationInv;
-    public Sprite data;
+    public HierarchicalPose FrameStart;
+    public HierarchicalPose EndFrame;
 
     // Constructor
     public Keyframe()
@@ -22,15 +23,16 @@ public class Keyframe : MonoBehaviour
         index = 0;
         duration = 0.01f;
         durationInv = 1 / duration;
-        data = null;
+        //data = null;
     }
     // Constructor Overload 
-    public Keyframe(int newIndex, float newDuration, Sprite newData)
+    public Keyframe(int newIndex, float newDuration, HierarchicalPose poseStart, HierarchicalPose poseEnd)
     {
         index = newIndex;
         duration = newDuration;
         durationInv = 1 / duration;
-        data = newData;
+        FrameStart = poseStart;
+        EndFrame = poseEnd;
     }
 
     // set index in pool
@@ -40,9 +42,10 @@ public class Keyframe : MonoBehaviour
     }
 
     // distribute data
-    public void SetData(Sprite i)
+    public void SetData(HierarchicalPose poseStart, HierarchicalPose poseEnd)
     {
-        data = i;
+        FrameStart = poseStart;
+        EndFrame = poseEnd;
     }
 
     // set frame duration

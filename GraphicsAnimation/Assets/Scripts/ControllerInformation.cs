@@ -53,7 +53,7 @@ public class ControllerInformation : MonoBehaviour
             controllerInformationOne.text += "\n";
             controllerInformationOne.text += "Current Keyframe Index: " + controllers[0].clip.frameSequence[controllers[0].GetFrameIndex()];
             controllerInformationOne.text += "\n";
-            controllerInformationOne.text += "Current Keyframe Data: " + controllers[0].clip.keyframePool.framePool[controllers[0].clip.frameSequence[controllers[0].GetFrameIndex()]].data;
+            //controllerInformationOne.text += "Current Keyframe Data: " + controllers[0].clip.keyframePool.framePool[controllers[0].clip.frameSequence[controllers[0].GetFrameIndex()]].data;
             controllerInformationOne.text += "\n";
 
             controllerInformationOne.text += "Time Direction: " + controllers[0].playDirection;
@@ -76,7 +76,7 @@ public class ControllerInformation : MonoBehaviour
             controllerInformationTwo.text += "\n";
             controllerInformationTwo.text += "Current Keyframe Index: " + controllers[1].clip.frameSequence[controllers[1].GetFrameIndex()];
             controllerInformationTwo.text += "\n";
-            controllerInformationTwo.text += "Current Keyframe Data: " + controllers[1].clip.keyframePool.framePool[controllers[1].clip.frameSequence[controllers[1].GetFrameIndex()]].data;
+            //controllerInformationTwo.text += "Current Keyframe Data: " + controllers[1].clip.keyframePool.framePool[controllers[1].clip.frameSequence[controllers[1].GetFrameIndex()]].data;
             controllerInformationOne.text += "\n";
 
             controllerInformationTwo.text += "Time Direction: " + controllers[1].playDirection;
@@ -100,7 +100,7 @@ public class ControllerInformation : MonoBehaviour
             controllerInformationThree.text += "\n";
             controllerInformationThree.text += "Current Keyframe Index: " + controllers[2].clip.frameSequence[controllers[2].GetFrameIndex()];
             controllerInformationThree.text += "\n";
-            controllerInformationThree.text += "Current Keyframe Data: " + controllers[2].clip.keyframePool.framePool[controllers[2].clip.frameSequence[controllers[2].GetFrameIndex()]].data;
+            //controllerInformationThree.text += "Current Keyframe Data: " + controllers[2].clip.keyframePool.framePool[controllers[2].clip.frameSequence[controllers[2].GetFrameIndex()]].data;
             controllerInformationThree.text += "\n";
 
             controllerInformationThree.text += "Time Direction: " + controllers[2].playDirection;

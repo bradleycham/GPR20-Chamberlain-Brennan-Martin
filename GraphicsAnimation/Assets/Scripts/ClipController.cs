@@ -22,7 +22,7 @@ public class ClipController : MonoBehaviour
 {
     public ClipPool pool;
     public Clip clip;
-    new SpriteRenderer renderer;
+    //new SpriteRenderer renderer;
 
     public string controllerName;
 
