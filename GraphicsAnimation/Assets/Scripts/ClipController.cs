@@ -107,8 +107,8 @@ public class ClipController : MonoBehaviour
 
     private void Start()
     {
-        renderer = new SpriteRenderer();
-        renderer = this.GetComponent<SpriteRenderer>();
+        //renderer = new SpriteRenderer();
+        //renderer = this.GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -129,7 +129,7 @@ public class ClipController : MonoBehaviour
     //set sprite renderer to the current keyframe
     void DisplayFrame()
     {
-        renderer.sprite = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].data;
+        //renderer.sprite = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].data;
     }
     public void Transition(bool isEnd)
     {

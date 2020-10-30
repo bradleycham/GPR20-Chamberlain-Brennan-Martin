@@ -11,18 +11,17 @@ public class HierarchyPopulator : MonoBehaviour
     public void CreateNewHierarchy(int count)
     {
         GameObject hierarchy;
-        hierarchy = Instantiate(hierarchyTemplate, new Vector3(0f,0f,0f), Quaternion.identity) as GameObject;
+        hierarchy = Instantiate(hierarchyTemplate, new Vector3(0f,0f,0f), Quaternion.identity);
         Hier = hierarchy.GetComponent<Hierarchy>();
-        Hierarchy tempH = new Hierarchy(count);
-        Hier = tempH; 
+        //Hierarchy tempH = new Hierarchy(0);
+        //Hier = tempH; 
         for(int i = 0; i < count; ++i)
         {
-            GameObject node = Instantiate(nodeTemplate, hierarchy.transform) as GameObject;
-            node.transform.localPosition = new Vector3(i, 0f, 0f);
+            GameObject node = Instantiate(nodeTemplate, hierarchy.transform);
             Node = node.GetComponent<HierarchyNode>();
             Node.index = i;
             Node.parentIndex = i - 1;
-            Hier.AddNode(Node,i);
+            Hier.AppendNode(Node);
         }
     }
     // Start is called before the first frame update

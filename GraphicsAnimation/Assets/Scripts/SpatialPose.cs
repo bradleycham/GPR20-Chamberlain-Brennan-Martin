@@ -48,7 +48,7 @@ public class SpatialPose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.position = translation;
+        transform.localPosition = translation;
     }
 
     //identity blend
