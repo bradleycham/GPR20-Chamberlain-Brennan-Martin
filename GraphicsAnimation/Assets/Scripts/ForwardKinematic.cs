@@ -21,7 +21,8 @@ public class ForwardKinematic : MonoBehaviour
     public HierarchicalPose previousPose;
     public HierarchicalPose nextNextPose;
 
-
+    //----------------------------------------------
+    //smoothstep interpolation  blend oepration
     public HierarchicalPose Smoothstep(HierarchicalPose hp, HierarchicalPose hp2, float t)
     {
 
@@ -40,6 +41,7 @@ public class ForwardKinematic : MonoBehaviour
         return temp;
     }
 
+    //descale blend oepration
     public HierarchicalPose Descale(HierarchicalPose samplePose, HierarchicalPose nextPose, float t)
     {
 
@@ -55,6 +57,7 @@ public class ForwardKinematic : MonoBehaviour
         return temp;
     }
 
+    //convert blend oepration
     public HierarchicalPose Convert(HierarchicalPose samplePose)
     {
 
@@ -72,6 +75,7 @@ public class ForwardKinematic : MonoBehaviour
         return temp;
     }
 
+    //revert blend oepration
     public HierarchicalPose Revert(HierarchicalPose samplePose)
     {
 
@@ -88,6 +92,7 @@ public class ForwardKinematic : MonoBehaviour
         return temp;
     }
 
+    //forwardkinematic blend oepration
     public HierarchicalPose ForwaredKinematic(Hierarchy hier, Matrix4x4[] localTransform, Matrix4x4[] objectTransform, HierarchicalPose samplePose)
     {
 
@@ -115,6 +120,7 @@ public class ForwardKinematic : MonoBehaviour
         return temp;
     }
 
+    //inverse kinematic blend oepration
     public HierarchicalPose InverseKinematic(Hierarchy hier, Matrix4x4[] localTransform, Matrix4x4[] objectTransform, HierarchicalPose samplePose)
     {
 
@@ -143,6 +149,7 @@ public class ForwardKinematic : MonoBehaviour
         return temp;
     }
 
+    //cubichermite interpolation blend oepration
     public HierarchicalPose CubicHermite(HierarchicalPose p0, HierarchicalPose p1, float t)
     {
 

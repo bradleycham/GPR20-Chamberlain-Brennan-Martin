@@ -85,4 +85,118 @@ public class SpatialPose : MonoBehaviour
         poseInv.orientation = -inPose.orientation;
         return poseInv;
     }
+
+    //smoothstep interpolation  blend oepration
+    public SpatialPose Smoothstep(SpatialPose hp, SpatialPose hp2, float t)
+    {
+
+        SpatialPose temp = hp;
+
+            float alpha = t * t * (3 - 2 * t);
+
+            temp.translation = hp.translation * alpha + (hp2.translation * (1 - alpha));
+            temp.orientation = hp.orientation * alpha + (hp2.orientation * (1 - alpha));
+            temp.scale = hp.scale * alpha + (hp2.scale * (1 - alpha));
+
+        return temp;
+    }
+
+    //descale blend oepration
+    public SpatialPose Descale(SpatialPose samplePose, SpatialPose nextPose, float t)
+    {
+
+        SpatialPose temp = samplePose;
+        SpatialPose invert = InvertPose(nextPose);
+
+            temp.scale = samplePose.scale * (1 - t) + invert.scale * t;
+
+        return temp;
+    }
+
+    //convert blend oepration
+    public SpatialPose Convert(SpatialPose samplePose)
+    {
+
+        SpatialPose temp = samplePose;
+
+
+            temp.worldPose = Matrix4x4.TRS(
+                samplePose.translation,
+                Quaternion.Euler(samplePose.orientation.x, samplePose.orientation.y, samplePose.orientation.z),
+                samplePose.scale);
+
+
+        return temp;
+    }
+
+    //revert blend oepration
+    public SpatialPose Revert(SpatialPose samplePose)
+    {
+
+        SpatialPose temp = samplePose;
+
+
+            temp.translation = new Vector3(samplePose.worldPose.m00, samplePose.worldPose.m01, samplePose.worldPose.m02);
+            temp.orientation = new Vector3(samplePose.worldPose.m10, samplePose.worldPose.m11, samplePose.worldPose.m12);
+            temp.scale = new Vector3(samplePose.worldPose.m20, samplePose.worldPose.m21, samplePose.worldPose.m22);
+
+        return temp;
+    }
+
+    //forwardkinematic blend oepration
+    public SpatialPose ForwaredKinematic(Hierarchy hier, Matrix4x4[] localTransform, Matrix4x4[] objectTransform, SpatialPose samplePose)
+    {
+
+        SpatialPose temp = samplePose;
+
+        for (int i = 0; i < hier.treeDepth.Length; i++)
+        {
+            if (hier.treeDepth[i].parentIndex == -1)
+            {
+
+                objectTransform[i] = localTransform[i];
+            }
+            else // forward kinematics
+            {
+
+                objectTransform[i] = objectTransform[hier.treeDepth[i].parentIndex] * localTransform[i].transpose;
+            }
+        }
+
+        for (int i = 0; i < hier.treeDepth.Length; i++)
+        {
+            //samplePose.transform.position = samplePose.translation + hier.treeDepth[i + ].parentIndex;
+        }
+
+        return temp;
+    }
+
+    //inverse kinematic blend oepration
+    public SpatialPose InverseKinematic(Hierarchy hier, Matrix4x4[] localTransform, Matrix4x4[] objectTransform, SpatialPose samplePose)
+    {
+
+        SpatialPose temp = samplePose;
+
+        for (int i = 0; i < hier.treeDepth.Length; i++)
+        {
+            if (hier.treeDepth[i].parentIndex == -1)
+            {
+
+                localTransform[i] = objectTransform[i];
+            }
+            else // forward kinematics
+            {
+
+                localTransform[hier.treeDepth[i].parentIndex] = localTransform[i] * objectTransform[i].transpose;
+            }
+        }
+
+        for (int i = hier.treeDepth.Length; i > 0; i--)
+        {
+
+            //temp.currentPose[hier.treeDepth[i].parentIndex].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hier.treeDepth[i].parentIndex].translation;
+        }
+
+        return temp;
+    }
 }
