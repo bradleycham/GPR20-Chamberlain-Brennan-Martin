@@ -90,7 +90,7 @@ public class HierarchyState : MonoBehaviour
             {
 
                 Interpolation(newPose);
-                Concat(basePose, samplePose);
+                Concat(samplePose, basePose, samplePose);
             }
             if (blend == Blend.nearest)
             {
@@ -100,7 +100,7 @@ public class HierarchyState : MonoBehaviour
             if (blend == Blend.linear)
             {
 
-                Lerp(t);
+                Lerp(samplePose, basePose, newPose, t);
             }
             if (blend == Blend.linearbounus)
             {
@@ -120,7 +120,7 @@ public class HierarchyState : MonoBehaviour
             if (blend == Blend.scale)
             {
 
-                Scale(samplePose, newPose, t);
+                Scale(samplePose, basePose, newPose, t);
             }
             if (blend == Blend.triangular)
             {
@@ -203,21 +203,22 @@ public class HierarchyState : MonoBehaviour
     */
     public void SetTime(float time)
     {
+        
         t = time;
     }
-    public void/*HierarchicalPose*/ Lerp(float u)
+    public void Lerp(HierarchicalPose outPose, HierarchicalPose pose1, HierarchicalPose pose2, float u)
     {
         //HierarchicalPose newPose = new HierarchicalPose(hp.currentPose.Length);
-
+        //t = Mathf.Clamp(0f,1f, time);
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
 
-            samplePose.currentPose[i].translation = basePose.currentPose[i].translation + (newPose.currentPose[i].translation - basePose.currentPose[i].translation) * u;
-            samplePose.currentPose[i].orientation = basePose.currentPose[i].orientation + (newPose.currentPose[i].orientation - basePose.currentPose[i].orientation) * u;
-            float x = samplePose.currentPose[i].scale.x * (newPose.currentPose[i].scale.x - basePose.currentPose[i].scale.x) * u;
-            float y = samplePose.currentPose[i].scale.y * (newPose.currentPose[i].scale.y - basePose.currentPose[i].scale.y) * u;
-            float z = samplePose.currentPose[i].scale.z * (newPose.currentPose[i].scale.z - basePose.currentPose[i].scale.z) * u;
-            samplePose.currentPose[i].scale = new Vector3(x, y, z);
+            outPose.currentPose[i].translation = pose1.currentPose[i].translation + (pose2.currentPose[i].translation - basePose.currentPose[i].translation) * u;
+            outPose.currentPose[i].orientation = pose1.currentPose[i].orientation + (pose2.currentPose[i].orientation - basePose.currentPose[i].orientation) * u;
+            //float x = samplePose.currentPose[i].scale.x * (newPose.currentPose[i].scale.x - basePose.currentPose[i].scale.x) * u;
+            //float y = samplePose.currentPose[i].scale.y * (newPose.currentPose[i].scale.y - basePose.currentPose[i].scale.y) * u;
+            //float z = samplePose.currentPose[i].scale.z * (newPose.currentPose[i].scale.z - basePose.currentPose[i].scale.z) * u;
+            //samplePose.currentPose[i].scale = new Vector3(x, y, z);
         }
         //return newPose;
     }
@@ -351,20 +352,18 @@ public class HierarchyState : MonoBehaviour
         }
     }
 
-    public HierarchicalPose Concat(HierarchicalPose lhs, HierarchicalPose rhs)
+    public void Concat(HierarchicalPose poseIn, HierarchicalPose lhs, HierarchicalPose rhs)
     {
-
-        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        //HierarchicalPose newPose = new HierarchicalPose(lhs.currentPose.Length);
+        for (int i = 0; i < newPose.currentPose.Length; i++)
         {
-            samplePose.currentPose[i].translation = lhs.currentPose[i].translation + rhs.currentPose[i].translation;
-            samplePose.currentPose[i].orientation = lhs.currentPose[i].orientation + rhs.currentPose[i].orientation;
-            samplePose.currentPose[i].scale = new Vector3
+            poseIn.currentPose[i].translation = lhs.currentPose[i].translation + rhs.currentPose[i].translation;
+            poseIn.currentPose[i].orientation = lhs.currentPose[i].orientation + rhs.currentPose[i].orientation;
+            poseIn.currentPose[i].scale = new Vector3
                 (lhs.currentPose[i].scale.x * rhs.currentPose[i].scale.x,
                  lhs.currentPose[i].scale.y * rhs.currentPose[i].scale.y,
                  lhs.currentPose[i].scale.z * rhs.currentPose[i].scale.z);
         }
-
-        return samplePose;
     }
 
     //near blend
@@ -478,16 +477,15 @@ public class HierarchyState : MonoBehaviour
     }
 
     //scale blend
-    public HierarchicalPose Scale(HierarchicalPose samplePose, HierarchicalPose nextPose, float t)
+    public void Scale(HierarchicalPose outPose, HierarchicalPose pose01, HierarchicalPose pose02, float t)
     {
 
-        for (int i = 0; i < samplePose.currentPose.Length; i++)
+        for (int i = 0; i < pose01.currentPose.Length; i++)
         {
 
-            samplePose.currentPose[i].scale = samplePose.currentPose[i].scale * (1 - t) + nextPose.currentPose[i].scale * t;
+            outPose.currentPose[i].scale = pose01.currentPose[i].scale * (1 - t) + pose02.currentPose[i].scale * t;
         }
 
-        return samplePose;
     }
 
     //triangular blend
@@ -499,7 +497,7 @@ public class HierarchyState : MonoBehaviour
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
 
-            samplePose = Concat(Concat(Scale(samplePose, currentPose, t0), Scale(currentPose, nextPose, t1)), Scale(nextPose, nextNextPose, t2));
+            //samplePose = Concat(Concat(Scale(samplePose, currentPose, t0), Scale(currentPose, nextPose, t1)), Scale(nextPose, nextNextPose, t2));
 
             //samplePose.currentPose[i].translation = t0 * currentPose.currentPose[i].translation + nextPose.currentPose[i].translation * t1 + nextNextPose.currentPose[i].translation * t2;
             //samplePose.currentPose[i].orientation = t0 * currentPose.currentPose[i].orientation + nextPose.currentPose[i].orientation * t1 + nextNextPose.currentPose[i].orientation * t2;

@@ -14,8 +14,8 @@ public class Clip : MonoBehaviour
     public string clipName; // identifies this clip
     
     public int clipIndex; // index of this clip in a pool of clips
-    float clipTime; // current time between 0 and clip duraton
-    float clipDuration; // can be calc. as a sum of frames or set at start
+    //float clipTime; // current time between 0 and clip duraton
+    public float clipDuration; // can be calc. as a sum of frames or set at start
     float durationInv; // 1/duration
     
     public int frameCount;

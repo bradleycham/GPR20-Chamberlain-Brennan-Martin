@@ -48,7 +48,7 @@ public class ClipBlender : MonoBehaviour
         HierarchyState pose1 = clip01.clip.keyframePool.framePool[clip01.GetFrameIndex()].GetHierarchyState();
         HierarchyState pose2 = clip02.clip.keyframePool.framePool[clip02.GetFrameIndex()].GetHierarchyState();
 
-        outPose = pose1.Lerp2(pose1.samplePose, pose2.samplePose, u);
+        pose1.Lerp(outPose, pose1.samplePose, pose2.samplePose, u);
     }
 
     // Blend Clips together by simply concatenating them
@@ -57,7 +57,7 @@ public class ClipBlender : MonoBehaviour
         HierarchyState pose1 = clip01.clip.keyframePool.framePool[clip01.GetFrameIndex()].GetHierarchyState();
         HierarchyState pose2 = clip02.clip.keyframePool.framePool[clip02.GetFrameIndex()].GetHierarchyState();
 
-        outPose = pose1.Concat(pose1.samplePose, pose2.samplePose);
+        pose1.Concat(outPose, pose1.samplePose, pose2.samplePose);
     }
 
     // Blend two clips together usin the Scale blend operation
@@ -66,7 +66,7 @@ public class ClipBlender : MonoBehaviour
         HierarchyState pose1 = clip01.clip.keyframePool.framePool[clip01.GetFrameIndex()].GetHierarchyState();
         HierarchyState pose2 = clip02.clip.keyframePool.framePool[clip02.GetFrameIndex()].GetHierarchyState();
 
-        outPose = pose1.Scale(pose1.samplePose, pose2.samplePose, u);
+        pose1.Scale(outPose, pose1.samplePose, pose2.samplePose, u);
     }
     void Start()
     {

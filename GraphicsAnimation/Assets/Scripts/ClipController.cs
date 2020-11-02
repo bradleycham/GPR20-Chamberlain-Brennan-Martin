@@ -91,16 +91,16 @@ public class ClipController : MonoBehaviour
         frameIndex = startFrame;
         if (newPlayDirection == Direction.forward)
         {
-            clipTime = clip.startEndTimes[startFrame].x;
+            clipTime = clip.startEndTimes[0].x;
         }
         if (newPlayDirection == Direction.pause)
         {
-            clipTime = clip.startEndTimes[startFrame].x;
+            clipTime = clip.startEndTimes[0].x;
         }
         if (newPlayDirection == Direction.reverse)
         {
-            clipTime = clip.startEndTimes[startFrame].y;
-            frameTime = clip.startEndTimes[startFrame].y - clip.startEndTimes[startFrame].x;
+            clipTime = clip.startEndTimes[0].y;
+            frameTime = clip.startEndTimes[0].y - clip.startEndTimes[0].x;
         }
         playDirection = newPlayDirection;
     }
@@ -119,7 +119,7 @@ public class ClipController : MonoBehaviour
         DisplayFrame();
         // post
         clipParameter = clipTime / clip.GetClipDuration();
-        float v = frameTime / clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
+        float v = frameTime / clip.keyframePool.framePool[frameIndex].duration;
         frameParameter = v;
         //DebugList();
 
@@ -128,11 +128,11 @@ public class ClipController : MonoBehaviour
     //set sprite renderer to the current keyframe
     void DisplayFrame()
     {
-        HierarchyState state;
-        float frameTime;
-        frameTime = clip.keyframePool.framePool[frameIndex].GetDuration();
-        state = clip.keyframePool.framePool[frameIndex].GetHierarchyState();
-        state.SetTime(frameParameter);
+        //float frameTime;
+        //frameTime = clip.keyframePool.framePool[frameIndex].GetDuration();
+        //state = clip.keyframePool.framePool[frameIndex].GetHierarchyState();
+        clip.keyframePool.framePool[frameIndex].GetHierarchyState().SetTime(frameParameter);
+        //Debug.Log("FrameParam: " + frameParameter);
     }
     public void Transition(bool isEnd)
     {
@@ -151,26 +151,25 @@ public class ClipController : MonoBehaviour
         clip = Trans.targetClip;
 
         // recalculate the time stamps for the clip
-        Trans.targetClip.CalculateDuration();
+        clip.CalculateDuration();
 
         // forward Transition
         if (Trans.playDirection == Direction.forward)
         {
             // input new clip data to clip controller
             frameIndex = Trans.startFrame;
-            clipTime = Trans.targetClip.startEndTimes[Trans.startFrame].x;
+            clipTime = Trans.targetClip.startEndTimes[0].x;
             frameTime = 0.0f;
             frameParameter = 0.0f;
             playDirection = Trans.playDirection;
             
         }
-        // reverse Transition
         else if (Trans.playDirection == Direction.reverse)
         {
             // input new clip data to clip controller
             frameIndex = Trans.startFrame;
-            clipTime = Trans.targetClip.startEndTimes[Trans.startFrame].y;
-            frameTime = Trans.targetClip.startEndTimes[Trans.startFrame].y - clip.startEndTimes[Trans.startFrame].x;
+            clipTime = Trans.targetClip.startEndTimes[0].y;
+            frameTime = Trans.targetClip.startEndTimes[0].y - clip.startEndTimes[0].x;
             frameParameter = 1.0f;
             playDirection = Trans.playDirection;
             
@@ -179,7 +178,7 @@ public class ClipController : MonoBehaviour
         {
             // input new clip data to clip controller
             frameIndex = Trans.startFrame;
-            clipTime = Trans.targetClip.startEndTimes[Trans.startFrame].x;
+            clipTime = Trans.targetClip.startEndTimes[0].x;
             frameTime = 0.0f;
             frameParameter = 0.0f;
             playDirection = Trans.playDirection;
@@ -194,36 +193,38 @@ public class ClipController : MonoBehaviour
         if (frameParameter > 1.0 && playDirection == Direction.forward) // moving forward and the frame ended
         {
             // this is the amount of time that the dx went over the last keyframe
-            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
+            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[frameIndex].duration;
 
             //transition to new clip
-            if (frameIndex == clip.frameCount-1)
+            if (clipTime >= clipDuration)
             {
                 //FORWARD TRANSITION
                 //Debug.Log(clipTime);
-                Debug.Log(frameIndex);
+                //Debug.Log(frameIndex);
+                
                 Transition(true);
             }
             // move to next frame
-            else if (frameIndex < clip.frameCount)
+            else
             {
-              Debug.Log(frameIndex);
+              //Debug.Log(frameIndex);
 
                 frameIndex++;
                 frameTime = 0.0f; // frame condition fixed
                 frameTime += frameOvershoot;
             }
             //Debug.Log(frameOvershoot);
+            Debug.Log(frameOvershoot);
         }
 
         // if yes, the keyframe last (random) just ended in reverse
         if (frameParameter < 0.0 && playDirection == Direction.reverse) // moving backwards and the frame ended
         {
-            frameOvershoot = (0.0f - frameParameter) * clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration;
+            frameOvershoot = (0.0f - frameParameter) * clip.keyframePool.framePool[frameIndex].duration;
             if (frameIndex > 0)
             {       
                 frameIndex--;
-                frameTime = clip.keyframePool.framePool[clip.frameSequence[frameIndex]].duration; // frame condition fixed
+                frameTime = clip.keyframePool.framePool[frameIndex].duration; // frame condition fixed
                 frameTime += frameOvershoot; // one frame condition fixed
             }
             if (frameIndex == 0)
@@ -232,8 +233,9 @@ public class ClipController : MonoBehaviour
                 Transition(false);
                 //Debug.Log(clipTime);
             }
-            //Debug.Log(frameOvershoot);
+            
         }
+        
     }    
 
     // Update Function

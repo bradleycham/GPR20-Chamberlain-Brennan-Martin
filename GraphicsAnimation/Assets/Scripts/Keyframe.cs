@@ -14,7 +14,7 @@ public class Keyframe : MonoBehaviour
     public int index;
     public float duration;
     public float durationInv;
-    public HierarchyState FrameStart;
+    public HierarchyState keyframeState;
     //public HierarchicalPose EndFrame;
 
     // Constructor
@@ -31,7 +31,7 @@ public class Keyframe : MonoBehaviour
         index = newIndex;
         duration = newDuration;
         durationInv = 1 / duration;
-        FrameStart = poseStart;
+        keyframeState = poseStart;
         //EndFrame = poseEnd;
     }
 
@@ -44,12 +44,12 @@ public class Keyframe : MonoBehaviour
     // distribute data
     public void SetData(HierarchyState poseStart)
     {
-        FrameStart = poseStart;
+        keyframeState = poseStart;
         
     }
     public HierarchyState GetHierarchyState()
     {
-        return FrameStart;
+        return keyframeState;
     }
 
     // set frame duration

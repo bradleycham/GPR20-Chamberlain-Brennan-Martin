@@ -25,7 +25,7 @@ public class KeyframePool : MonoBehaviour
     //default constructor
     public KeyframePool()
     {
-        frameCount = 2;
+        //frameCount = 2;
         framePool = new Keyframe[frameCount];
     }
 
