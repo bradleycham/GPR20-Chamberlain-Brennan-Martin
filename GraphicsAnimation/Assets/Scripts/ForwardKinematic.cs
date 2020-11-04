@@ -512,4 +512,35 @@ public class ForwardKinematic : MonoBehaviour
         return samplePose;
     }
     */
+
+    public void EulerIntergration(Vector3 currentPos, Vector3 vectorChange)
+    {
+
+        Vector3 temp = currentPos;
+        temp = currentPos + Time.deltaTime * vectorChange;
+    }
+
+    public void KinematicIntergration(Vector3 currentPos, Vector3 vectorChange, Vector3 accelerationChange)
+    {
+
+        Vector3 temp = currentPos;
+        temp = currentPos + Time.deltaTime * vectorChange;
+        temp = temp + accelerationChange * Time.deltaTime * Time.deltaTime * .5f;
+    }
+
+    public void InterpolationIntergration(Vector3 currentPos, Vector3 defualtPos, float t)
+    {
+
+        Vector3 temp = currentPos;
+        Vector3 offest = currentPos + defualtPos;
+        temp = currentPos + (offest - currentPos) * t;
+    }
+
+    public void SecondInterpolationIntergration(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+    {
+
+        Vector3 temp = ((1 - t) * (1 - t)) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
+        Vector3 tempD = 2*(1-t)*(p1-p0) + 2 *t * (p2-p1);
+        Vector3 tempD2 = 2 * (p2 - 2 * p1 + p0);
+    }
 }
