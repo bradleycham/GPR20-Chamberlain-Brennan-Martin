@@ -23,7 +23,7 @@ public class ClipController : MonoBehaviour
     public ClipPool pool;
     public Clip clip;
     //new SpriteRenderer renderer;
-
+    public HierarchyState state;
     public string controllerName;
 
     int clipIndex;
@@ -131,7 +131,7 @@ public class ClipController : MonoBehaviour
         //float frameTime;
         //frameTime = clip.keyframePool.framePool[frameIndex].GetDuration();
         //state = clip.keyframePool.framePool[frameIndex].GetHierarchyState();
-        clip.keyframePool.framePool[frameIndex].GetHierarchyState().SetTime(frameParameter);
+        state.SetTime(frameParameter);
         //Debug.Log("FrameParam: " + frameParameter);
     }
     public void Transition(bool isEnd)
@@ -282,7 +282,7 @@ public class ClipController : MonoBehaviour
     }
     public void ResetToLastFrame()
     {
-        frameIndex = clip.frameCount -1;
+        frameIndex = clip.frameSequence.Length -1;
         clip.CalculateDuration();
         clipTime = clip.GetClipDuration();
         frameTime = clip.keyframePool.framePool[frameIndex].duration;

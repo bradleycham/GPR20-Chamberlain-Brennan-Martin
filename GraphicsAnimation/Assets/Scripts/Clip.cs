@@ -14,22 +14,22 @@ public class Clip : MonoBehaviour
     public string clipName; // identifies this clip
     
     public int clipIndex; // index of this clip in a pool of clips
-    //float clipTime; // current time between 0 and clip duraton
+    public float clipTime; // current time between 0 and clip duraton
     public float clipDuration; // can be calc. as a sum of frames or set at start
     float durationInv; // 1/duration
-    
-    public int frameCount;
+    public KeyframePool keyframePool;
+    //public int frameCount;
 
-    int firstIndex;//first and last frames
-    int lastIndex;
+    //int firstIndex;//first and last frames
+    //int lastIndex;
 
-    public Vector2[] startEndTimes;
+    public Vector2[] startEndTimes; // public for testing purposes
 
     public ClipTransition EndTransition;
     public ClipTransition ReverseTransition;
 
-    public int[] frameSequence;
-    public KeyframePool keyframePool;
+    //public int[] frameSequence; // an array of numbers that represents the sequence of frames
+    public Keyframe[] frameSequence;
 
     public float GetClipDuration()
     {
@@ -55,8 +55,8 @@ public class Clip : MonoBehaviour
         keyframePool = pool;
 
         clipName = name;
-        firstIndex = first;
-        lastIndex = last;
+        //firstIndex = first;
+        //lastIndex = last;
 
         clipDuration = 1.0f;
         durationInv = 1.0f / clipDuration;
@@ -72,14 +72,21 @@ public class Clip : MonoBehaviour
     // calculate the duration of the clip via the frame lengths
     public void CalculateDuration()
     {
-        startEndTimes = new Vector2[frameCount];
+        startEndTimes = new Vector2[frameSequence.Length];
         float cumulativeTime = 0.0f;
-        for (int i = 0; i < frameCount; i++)
+        for (int i = 0; i < frameSequence.Length; i++)
         {
             startEndTimes[i].x = cumulativeTime;
-            cumulativeTime += keyframePool.framePool[frameSequence[i]].duration;
+            cumulativeTime += frameSequence[i].duration;
             startEndTimes[i].y = cumulativeTime;
         }
         clipDuration = cumulativeTime;
+        if(clipDuration != 0) durationInv = 1 / clipDuration;
+    }
+
+    private void Update()
+    {
+        clipTime += Time.deltaTime;
+        if (clipTime > clipDuration) clipTime = 0;
     }
 }

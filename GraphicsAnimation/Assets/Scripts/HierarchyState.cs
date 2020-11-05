@@ -142,28 +142,8 @@ public class HierarchyState : MonoBehaviour
 
                 BiCubic(previousPose, towardPose, newPose, nextNextPose, t);
             }
-
-
-            //ConcatenationConversion();//2
             Kinematic();
-        }
-        /*
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-
-            if (blend != Blend.bicubic)
-            {
-                blend++;
-
-            }
-
-            else
-            {
-
-                blend = Blend.identity;
-            }
-        }
-        */
+        }    
     }
 
     // Composite Linear Interpolation
@@ -339,16 +319,6 @@ public class HierarchyState : MonoBehaviour
                 //Debug.Log("1");
                 objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i].transpose;
             }
-        }
-        //Debug.Log("hello");
-        //set the new position
-        for (int i = 0; i < samplePose.currentPose.Length; i++)
-        {
-            //Debug.Log(samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].translation);
-            //Debug.Log(samplePose.currentPose[i].translation);
-            //Debug.Log(samplePose.currentPose[i].transform);
-            //samplePose.currentPose[i].transform.position = samplePose.currentPose[i].translation + samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].translation;
-            //Debug.Log(hierarchy.treeDepth[i].parentIndex);
         }
     }
 
@@ -634,7 +604,7 @@ public class HierarchyState : MonoBehaviour
         {
             samplePose.currentPose[i].translation = inPose.currentPose[i].translation * -1;
             samplePose.currentPose[i].orientation = inPose.currentPose[i].orientation * -1;
-            //samplePose.currentPose[i].scale = inPose.currentPose[i].scale * -1;
+            //samplePose.currentPose[i].scale = inPose.currentPose[i].scale;
         }
 
         return samplePose;
