@@ -543,4 +543,243 @@ public class ForwardKinematic : MonoBehaviour
         Vector3 tempD = 2*(1-t)*(p1-p0) + 2 *t * (p2-p1);
         Vector3 tempD2 = 2 * (p2 - 2 * p1 + p0);
     }
+
+    public void Direct()
+    {
+
+        Vector3 temp = new Vector3(0,0,0);
+        Vector3 orien = new Vector3(0, 0, 0);
+
+        if (Input.GetKey(KeyCode.W))
+        {
+
+            temp.x += 1;
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+
+            temp.x -= 1;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+
+            temp.z -= 1;
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+
+            temp.z += 1;
+        }
+
+        if (Input.GetKey(KeyCode.J))
+        {
+
+            orien.y -= 1;
+        }
+
+        if (Input.GetKey(KeyCode.L))
+        {
+
+            orien.y += 1;
+        }
+    }
+
+    public void ControlVelocity()
+    {
+
+        Vector3 temp = new Vector3(0, 0, 0);
+        Vector3 orien = new Vector3(0, 0, 0);
+
+        if (Input.GetKey(KeyCode.W))
+        {
+
+            EulerIntergration(temp, new Vector3(1, 0,0));
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+
+            EulerIntergration(temp, new Vector3(-1, 0,0));
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+
+            EulerIntergration(temp, new Vector3(0, 0, -1));
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+
+            EulerIntergration(temp, new Vector3(0, 0, 1));
+        }
+
+        if (Input.GetKey(KeyCode.J))
+        {
+
+            EulerIntergration(orien, new Vector3(0, -1, 0));
+        }
+
+        if (Input.GetKey(KeyCode.L))
+        {
+
+            EulerIntergration(temp, new Vector3(0, 1, 0));
+        }
+    }
+
+    public void ControlAcceleration()
+    {
+
+        Vector3 temp = new Vector3(0, 0, 0);
+        Vector3 orien = new Vector3(0, 0, 0);
+        Vector3 velocityChange = new Vector3(0, 0, 0);
+        Vector3 accelerationChange = new Vector3(0, 0, 0);
+        Vector3 AngularVelocityChange = new Vector3(0, 0, 0);
+        Vector3 AngularAccelerationChange = new Vector3(0, 0, 0);
+
+        if (Input.GetKey(KeyCode.W))
+        {
+
+            KinematicIntergration(temp, velocityChange, accelerationChange);
+            EulerIntergration(velocityChange, accelerationChange);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+
+            KinematicIntergration(temp, velocityChange, accelerationChange);
+            EulerIntergration(velocityChange, accelerationChange);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+
+            KinematicIntergration(temp, velocityChange, accelerationChange);
+            EulerIntergration(velocityChange, accelerationChange);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+
+            KinematicIntergration(temp, velocityChange, accelerationChange);
+            EulerIntergration(velocityChange, accelerationChange);
+        }
+
+        if (Input.GetKey(KeyCode.J))
+        {
+
+            KinematicIntergration(orien, AngularVelocityChange, AngularAccelerationChange);
+            EulerIntergration(AngularVelocityChange, AngularAccelerationChange);
+        }
+
+        if (Input.GetKey(KeyCode.L))
+        {
+
+            KinematicIntergration(orien, AngularVelocityChange, AngularAccelerationChange);
+            EulerIntergration(AngularVelocityChange, AngularAccelerationChange);
+        }
+    }
+
+    public void FakeVelocity()
+    {
+
+        Vector3 temp = new Vector3(0, 0, 0);
+        Vector3 orien = new Vector3(0, 0, 0);
+        Vector3 offset = new Vector3(0, 0, 0);
+        Vector3 angularOffset = new Vector3(0, 0, 0);
+        float t = 0;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+
+            InterpolationIntergration(temp, offset, t);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+
+            InterpolationIntergration(temp, offset, t);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+
+            InterpolationIntergration(temp, offset, t);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+
+            InterpolationIntergration(temp, offset, t);
+        }
+
+        if (Input.GetKey(KeyCode.J))
+        {
+
+            InterpolationIntergration(orien, angularOffset, t);
+        }
+
+        if (Input.GetKey(KeyCode.L))
+        {
+
+            InterpolationIntergration(orien, angularOffset, t);
+        }
+    }
+
+    public void FakeAcceleration()
+    {
+
+        Vector3 temp = new Vector3(0, 0, 0);
+        Vector3 orien = new Vector3(0, 0, 0);
+        Vector3 offset = new Vector3(0, 0, 0);
+        Vector3 angularOffset = new Vector3(0, 0, 0);
+        Vector3 velocityChange = new Vector3(0, 0, 0);
+        Vector3 angularVelocityChange = new Vector3(0, 0, 0);
+        float t = 0;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+
+            EulerIntergration(temp, velocityChange);
+            InterpolationIntergration(velocityChange, offset, t);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+
+            EulerIntergration(temp, velocityChange);
+            InterpolationIntergration(velocityChange, offset, t);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+
+            EulerIntergration(temp, velocityChange);
+            InterpolationIntergration(velocityChange, offset, t);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+
+            EulerIntergration(temp, velocityChange);
+            InterpolationIntergration(velocityChange, offset, t);
+        }
+
+        if (Input.GetKey(KeyCode.J))
+        {
+
+            EulerIntergration(orien, angularVelocityChange);
+            InterpolationIntergration(angularVelocityChange, angularOffset, t);
+        }
+
+        if (Input.GetKey(KeyCode.L))
+        {
+
+            EulerIntergration(orien, angularVelocityChange);
+            InterpolationIntergration(angularVelocityChange, angularOffset, t);
+        }
+    }
 }
