@@ -10,7 +10,6 @@ using UnityEngine;
 
 public class ClipTransition : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Clip targetClip;
     public bool startAtBegining;
     public Direction playDirection;

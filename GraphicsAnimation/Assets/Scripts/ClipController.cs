@@ -347,5 +347,18 @@ public class ClipController : MonoBehaviour
             clip = pool.clipPool[0];
         }
     }
-    
+
+    public void ChangeClip(Clip newClip)
+    {
+        clipIndex = 0;
+        clip = newClip;
+        frameIndex = 0;
+        frameTime = 0f;
+        frameParameter = 0f;
+        clipParameter = 0.0f;
+
+        state.basePose = clip.frameSequence[0].basePose;
+        state.newPose = clip.frameSequence[0].endPose;
+    }
+
 }
