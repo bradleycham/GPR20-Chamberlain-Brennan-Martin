@@ -12,6 +12,6 @@ public class ClipTransition : MonoBehaviour
 {
     // Start is called before the first frame update
     public Clip targetClip;
-    public int startFrame;
+    public bool startAtBegining;
     public Direction playDirection;
 }

@@ -141,10 +141,12 @@ public class ClipController : MonoBehaviour
         if (isEnd)
         {
             Trans = clip.EndTransition;
+            
         }
         else // transition backwards
         {
             Trans = clip.ReverseTransition;
+            
         }
 
         // set controlled clip to transition clip
@@ -157,27 +159,47 @@ public class ClipController : MonoBehaviour
         if (Trans.playDirection == Direction.forward)
         {
             // input new clip data to clip controller
-            frameIndex = Trans.startFrame;
-            clipTime = Trans.targetClip.startEndTimes[0].x;
+            if (Trans.startAtBegining)
+                frameIndex = 0;
+            else
+                frameIndex = clip.frameSequence.Length - 1;
+
+            clipTime = 0.0f;
             frameTime = 0.0f;
             frameParameter = 0.0f;
             playDirection = Trans.playDirection;
-            
+
+            state.basePose = clip.frameSequence[0].basePose;
+            state.newPose = clip.frameSequence[0].endPose;
+            state.SetTime(0);
+
         }
         else if (Trans.playDirection == Direction.reverse)
         {
             // input new clip data to clip controller
-            frameIndex = Trans.startFrame;
-            clipTime = Trans.targetClip.startEndTimes[0].y;
-            frameTime = Trans.targetClip.startEndTimes[0].y - clip.startEndTimes[0].x;
+            if (Trans.startAtBegining)
+                frameIndex = 0;
+            else
+                frameIndex = clip.frameSequence.Length - 1;
+
+            clipTime = clip.startEndTimes[clip.frameSequence.Length - 1].y;
+            frameTime = clip.startEndTimes[frameIndex].y - clip.startEndTimes[frameIndex].x;
             frameParameter = 1.0f;
             playDirection = Trans.playDirection;
-            
+
+            state.basePose = clip.frameSequence[clip.frameSequence.Length - 1].basePose;
+            state.newPose = clip.frameSequence[clip.frameSequence.Length - 1].endPose;
+            state.SetTime(1);
+
         }
         else // Pause Transition
         {
             // input new clip data to clip controller
-            frameIndex = Trans.startFrame;
+            if (Trans.startAtBegining)
+                frameIndex = 0;
+            else
+                frameIndex = Trans.targetClip.frameSequence.Length - 1;
+
             clipTime = Trans.targetClip.startEndTimes[0].x;
             frameTime = 0.0f;
             frameParameter = 0.0f;
@@ -193,10 +215,10 @@ public class ClipController : MonoBehaviour
         if (frameParameter > 1.0 && playDirection == Direction.forward) // moving forward and the frame ended
         {
             // this is the amount of time that the dx went over the last keyframe
-            frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[frameIndex].duration;
+            frameOvershoot = (frameParameter - 1.0f) * clip.frameSequence[frameIndex].duration;
 
             //transition to new clip
-            if (clipTime >= clip.clipDuration)
+            if (clipTime > clip.clipDuration)
             {
                 //FORWARD TRANSITION
                 //Debug.Log(clipTime);
@@ -214,6 +236,7 @@ public class ClipController : MonoBehaviour
                 
                 frameTime = 0.0f; // frame condition fixed
                 frameTime += frameOvershoot;
+                
             }
             //Debug.Log(frameOvershoot);
             Debug.Log(frameOvershoot);
