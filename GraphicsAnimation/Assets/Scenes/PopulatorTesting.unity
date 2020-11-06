@@ -1752,7 +1752,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516848396}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08355713, y: 3.3875732, z: -11.008447}
+  m_LocalPosition: {x: 0.08355713, y: -0.34, z: -11.008447}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 797758159}
@@ -1874,7 +1874,10 @@ MonoBehaviour:
   index: 0
   duration: 1
   durationInv: 0
-  keyframeState: {fileID: 516848397}
+  previous: {fileID: 0}
+  basePose: {fileID: 1658304369}
+  endPose: {fileID: 1132153535}
+  next: {fileID: 0}
 --- !u!1 &765960010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,14 +1987,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipName: legWalk
   clipIndex: 0
+  clipTime: 0
   clipDuration: 1
-  frameCount: 1
+  keyframePool: {fileID: 93816918}
   startEndTimes:
   - {x: 0, y: 0}
   EndTransition: {fileID: 1268852012}
   ReverseTransition: {fileID: 1965501187}
-  frameSequence: 00000000
-  keyframePool: {fileID: 93816918}
+  frameSequence:
+  - {fileID: 0}
 --- !u!4 &772199288
 Transform:
   m_ObjectHideFlags: 0
@@ -2489,6 +2493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pool: {fileID: 1597676661}
   clip: {fileID: 772199287}
+  state: {fileID: 516848397}
   controllerName: legwalkclip
   playDirection: 1
   timeScalar: 1
@@ -2633,6 +2638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pool: {fileID: 1597676661}
   clip: {fileID: 1733584898}
+  state: {fileID: 0}
   controllerName: armSwayController
   playDirection: 1
   timeScalar: 1
@@ -2871,7 +2877,10 @@ MonoBehaviour:
   index: 1
   duration: 1
   durationInv: 1
-  keyframeState: {fileID: 1671371814}
+  previous: {fileID: 0}
+  basePose: {fileID: 0}
+  endPose: {fileID: 0}
+  next: {fileID: 0}
 --- !u!1 &1426089151
 GameObject:
   m_ObjectHideFlags: 0
@@ -4229,14 +4238,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipName: armSway
   clipIndex: 0
+  clipTime: 0
   clipDuration: 1
-  frameCount: 1
+  keyframePool: {fileID: 93816918}
   startEndTimes:
   - {x: 0, y: 0}
   EndTransition: {fileID: 2075364447}
   ReverseTransition: {fileID: 523290073}
-  frameSequence: 01000000
-  keyframePool: {fileID: 93816918}
+  frameSequence:
+  - {fileID: 0}
 --- !u!4 &1733584899
 Transform:
   m_ObjectHideFlags: 0

@@ -86,7 +86,7 @@ public class Clip : MonoBehaviour
 
     private void Update()
     {
-        clipTime += Time.deltaTime;
-        if (clipTime > clipDuration) clipTime = 0;
+        //clipTime += Time.deltaTime;
+        //if (clipTime > clipDuration) clipTime = 0;
     }
 }

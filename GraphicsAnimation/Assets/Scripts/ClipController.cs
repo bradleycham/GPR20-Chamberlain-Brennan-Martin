@@ -107,8 +107,8 @@ public class ClipController : MonoBehaviour
 
     private void Start()
     {
-        //renderer = new SpriteRenderer();
-        //renderer = this.GetComponent<SpriteRenderer>();
+        state.basePose = clip.frameSequence[frameIndex].basePose;
+        state.newPose = clip.frameSequence[frameIndex].endPose;
     }
 
     void Update()
@@ -196,7 +196,7 @@ public class ClipController : MonoBehaviour
             frameOvershoot = (frameParameter - 1.0f) * clip.keyframePool.framePool[frameIndex].duration;
 
             //transition to new clip
-            if (clipTime >= clipDuration)
+            if (clipTime >= clip.clipDuration)
             {
                 //FORWARD TRANSITION
                 //Debug.Log(clipTime);
@@ -207,9 +207,11 @@ public class ClipController : MonoBehaviour
             // move to next frame
             else
             {
-              //Debug.Log(frameIndex);
-
+                //Debug.Log(frameIndex);
                 frameIndex++;
+                state.basePose = clip.frameSequence[frameIndex].basePose;
+                state.newPose = clip.frameSequence[frameIndex].endPose;
+                
                 frameTime = 0.0f; // frame condition fixed
                 frameTime += frameOvershoot;
             }
@@ -220,11 +222,11 @@ public class ClipController : MonoBehaviour
         // if yes, the keyframe last (random) just ended in reverse
         if (frameParameter < 0.0 && playDirection == Direction.reverse) // moving backwards and the frame ended
         {
-            frameOvershoot = (0.0f - frameParameter) * clip.keyframePool.framePool[frameIndex].duration;
+            frameOvershoot = (0.0f - frameParameter) * clip.frameSequence[frameIndex].duration;
             if (frameIndex > 0)
             {       
                 frameIndex--;
-                frameTime = clip.keyframePool.framePool[frameIndex].duration; // frame condition fixed
+                frameTime = clip.frameSequence[frameIndex].duration; // frame condition fixed
                 frameTime += frameOvershoot; // one frame condition fixed
             }
             if (frameIndex == 0)
@@ -285,7 +287,7 @@ public class ClipController : MonoBehaviour
         frameIndex = clip.frameSequence.Length -1;
         clip.CalculateDuration();
         clipTime = clip.GetClipDuration();
-        frameTime = clip.keyframePool.framePool[frameIndex].duration;
+        frameTime = clip.frameSequence[frameIndex].duration;
         SetDirection(Direction.reverse);
     }
 

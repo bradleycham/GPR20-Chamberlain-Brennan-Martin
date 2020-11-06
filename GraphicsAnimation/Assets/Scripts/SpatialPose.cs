@@ -13,11 +13,12 @@ public class SpatialPose : MonoBehaviour
 {
 
     public Matrix4x4 worldPose; //World Space
-    
+
     //object space
+    public Vector3 translation;
     public Vector3 orientation;
     public Vector3 scale;
-    public Vector3 translation;
+    
 
     
     //defualt
@@ -49,6 +50,7 @@ public class SpatialPose : MonoBehaviour
     void Update()
     {
         transform.localPosition = translation;
+        transform.localRotation = Quaternion.Euler(orientation);
     }
 
     //identity blend

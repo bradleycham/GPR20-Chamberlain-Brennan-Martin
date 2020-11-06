@@ -17,8 +17,6 @@ public class HierarchyState : MonoBehaviour
     public HierarchicalPose samplePose;
     public Matrix4x4[] objectTransformList;
     public Matrix4x4[] localTransformList;
-    //public HierarchicalPose localSpacePose;
-    //public HierarchicalPose objectSpacePose;
 
     public HierarchicalPose basePose;
     public HierarchicalPose newPose;
@@ -29,8 +27,7 @@ public class HierarchyState : MonoBehaviour
     public bool isKinematic = false;
     //set time and what pose is coming from
     [Range(0,1)]
-    public float t;
-    public HierarchicalPose towardPose;
+    public float u;
 
     //set which interpolation is used
     //public enum Interp {step, nearest, linear, smoothstep };
@@ -74,7 +71,7 @@ public class HierarchyState : MonoBehaviour
             if (blend == Blend.construct)
             {
 
-                Construct(towardPose, newPose);
+                //Construct(towardPose, newPose);
             }
             if (blend == Blend.copy)
             {
@@ -84,7 +81,7 @@ public class HierarchyState : MonoBehaviour
             if (blend == Blend.invert)
             {
 
-                InvertPose(towardPose);
+                //InvertPose(towardPose);
             }
             if (blend == Blend.merge)
             {
@@ -95,52 +92,52 @@ public class HierarchyState : MonoBehaviour
             if (blend == Blend.nearest)
             {
 
-                Near(towardPose, newPose, t);
+                //Near(towardPose, newPose, u);
             }
             if (blend == Blend.linear)
             {
 
-                Lerp(samplePose, basePose, newPose, t);
+                Lerp(samplePose, basePose, newPose, u);
             }
             if (blend == Blend.linearbounus)
             {
 
-                Lerp2(towardPose, newPose, t);
+                //Lerp2(towardPose, newPose, u);
             }
             if (blend == Blend.cubic)
             {
 
-                samplePose = Cubic(previousPose, towardPose, newPose, nextNextPose, t);
+                //samplePose = Cubic(previousPose, towardPose, newPose, nextNextPose, u);
             }
             if (blend == Blend.split)
             {
 
-                Split(samplePose, towardPose, newPose);
+                //Split(samplePose, towardPose, newPose);
             }
             if (blend == Blend.scale)
             {
 
-                Scale(samplePose, basePose, newPose, t);
+                Scale(samplePose, basePose, newPose, u);
             }
             if (blend == Blend.triangular)
             {
 
-                Trianglular(samplePose, towardPose, newPose, nextNextPose, t, t);
+                //Trianglular(samplePose, towardPose, newPose, nextNextPose, u, u);
             }
             if (blend == Blend.binear)
             {
 
-                BiNearest(towardPose, newPose, previousPose, nextNextPose, t, t);
+                //BiNearest(towardPose, newPose, previousPose, nextNextPose, u, u);
             }
             if (blend == Blend.bilinear)
             {
 
-                BiLinear(previousPose, towardPose, newPose, nextNextPose, t, t);
+                //BiLinear(previousPose, towardPose, newPose, nextNextPose, u, u);
             }
             if (blend == Blend.bicubic)
             {
 
-                BiCubic(previousPose, towardPose, newPose, nextNextPose, t);
+                //BiCubic(previousPose, towardPose, newPose, nextNextPose, u);
             }
             Kinematic();
         }    
@@ -184,7 +181,7 @@ public class HierarchyState : MonoBehaviour
     public void SetTime(float time)
     {
         
-        t = time;
+        u = time;
     }
     public void Lerp(HierarchicalPose outPose, HierarchicalPose pose1, HierarchicalPose pose2, float u)
     {
