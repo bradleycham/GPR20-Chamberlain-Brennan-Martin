@@ -34,7 +34,7 @@ public class ForwardKinematic : MonoBehaviour
     [Range(0, 1)]
     public float u;
 
-    public enum integration { direct, velocity, acceleration, fVelocity, fAcceleration};
+    public enum integration { direct, velocity, acceleration, fVelocity, fAcceleration, bonus};
     public integration choice;
 
 
@@ -619,6 +619,12 @@ public class ForwardKinematic : MonoBehaviour
         return temp;
     }
 
+    public void SecondInterpolationIntergration2(Vector3 p1, Vector3 p2, float t)
+    {
+
+        player.transform.position = SecondInterpolationIntergration(player.transform.position, p1, p2, t);
+    }
+
     //Direct Control
     public void Direct(bool thisWASD, bool thisIKJL)
     {
@@ -678,25 +684,25 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
 
-                EulerIntergration2( new Vector3(1, 0, 0), thisWASD, thisIKJL);
+                EulerIntergration2( new Vector3(1, 0, 0), thisWASD, false);
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                EulerIntergration2( new Vector3(-1, 0, 0), thisWASD, thisIKJL);
+                EulerIntergration2( new Vector3(-1, 0, 0), thisWASD, false);
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                EulerIntergration2( new Vector3(0, 0, -1), thisWASD, thisIKJL);
+                EulerIntergration2( new Vector3(0, 0, -1), thisWASD, false);
             }
 
             if (Input.GetKey(KeyCode.D))
             {
 
-                EulerIntergration2( new Vector3(0, 0, 1), thisWASD, thisIKJL);
+                EulerIntergration2( new Vector3(0, 0, 1), thisWASD, false);
             }
         }
 
@@ -706,13 +712,13 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.J))
             {
 
-                EulerIntergration2( new Vector3(0, -1, 0), thisWASD, thisIKJL);
+                EulerIntergration2( new Vector3(0, -1, 0), false, thisIKJL);
             }
 
             if (Input.GetKey(KeyCode.L))
             {
 
-                EulerIntergration2( new Vector3(0, 1, 0), thisWASD, thisIKJL);
+                EulerIntergration2( new Vector3(0, 1, 0), false, thisIKJL);
             }
         }
     }
@@ -727,28 +733,28 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
 
-                KinematicIntergration2( new Vector3(velocityF,0,0), new Vector3(accelerationF, 0, 0), thisWASD, thisIKJL);
+                KinematicIntergration2( new Vector3(velocityF,0,0), new Vector3(accelerationF, 0, 0), thisWASD, false);
                 velocityF = EulerIntergration(new Vector3(velocityF, 0, 0), new Vector3(accelerationF, 0, 0)).x;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                KinematicIntergration2(new Vector3(-1 * velocityF, 0, 0), new Vector3(-1 * accelerationF, 0, 0), thisWASD, thisIKJL);
+                KinematicIntergration2(new Vector3(-1 * velocityF, 0, 0), new Vector3(-1 * accelerationF, 0, 0), thisWASD, false);
                 velocityF = EulerIntergration(new Vector3(-1 * velocityF, 0, 0), new Vector3(-1 * accelerationF, 0, 0)).x;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                KinematicIntergration2(new Vector3(0, 0, -1 * velocityF), new Vector3(0, 0, -1 * accelerationF), thisWASD, thisIKJL);
+                KinematicIntergration2(new Vector3(0, 0, -1 * velocityF), new Vector3(0, 0, -1 * accelerationF), thisWASD, false);
                 velocityF = EulerIntergration(-1 * new Vector3(0, 0, -1 * velocityF), new Vector3(0, 0, -1 * accelerationF)).z;
             }
 
             if (Input.GetKey(KeyCode.D))
             {
 
-                KinematicIntergration2(new Vector3(0, 0, velocityF), new Vector3(0, 0, accelerationF), thisWASD, thisIKJL);
+                KinematicIntergration2(new Vector3(0, 0, velocityF), new Vector3(0, 0, accelerationF), thisWASD, false);
                 velocityF = EulerIntergration(new Vector3(0, 0, velocityF), new Vector3(0, 0, accelerationF)).z;
             }
         }
@@ -759,14 +765,14 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.J))
             {
 
-                KinematicIntergration2(new Vector3(0, angularVelocityF, 0), new Vector3(0, angularAccelerationF, 0), thisWASD, thisIKJL);
+                KinematicIntergration2(new Vector3(0, angularVelocityF, 0), new Vector3(0, angularAccelerationF, 0), false, thisIKJL);
                 angularVelocityF = EulerIntergration(new Vector3(0, angularVelocityF, 0), new Vector3(0, angularAccelerationF, 0)).y;
             }
 
             if (Input.GetKey(KeyCode.L))
             {
 
-                KinematicIntergration2(new Vector3(0, -1 * angularVelocityF, 0), new Vector3(0, -1 * angularAccelerationF, 0), thisWASD, thisIKJL);
+                KinematicIntergration2(new Vector3(0, -1 * angularVelocityF, 0), new Vector3(0, -1 * angularAccelerationF, 0), false, thisIKJL);
                 angularVelocityF = EulerIntergration(new Vector3(0, -1 * angularVelocityF, 0), new Vector3(0, -1 * angularAccelerationF, 0)).y;
             }
         }
@@ -782,25 +788,25 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
 
-                InterpolationIntergration2( new Vector3(offsetF,0,0), t, thisWASD, thisIKJL);
+                InterpolationIntergration2( new Vector3(offsetF,0,0), t, thisWASD, false);
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                InterpolationIntergration2(new Vector3(-1 * offsetF, 0, 0), t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(-1 * offsetF, 0, 0), t, thisWASD, false);
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                InterpolationIntergration2(new Vector3(0, 0, -1 * offsetF), t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(0, 0, -1 * offsetF), t, thisWASD, false);
             }
 
             if (Input.GetKey(KeyCode.D))
             {
 
-                InterpolationIntergration2(new Vector3(0, 0, offsetF), t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(0, 0, offsetF), t, thisWASD, false);
             }
         }
 
@@ -810,13 +816,13 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.J))
             {
 
-                InterpolationIntergration2(new Vector3(0, -1 * angularOffsetF, 0), t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(0, -1 * angularOffsetF, 0), t, false, thisIKJL);
             }
 
             if (Input.GetKey(KeyCode.L))
             {
 
-                InterpolationIntergration2(new Vector3(0, angularOffsetF, 0), t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(0, angularOffsetF, 0), t, false, thisIKJL);
             }
         }
     }
@@ -831,28 +837,28 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
 
-                EulerIntergration2(new Vector3(velocityF, 0, 0), thisWASD, thisIKJL);
+                EulerIntergration2(new Vector3(velocityF, 0, 0), thisWASD, false);
                 velocityF = InterpolationIntergration(new Vector3(velocityF, 0, 0), new Vector3(offsetF, 0, 0), t).x;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                EulerIntergration2(new Vector3(-1 * velocityF, 0, 0), thisWASD, thisIKJL);
+                EulerIntergration2(new Vector3(-1 * velocityF, 0, 0), thisWASD, false);
                 velocityF = InterpolationIntergration(new Vector3(-1 * velocityF, 0, 0), new Vector3(-1 * offsetF, 0, 0), t).x;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                EulerIntergration2(new Vector3(0, 0, -1 * velocityF), thisWASD, thisIKJL);
+                EulerIntergration2(new Vector3(0, 0, -1 * velocityF), thisWASD, false);
                 velocityF = InterpolationIntergration(new Vector3(0, 0, -1 * velocityF), new Vector3(0, 0, -1 * offsetF), t).z;
             }
 
             if (Input.GetKey(KeyCode.D))
             {
 
-                EulerIntergration2(new Vector3(0, 0, velocityF), thisWASD, thisIKJL);
+                EulerIntergration2(new Vector3(0, 0, velocityF), thisWASD, false);
                 velocityF = InterpolationIntergration(new Vector3(0, 0, velocityF), new Vector3(0, 0, offsetF), t).z;
             }
         }
@@ -863,14 +869,14 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.J))
             {
 
-                EulerIntergration2(new Vector3(0, angularVelocityF, 0), thisWASD, thisIKJL);
+                EulerIntergration2(new Vector3(0, angularVelocityF, 0), false, thisIKJL);
                 angularVelocityF = InterpolationIntergration(new Vector3(0, angularVelocityF, 0), new Vector3(0, angularOffsetF, 0), t).y;
             }
 
             if (Input.GetKey(KeyCode.L))
             {
 
-                EulerIntergration2(new Vector3(0, -1 * angularVelocityF, 0), thisWASD, thisIKJL);
+                EulerIntergration2(new Vector3(0, -1 * angularVelocityF, 0), false, thisIKJL);
                 angularVelocityF = InterpolationIntergration(new Vector3(0, -1 * angularVelocityF, 0), new Vector3(0, -1 * angularOffsetF, 0), t).y;
             }
         }
@@ -908,5 +914,13 @@ public class ForwardKinematic : MonoBehaviour
 
             FakeAcceleration(true, true, u);
         }
+
+        if (choice == integration.bonus)
+        {
+
+            SecondInterpolationIntergration2(new Vector3(velocityF, 0, 0), new Vector3(0, 0, accelerationF), u);
+            velocityF = EulerIntergration(new Vector3(velocityF, 0, 0), new Vector3(accelerationF, 0, 0)).x;
+        }
+
     }
 }
