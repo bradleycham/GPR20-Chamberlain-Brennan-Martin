@@ -20,6 +20,9 @@ public class ForwardKinematic : MonoBehaviour
 
     public HierarchicalPose previousPose;
     public HierarchicalPose nextNextPose;
+    //----------------------------------------------
+
+    public GameObject player;
 
     //----------------------------------------------
     //smoothstep interpolation  blend oepration
@@ -513,273 +516,353 @@ public class ForwardKinematic : MonoBehaviour
     }
     */
 
-    public void EulerIntergration(Vector3 currentPos, Vector3 vectorChange)
+    public Vector3 EulerIntergration(Vector3 currentPos, Vector3 vectorChange)
     {
 
         Vector3 temp = currentPos;
         temp = currentPos + Time.deltaTime * vectorChange;
+        return temp;
     }
 
-    public void KinematicIntergration(Vector3 currentPos, Vector3 vectorChange, Vector3 accelerationChange)
+    public void EulerIntergration2(Vector3 vectorChange, bool thisWASD, bool thisIKJL)
+    {
+
+        if (thisWASD)
+        {
+
+            player.transform.position = EulerIntergration(player.transform.position, vectorChange);
+        }
+
+        if (thisIKJL)
+        {
+
+            player.transform.rotation = Quaternion.Euler(EulerIntergration(player.transform.rotation.eulerAngles, vectorChange));
+        }
+
+    }
+
+    public Vector3 KinematicIntergration(Vector3 currentPos, Vector3 vectorChange, Vector3 accelerationChange)
     {
 
         Vector3 temp = currentPos;
         temp = currentPos + Time.deltaTime * vectorChange;
         temp = temp + accelerationChange * Time.deltaTime * Time.deltaTime * .5f;
+        return temp;
     }
 
-    public void InterpolationIntergration(Vector3 currentPos, Vector3 defualtPos, float t)
+    public void KinematicIntergration2(Vector3 vectorChange, Vector3 accelerationChange, bool thisWASD, bool thisIKJL)
+    {
+
+        if (thisWASD)
+        {
+
+            player.transform.position = KinematicIntergration(player.transform.position, vectorChange, accelerationChange);
+        }
+
+        if (thisIKJL)
+        {
+
+            player.transform.rotation = Quaternion.Euler(KinematicIntergration(player.transform.rotation.eulerAngles, vectorChange, accelerationChange));
+        }
+    }
+
+    public Vector3 InterpolationIntergration(Vector3 currentPos, Vector3 defualtPos, float t)
     {
 
         Vector3 temp = currentPos;
         Vector3 offest = currentPos + defualtPos;
         temp = currentPos + (offest - currentPos) * t;
+        return temp;
     }
 
-    public void SecondInterpolationIntergration(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+    public void InterpolationIntergration2(Vector3 defualtPos, float t, bool thisWASD, bool thisIKJL)
+    {
+
+        if (thisWASD)
+        {
+
+            player.transform.position = InterpolationIntergration(player.transform.position, defualtPos, t);
+        }
+
+        if (thisIKJL)
+        {
+
+            player.transform.rotation = Quaternion.Euler(InterpolationIntergration(player.transform.rotation.eulerAngles, defualtPos, t));
+        }
+    }
+
+    public Vector3 SecondInterpolationIntergration(Vector3 p0, Vector3 p1, Vector3 p2, float t)
     {
 
         Vector3 temp = ((1 - t) * (1 - t)) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
         Vector3 tempD = 2 * (1 - t) * (p1 - p0) + 2 * t * (p2 - p1);
         Vector3 tempD2 = 2 * (p2 - 2 * p1 + p0);
+
+        return temp;
     }
 
-    public void Direct()
+    public void Direct(bool thisWASD, bool thisIKJL)
     {
 
-        Vector3 temp = new Vector3(0, 0, 0);
-        Vector3 orien = new Vector3(0, 0, 0);
-
-        if (Input.GetKey(KeyCode.W))
+        if (thisWASD)
         {
 
-            temp.x += 1;
+            if (Input.GetKey(KeyCode.W))
+            {
+
+                player.transform.position += new Vector3(1,0,0);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+
+                player.transform.position += new Vector3(-1, 0, 0);
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+
+                player.transform.position += new Vector3(0, 0, -1);
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+
+                player.transform.position += new Vector3(0, 0, 1);
+            }
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (thisIKJL)
         {
 
-            temp.x -= 1;
-        }
+            if (Input.GetKey(KeyCode.J))
+            {
 
-        if (Input.GetKey(KeyCode.A))
-        {
+                player.transform.rotation *= Quaternion.Euler(new Vector3(0, -1, 0));
+            }
 
-            temp.z -= 1;
-        }
+            if (Input.GetKey(KeyCode.L))
+            {
 
-        if (Input.GetKey(KeyCode.D))
-        {
-
-            temp.z += 1;
-        }
-
-        if (Input.GetKey(KeyCode.J))
-        {
-
-            orien.y -= 1;
-        }
-
-        if (Input.GetKey(KeyCode.L))
-        {
-
-            orien.y += 1;
-        }
-    }
-
-    public void ControlVelocity()
-    {
-
-        Vector3 temp = new Vector3(0, 0, 0);
-        Vector3 orien = new Vector3(0, 0, 0);
-
-        if (Input.GetKey(KeyCode.W))
-        {
-
-            EulerIntergration(temp, new Vector3(1, 0, 0));
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-
-            EulerIntergration(temp, new Vector3(-1, 0, 0));
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-
-            EulerIntergration(temp, new Vector3(0, 0, -1));
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-
-            EulerIntergration(temp, new Vector3(0, 0, 1));
-        }
-
-        if (Input.GetKey(KeyCode.J))
-        {
-
-            EulerIntergration(orien, new Vector3(0, -1, 0));
-        }
-
-        if (Input.GetKey(KeyCode.L))
-        {
-
-            EulerIntergration(temp, new Vector3(0, 1, 0));
+                player.transform.rotation *= Quaternion.Euler(new Vector3(0, 1, 0));
+            }
         }
     }
 
-    public void ControlAcceleration()
+    public void ControlVelocity(bool thisWASD, bool thisIKJL)
     {
 
-        Vector3 temp = new Vector3(0, 0, 0);
-        Vector3 orien = new Vector3(0, 0, 0);
+        if (thisWASD)
+        {
+
+            if (Input.GetKey(KeyCode.W))
+            {
+
+                EulerIntergration2( new Vector3(1, 0, 0), thisWASD, thisIKJL);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+
+                EulerIntergration2( new Vector3(-1, 0, 0), thisWASD, thisIKJL);
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+
+                EulerIntergration2( new Vector3(0, 0, -1), thisWASD, thisIKJL);
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+
+                EulerIntergration2( new Vector3(0, 0, 1), thisWASD, thisIKJL);
+            }
+        }
+
+        if (thisIKJL)
+        {
+
+            if (Input.GetKey(KeyCode.J))
+            {
+
+                EulerIntergration2( new Vector3(0, -1, 0), thisWASD, thisIKJL);
+            }
+
+            if (Input.GetKey(KeyCode.L))
+            {
+
+                EulerIntergration2( new Vector3(0, 1, 0), thisWASD, thisIKJL);
+            }
+        }
+    }
+
+    public void ControlAcceleration(bool thisWASD, bool thisIKJL)
+    {
+
         Vector3 velocityChange = new Vector3(0, 0, 0);
         Vector3 accelerationChange = new Vector3(0, 0, 0);
-        Vector3 AngularVelocityChange = new Vector3(0, 0, 0);
-        Vector3 AngularAccelerationChange = new Vector3(0, 0, 0);
+        Vector3 angularVelocityChange = new Vector3(0, 0, 0);
+        Vector3 angularAccelerationChange = new Vector3(0, 0, 0);
 
-        if (Input.GetKey(KeyCode.W))
+        if (thisWASD)
         {
 
-            KinematicIntergration(temp, velocityChange, accelerationChange);
-            EulerIntergration(velocityChange, accelerationChange);
+            if (Input.GetKey(KeyCode.W))
+            {
+
+                KinematicIntergration2( velocityChange, accelerationChange, thisWASD, thisIKJL);
+                velocityChange = EulerIntergration(velocityChange, accelerationChange);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+
+                KinematicIntergration2( velocityChange, accelerationChange, thisWASD, thisIKJL);
+                velocityChange = EulerIntergration(velocityChange, accelerationChange);
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+
+                KinematicIntergration2( velocityChange, accelerationChange, thisWASD, thisIKJL);
+                velocityChange = EulerIntergration(velocityChange, accelerationChange);
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+
+                KinematicIntergration2( velocityChange, accelerationChange, thisWASD, thisIKJL);
+                velocityChange = EulerIntergration(velocityChange, accelerationChange);
+            }
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (thisIKJL)
         {
 
-            KinematicIntergration(temp, velocityChange, accelerationChange);
-            EulerIntergration(velocityChange, accelerationChange);
-        }
+            if (Input.GetKey(KeyCode.J))
+            {
 
-        if (Input.GetKey(KeyCode.A))
-        {
+                KinematicIntergration2( angularVelocityChange, angularAccelerationChange, thisWASD, thisIKJL);
+                angularVelocityChange = EulerIntergration(angularVelocityChange, angularAccelerationChange);
+            }
 
-            KinematicIntergration(temp, velocityChange, accelerationChange);
-            EulerIntergration(velocityChange, accelerationChange);
-        }
+            if (Input.GetKey(KeyCode.L))
+            {
 
-        if (Input.GetKey(KeyCode.D))
-        {
-
-            KinematicIntergration(temp, velocityChange, accelerationChange);
-            EulerIntergration(velocityChange, accelerationChange);
-        }
-
-        if (Input.GetKey(KeyCode.J))
-        {
-
-            KinematicIntergration(orien, AngularVelocityChange, AngularAccelerationChange);
-            EulerIntergration(AngularVelocityChange, AngularAccelerationChange);
-        }
-
-        if (Input.GetKey(KeyCode.L))
-        {
-
-            KinematicIntergration(orien, AngularVelocityChange, AngularAccelerationChange);
-            EulerIntergration(AngularVelocityChange, AngularAccelerationChange);
+                KinematicIntergration2( angularVelocityChange, angularAccelerationChange, thisWASD, thisIKJL);
+                angularVelocityChange = EulerIntergration(angularVelocityChange, angularAccelerationChange);
+            }
         }
     }
 
-    public void FakeVelocity()
+    public void FakeVelocity(bool thisWASD, bool thisIKJL,float t)
     {
 
-        Vector3 temp = new Vector3(0, 0, 0);
-        Vector3 orien = new Vector3(0, 0, 0);
         Vector3 offset = new Vector3(0, 0, 0);
         Vector3 angularOffset = new Vector3(0, 0, 0);
-        float t = 0;
 
-        if (Input.GetKey(KeyCode.W))
+        if (thisWASD)
         {
 
-            InterpolationIntergration(temp, offset, t);
+            if (Input.GetKey(KeyCode.W))
+            {
+
+                InterpolationIntergration2( offset, t, thisWASD, thisIKJL);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+
+                InterpolationIntergration2( offset, t, thisWASD, thisIKJL);
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+
+                InterpolationIntergration2( offset, t, thisWASD, thisIKJL);
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+
+                InterpolationIntergration2( offset, t, thisWASD, thisIKJL);
+            }
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (thisIKJL)
         {
 
-            InterpolationIntergration(temp, offset, t);
-        }
+            if (Input.GetKey(KeyCode.J))
+            {
 
-        if (Input.GetKey(KeyCode.A))
-        {
+                InterpolationIntergration2( angularOffset, t, thisWASD, thisIKJL);
+            }
 
-            InterpolationIntergration(temp, offset, t);
-        }
+            if (Input.GetKey(KeyCode.L))
+            {
 
-        if (Input.GetKey(KeyCode.D))
-        {
-
-            InterpolationIntergration(temp, offset, t);
-        }
-
-        if (Input.GetKey(KeyCode.J))
-        {
-
-            InterpolationIntergration(orien, angularOffset, t);
-        }
-
-        if (Input.GetKey(KeyCode.L))
-        {
-
-            InterpolationIntergration(orien, angularOffset, t);
+                InterpolationIntergration2( angularOffset, t, thisWASD, thisIKJL);
+            }
         }
     }
 
-    public void FakeAcceleration()
+    public void FakeAcceleration(bool thisWASD, bool thisIKJL, float t)
     {
 
-        Vector3 temp = new Vector3(0, 0, 0);
-        Vector3 orien = new Vector3(0, 0, 0);
         Vector3 offset = new Vector3(0, 0, 0);
         Vector3 angularOffset = new Vector3(0, 0, 0);
         Vector3 velocityChange = new Vector3(0, 0, 0);
         Vector3 angularVelocityChange = new Vector3(0, 0, 0);
-        float t = 0;
 
-        if (Input.GetKey(KeyCode.W))
+        if (thisWASD)
         {
 
-            EulerIntergration(temp, velocityChange);
-            InterpolationIntergration(velocityChange, offset, t);
+            if (Input.GetKey(KeyCode.W))
+            {
+
+                EulerIntergration2( velocityChange, thisWASD, thisIKJL);
+                velocityChange = InterpolationIntergration(velocityChange, offset, t);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+
+                EulerIntergration2( velocityChange, thisWASD, thisIKJL);
+                velocityChange = InterpolationIntergration(velocityChange, offset, t);
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+
+                EulerIntergration2( velocityChange, thisWASD, thisIKJL);
+                velocityChange = InterpolationIntergration(velocityChange, offset, t);
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+
+                EulerIntergration2( velocityChange, thisWASD, thisIKJL);
+                velocityChange = InterpolationIntergration(velocityChange, offset, t);
+            }
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (thisIKJL)
         {
 
-            EulerIntergration(temp, velocityChange);
-            InterpolationIntergration(velocityChange, offset, t);
-        }
+            if (Input.GetKey(KeyCode.J))
+            {
 
-        if (Input.GetKey(KeyCode.A))
-        {
+                EulerIntergration2( angularVelocityChange, thisWASD, thisIKJL);
+                angularVelocityChange = InterpolationIntergration(angularVelocityChange, angularOffset, t);
+            }
 
-            EulerIntergration(temp, velocityChange);
-            InterpolationIntergration(velocityChange, offset, t);
-        }
+            if (Input.GetKey(KeyCode.L))
+            {
 
-        if (Input.GetKey(KeyCode.D))
-        {
-
-            EulerIntergration(temp, velocityChange);
-            InterpolationIntergration(velocityChange, offset, t);
-        }
-
-        if (Input.GetKey(KeyCode.J))
-        {
-
-            EulerIntergration(orien, angularVelocityChange);
-            InterpolationIntergration(angularVelocityChange, angularOffset, t);
-        }
-
-        if (Input.GetKey(KeyCode.L))
-        {
-
-            EulerIntergration(orien, angularVelocityChange);
-            InterpolationIntergration(angularVelocityChange, angularOffset, t);
+                EulerIntergration2( angularVelocityChange, thisWASD, thisIKJL);
+                angularVelocityChange = InterpolationIntergration(angularVelocityChange, angularOffset, t);
+            }
         }
     }
 }
