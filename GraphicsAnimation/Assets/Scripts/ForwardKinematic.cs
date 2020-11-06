@@ -33,6 +33,7 @@ public class ForwardKinematic : MonoBehaviour
     public float angularAccelerationF;
     [Range(0, 1)]
     public float u;
+    public string mode;
 
     public enum integration { direct, velocity, acceleration, fVelocity, fAcceleration, bonus};
     public integration choice;
@@ -889,30 +890,35 @@ public class ForwardKinematic : MonoBehaviour
         {
 
             Direct(true, true);
+            mode = "Direct";
         }
 
         if (choice == integration.velocity)
         {
 
             ControlVelocity(true, true);
+            mode = "velocity";
         }
 
         if (choice == integration.acceleration)
         {
 
             ControlAcceleration(true, true);
+            mode = "acceleration";
         }
 
         if (choice == integration.fVelocity)
         {
 
             FakeVelocity(true, true, u);
+            mode = "fake velocity";
         }
 
         if (choice == integration.fAcceleration)
         {
 
             FakeAcceleration(true, true, u);
+            mode = "fake accleration";
         }
 
         if (choice == integration.bonus)
@@ -920,6 +926,7 @@ public class ForwardKinematic : MonoBehaviour
 
             SecondInterpolationIntergration2(new Vector3(velocityF, 0, 0), new Vector3(0, 0, accelerationF), u);
             velocityF = EulerIntergration(new Vector3(velocityF, 0, 0), new Vector3(accelerationF, 0, 0)).x;
+            mode = "bonus demo";
         }
 
     }
