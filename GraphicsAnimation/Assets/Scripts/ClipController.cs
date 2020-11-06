@@ -359,6 +359,7 @@ public class ClipController : MonoBehaviour
 
         state.basePose = clip.frameSequence[0].basePose;
         state.newPose = clip.frameSequence[0].endPose;
+        state.SetTime(0);
     }
 
 }
