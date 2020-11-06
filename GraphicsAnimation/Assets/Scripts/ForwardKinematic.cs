@@ -516,6 +516,7 @@ public class ForwardKinematic : MonoBehaviour
     }
     */
 
+    //Euler Intergration
     public Vector3 EulerIntergration(Vector3 currentPos, Vector3 vectorChange)
     {
 
@@ -541,6 +542,7 @@ public class ForwardKinematic : MonoBehaviour
 
     }
 
+    //Kinematic Intergration
     public Vector3 KinematicIntergration(Vector3 currentPos, Vector3 vectorChange, Vector3 accelerationChange)
     {
 
@@ -566,6 +568,7 @@ public class ForwardKinematic : MonoBehaviour
         }
     }
 
+    //Interpolation Intergration
     public Vector3 InterpolationIntergration(Vector3 currentPos, Vector3 defualtPos, float t)
     {
 
@@ -591,6 +594,7 @@ public class ForwardKinematic : MonoBehaviour
         }
     }
 
+    //Quadratic Bezier Intergration
     public Vector3 SecondInterpolationIntergration(Vector3 p0, Vector3 p1, Vector3 p2, float t)
     {
 
@@ -601,6 +605,7 @@ public class ForwardKinematic : MonoBehaviour
         return temp;
     }
 
+    //Direct Control
     public void Direct(bool thisWASD, bool thisIKJL)
     {
 
@@ -649,6 +654,7 @@ public class ForwardKinematic : MonoBehaviour
         }
     }
 
+    //Control Velocity
     public void ControlVelocity(bool thisWASD, bool thisIKJL)
     {
 
@@ -697,6 +703,7 @@ public class ForwardKinematic : MonoBehaviour
         }
     }
 
+    //Control Accerleration
     public void ControlAcceleration(bool thisWASD, bool thisIKJL)
     {
 
@@ -756,6 +763,7 @@ public class ForwardKinematic : MonoBehaviour
         }
     }
 
+    //Fake velocity
     public void FakeVelocity(bool thisWASD, bool thisIKJL,float t)
     {
 
@@ -807,6 +815,7 @@ public class ForwardKinematic : MonoBehaviour
         }
     }
 
+    //fake acceleration
     public void FakeAcceleration(bool thisWASD, bool thisIKJL, float t)
     {
 
