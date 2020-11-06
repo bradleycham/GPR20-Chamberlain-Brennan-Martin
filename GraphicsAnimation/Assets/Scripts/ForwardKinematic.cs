@@ -23,6 +23,20 @@ public class ForwardKinematic : MonoBehaviour
     //----------------------------------------------
 
     public GameObject player;
+    public bool thisWASD;
+    public bool thisIKJL;
+    public float offsetF;
+    public float angularOffsetF;
+    public float velocityF;
+    public float accelerationF;
+    public float angularVelocityF;
+    public float angularAccelerationF;
+    [Range(0, 1)]
+    public float u;
+
+    public enum integration { direct, velocity, acceleration, fVelocity, fAcceleration};
+    public integration choice;
+
 
     //----------------------------------------------
     //smoothstep interpolation  blend oepration
@@ -707,40 +721,35 @@ public class ForwardKinematic : MonoBehaviour
     public void ControlAcceleration(bool thisWASD, bool thisIKJL)
     {
 
-        Vector3 velocityChange = new Vector3(0, 0, 0);
-        Vector3 accelerationChange = new Vector3(0, 0, 0);
-        Vector3 angularVelocityChange = new Vector3(0, 0, 0);
-        Vector3 angularAccelerationChange = new Vector3(0, 0, 0);
-
         if (thisWASD)
         {
 
             if (Input.GetKey(KeyCode.W))
             {
 
-                KinematicIntergration2( velocityChange, accelerationChange, thisWASD, thisIKJL);
-                velocityChange = EulerIntergration(velocityChange, accelerationChange);
+                KinematicIntergration2( new Vector3(velocityF,0,0), new Vector3(accelerationF, 0, 0), thisWASD, thisIKJL);
+                velocityF = EulerIntergration(new Vector3(velocityF, 0, 0), new Vector3(accelerationF, 0, 0)).x;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                KinematicIntergration2( velocityChange, accelerationChange, thisWASD, thisIKJL);
-                velocityChange = EulerIntergration(velocityChange, accelerationChange);
+                KinematicIntergration2(new Vector3(-1 * velocityF, 0, 0), new Vector3(-1 * accelerationF, 0, 0), thisWASD, thisIKJL);
+                velocityF = EulerIntergration(new Vector3(-1 * velocityF, 0, 0), new Vector3(-1 * accelerationF, 0, 0)).x;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                KinematicIntergration2( velocityChange, accelerationChange, thisWASD, thisIKJL);
-                velocityChange = EulerIntergration(velocityChange, accelerationChange);
+                KinematicIntergration2(new Vector3(0, 0, -1 * velocityF), new Vector3(0, 0, -1 * accelerationF), thisWASD, thisIKJL);
+                velocityF = EulerIntergration(-1 * new Vector3(0, 0, -1 * velocityF), new Vector3(0, 0, -1 * accelerationF)).z;
             }
 
             if (Input.GetKey(KeyCode.D))
             {
 
-                KinematicIntergration2( velocityChange, accelerationChange, thisWASD, thisIKJL);
-                velocityChange = EulerIntergration(velocityChange, accelerationChange);
+                KinematicIntergration2(new Vector3(0, 0, velocityF), new Vector3(0, 0, accelerationF), thisWASD, thisIKJL);
+                velocityF = EulerIntergration(new Vector3(0, 0, velocityF), new Vector3(0, 0, accelerationF)).z;
             }
         }
 
@@ -750,15 +759,15 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.J))
             {
 
-                KinematicIntergration2( angularVelocityChange, angularAccelerationChange, thisWASD, thisIKJL);
-                angularVelocityChange = EulerIntergration(angularVelocityChange, angularAccelerationChange);
+                KinematicIntergration2(new Vector3(0, angularVelocityF, 0), new Vector3(0, angularAccelerationF, 0), thisWASD, thisIKJL);
+                angularVelocityF = EulerIntergration(new Vector3(0, angularVelocityF, 0), new Vector3(0, angularAccelerationF, 0)).y;
             }
 
             if (Input.GetKey(KeyCode.L))
             {
 
-                KinematicIntergration2( angularVelocityChange, angularAccelerationChange, thisWASD, thisIKJL);
-                angularVelocityChange = EulerIntergration(angularVelocityChange, angularAccelerationChange);
+                KinematicIntergration2(new Vector3(0, -1 * angularVelocityF, 0), new Vector3(0, -1 * angularAccelerationF, 0), thisWASD, thisIKJL);
+                angularVelocityF = EulerIntergration(new Vector3(0, -1 * angularVelocityF, 0), new Vector3(0, -1 * angularAccelerationF, 0)).y;
             }
         }
     }
@@ -767,34 +776,31 @@ public class ForwardKinematic : MonoBehaviour
     public void FakeVelocity(bool thisWASD, bool thisIKJL,float t)
     {
 
-        Vector3 offset = new Vector3(0, 0, 0);
-        Vector3 angularOffset = new Vector3(0, 0, 0);
-
         if (thisWASD)
         {
 
             if (Input.GetKey(KeyCode.W))
             {
 
-                InterpolationIntergration2( offset, t, thisWASD, thisIKJL);
+                InterpolationIntergration2( new Vector3(offsetF,0,0), t, thisWASD, thisIKJL);
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                InterpolationIntergration2( offset, t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(-1 * offsetF, 0, 0), t, thisWASD, thisIKJL);
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                InterpolationIntergration2( offset, t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(0, 0, -1 * offsetF), t, thisWASD, thisIKJL);
             }
 
             if (Input.GetKey(KeyCode.D))
             {
 
-                InterpolationIntergration2( offset, t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(0, 0, offsetF), t, thisWASD, thisIKJL);
             }
         }
 
@@ -804,13 +810,13 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.J))
             {
 
-                InterpolationIntergration2( angularOffset, t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(0, -1 * angularOffsetF, 0), t, thisWASD, thisIKJL);
             }
 
             if (Input.GetKey(KeyCode.L))
             {
 
-                InterpolationIntergration2( angularOffset, t, thisWASD, thisIKJL);
+                InterpolationIntergration2(new Vector3(0, angularOffsetF, 0), t, thisWASD, thisIKJL);
             }
         }
     }
@@ -819,40 +825,35 @@ public class ForwardKinematic : MonoBehaviour
     public void FakeAcceleration(bool thisWASD, bool thisIKJL, float t)
     {
 
-        Vector3 offset = new Vector3(0, 0, 0);
-        Vector3 angularOffset = new Vector3(0, 0, 0);
-        Vector3 velocityChange = new Vector3(0, 0, 0);
-        Vector3 angularVelocityChange = new Vector3(0, 0, 0);
-
         if (thisWASD)
         {
 
             if (Input.GetKey(KeyCode.W))
             {
 
-                EulerIntergration2( velocityChange, thisWASD, thisIKJL);
-                velocityChange = InterpolationIntergration(velocityChange, offset, t);
+                EulerIntergration2(new Vector3(velocityF, 0, 0), thisWASD, thisIKJL);
+                velocityF = InterpolationIntergration(new Vector3(velocityF, 0, 0), new Vector3(offsetF, 0, 0), t).x;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                EulerIntergration2( velocityChange, thisWASD, thisIKJL);
-                velocityChange = InterpolationIntergration(velocityChange, offset, t);
+                EulerIntergration2(new Vector3(-1 * velocityF, 0, 0), thisWASD, thisIKJL);
+                velocityF = InterpolationIntergration(new Vector3(-1 * velocityF, 0, 0), new Vector3(-1 * offsetF, 0, 0), t).x;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                EulerIntergration2( velocityChange, thisWASD, thisIKJL);
-                velocityChange = InterpolationIntergration(velocityChange, offset, t);
+                EulerIntergration2(new Vector3(0, 0, -1 * velocityF), thisWASD, thisIKJL);
+                velocityF = InterpolationIntergration(new Vector3(0, 0, -1 * velocityF), new Vector3(0, 0, -1 * offsetF), t).z;
             }
 
             if (Input.GetKey(KeyCode.D))
             {
 
-                EulerIntergration2( velocityChange, thisWASD, thisIKJL);
-                velocityChange = InterpolationIntergration(velocityChange, offset, t);
+                EulerIntergration2(new Vector3(0, 0, velocityF), thisWASD, thisIKJL);
+                velocityF = InterpolationIntergration(new Vector3(0, 0, velocityF), new Vector3(0, 0, offsetF), t).z;
             }
         }
 
@@ -862,16 +863,50 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.J))
             {
 
-                EulerIntergration2( angularVelocityChange, thisWASD, thisIKJL);
-                angularVelocityChange = InterpolationIntergration(angularVelocityChange, angularOffset, t);
+                EulerIntergration2(new Vector3(0, angularVelocityF, 0), thisWASD, thisIKJL);
+                angularVelocityF = InterpolationIntergration(new Vector3(0, angularVelocityF, 0), new Vector3(0, angularOffsetF, 0), t).y;
             }
 
             if (Input.GetKey(KeyCode.L))
             {
 
-                EulerIntergration2( angularVelocityChange, thisWASD, thisIKJL);
-                angularVelocityChange = InterpolationIntergration(angularVelocityChange, angularOffset, t);
+                EulerIntergration2(new Vector3(0, -1 * angularVelocityF, 0), thisWASD, thisIKJL);
+                angularVelocityF = InterpolationIntergration(new Vector3(0, -1 * angularVelocityF, 0), new Vector3(0, -1 * angularOffsetF, 0), t).y;
             }
+        }
+    }
+
+    void Update()
+    {
+        
+        if(choice == integration.direct)
+        {
+
+            Direct(true, true);
+        }
+
+        if (choice == integration.velocity)
+        {
+
+            ControlVelocity(true, true);
+        }
+
+        if (choice == integration.acceleration)
+        {
+
+            ControlAcceleration(true, true);
+        }
+
+        if (choice == integration.fVelocity)
+        {
+
+            FakeVelocity(true, true, u);
+        }
+
+        if (choice == integration.fAcceleration)
+        {
+
+            FakeAcceleration(true, true, u);
         }
     }
 }
