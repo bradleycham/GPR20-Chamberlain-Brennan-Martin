@@ -45,28 +45,30 @@ public class ClipBlender : MonoBehaviour
     // Blend the current pose of two clips using a Lerp Function
     void BlendCLipsLerp()
     {
-        //HierarchyState pose1 = clip01.clip.keyframePool.framePool[clip01.GetFrameIndex()].GetHierarchyState();
-        //HierarchyState pose2 = clip02.clip.keyframePool.framePool[clip02.GetFrameIndex()].GetHierarchyState();
+        HierarchyState pose1 = clip01.state;
+        HierarchyState pose2 = clip02.state;
 
-        //pose1.Lerp(outPose, pose1.samplePose, pose2.samplePose, u);
+
+        pose1.Lerp(outPose, pose1.samplePose, pose2.samplePose, u);
     }
 
     // Blend Clips together by simply concatenating them
     void BlendClipsAdd()
     {
-        //HierarchyState pose1 = clip01.clip.keyframePool.framePool[clip01.GetFrameIndex()].GetHierarchyState();
-       //HierarchyState pose2 = clip02.clip.keyframePool.framePool[clip02.GetFrameIndex()].GetHierarchyState();
+       HierarchyState pose1 = clip01.state;
+       HierarchyState pose2 = clip02.state;
 
-        //pose1.Concat(outPose, pose1.samplePose, pose2.samplePose);
+        pose1.Concat(outPose, pose1.samplePose, pose2.samplePose);
     }
 
     // Blend two clips together usin the Scale blend operation
     void BlendClipsScale()
     {
-        //HierarchyState pose1 = clip01.clip.keyframePool.framePool[clip01.GetFrameIndex()].GetHierarchyState();
-        //HierarchyState pose2 = clip02.clip.keyframePool.framePool[clip02.GetFrameIndex()].GetHierarchyState();
+        HierarchyState pose1 = clip01.state;
+        HierarchyState pose2 = clip02.state;
 
-        //pose1.Scale(outPose, pose1.samplePose, pose2.samplePose, u);
+
+        pose1.Scale(outPose, pose1.samplePose, pose2.samplePose, u);
     }
     void Start()
     {
@@ -79,38 +81,17 @@ public class ClipBlender : MonoBehaviour
         if(type == BlendType.Lerp)
         {
             BlendCLipsLerp();
-            arrow2.enabled = true;
-            treeLeef2.enabled = true;
-            operation.text = " LERP ";
-            arrow4.enabled = true;
-            treeLeefU.enabled = true;
-            treeLeef1.text = node0.name;
-            treeLeef2.text = node1.name;
-            treeLeefFinal.text = nodef.name;
+            
         }
         if (type == BlendType.Concat)
         {
             BlendClipsAdd();
-            arrow2.enabled = true;
-            treeLeef2.enabled = true;
-            operation.text = " + ";
-            arrow4.enabled = false;
-            treeLeefU.enabled = false;
-            treeLeef1.text = node0.name;
-            treeLeef2.text = node1.name;
-            treeLeefFinal.text = nodef.name;
+            
         }
         if (type == BlendType.Scale)
         {
             BlendClipsScale();
-            arrow2.enabled = false;
-            treeLeef2.enabled = false;
-            operation.text = " x ";
-            arrow4.enabled = true;
-            treeLeefU.enabled = true;
-            treeLeef1.text = node0.name;
-            treeLeef2.text = node1.name;
-            treeLeefFinal.text = nodef.name;
+            
         }
             
     }

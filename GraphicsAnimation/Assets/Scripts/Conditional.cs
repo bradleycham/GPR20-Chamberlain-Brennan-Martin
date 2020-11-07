@@ -23,40 +23,44 @@ public class Conditional : MonoBehaviour
     public conditionType condition;
     public Clip mainClip;
     public Clip altClip;
-    Clip currentClip;
+    public Clip currentClip;
     public float a;
     public float b;
-    bool clipSwitch;
+    public bool clipSwitch;
 
     public ClipController controller;
     public void CheckClip()
     {
+        /*
         if(condition == conditionType.greaterThan)
         {
             if (a > b)
-                currentClip = mainClip;
+                currentClip = altClip;
         }
-        if (condition == conditionType.lessThan)
+        else if (condition == conditionType.lessThan)
         {
             if (a < b)
-                currentClip = mainClip;
+                currentClip = altClip;
         }
-        if (condition == conditionType.equal)
+        else if (condition == conditionType.equal)
         {
             if (a == b)
-                currentClip = mainClip;
+                currentClip = altClip;
         }
-        if (condition == conditionType.greaterThanOrEqual)
+        else if (condition == conditionType.greaterThanOrEqual)
         {
             if (a >= b)
-                currentClip = mainClip;
+                currentClip = altClip;
         }
-        if (condition == conditionType.lessThanOrEqual)
+        else if (condition == conditionType.lessThanOrEqual)
         {
             if (a <= b)
-                currentClip = mainClip;
-        }
-        currentClip = altClip;
+                currentClip = altClip;
+        }*/
+        if (clipSwitch)
+            currentClip = altClip;
+        else
+            currentClip = mainClip;
     }
 
     public Clip GetCurrentClip()
@@ -72,11 +76,19 @@ public class Conditional : MonoBehaviour
 
     private void Update()
     {
+        if (Input.anyKey)
+        {
+            clipSwitch = true;
+        }
+        if(!Input.anyKey)
+        {
+            clipSwitch = false;
+        }
         Clip temp = currentClip;
         CheckClip();
         if(currentClip != temp)
         {
-            controller.ChangeClip(currentClip);
+            controller.ChangeClip(currentClip);           
         }
     }
 }

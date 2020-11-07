@@ -29,6 +29,6 @@ public class lab4display : MonoBehaviour
     {
 
         mode.text = player.GetComponent<ForwardKinematic>().mode;
-        //conditional = transform.GetComponent<Conditional>().currentClip;
+        conditional.text = transition.GetComponent<Conditional>().currentClip.clipName;
     }
 }

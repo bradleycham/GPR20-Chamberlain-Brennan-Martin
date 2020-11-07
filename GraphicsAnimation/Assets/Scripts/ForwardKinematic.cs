@@ -22,6 +22,8 @@ public class ForwardKinematic : MonoBehaviour
     public HierarchicalPose nextNextPose;
     //----------------------------------------------
 
+ 
+
     public GameObject player;
     public bool thisWASD;
     public bool thisIKJL;
@@ -552,7 +554,7 @@ public class ForwardKinematic : MonoBehaviour
         if (thisIKJL)
         {
 
-            player.transform.rotation = Quaternion.Euler(EulerIntergration(player.transform.rotation.eulerAngles, vectorChange));
+            player.transform.rotation *= Quaternion.Euler(EulerIntergration(player.transform.rotation.eulerAngles, vectorChange));
         }
 
     }
@@ -579,7 +581,7 @@ public class ForwardKinematic : MonoBehaviour
         if (thisIKJL)
         {
 
-            player.transform.rotation = Quaternion.Euler(KinematicIntergration(player.transform.rotation.eulerAngles, vectorChange, accelerationChange));
+            player.transform.rotation *= Quaternion.Euler(KinematicIntergration(player.transform.rotation.eulerAngles, vectorChange, accelerationChange));
         }
     }
 
@@ -605,7 +607,7 @@ public class ForwardKinematic : MonoBehaviour
         if (thisIKJL)
         {
 
-            player.transform.rotation = Quaternion.Euler(InterpolationIntergration(player.transform.rotation.eulerAngles, defualtPos, t));
+            player.transform.rotation *= Quaternion.Euler(InterpolationIntergration(player.transform.rotation.eulerAngles, defualtPos, t));
         }
     }
 

@@ -121,18 +121,10 @@ public class ClipController : MonoBehaviour
         clipParameter = clipTime / clip.GetClipDuration();
         float v = frameTime / clip.keyframePool.framePool[frameIndex].duration;
         frameParameter = v;
-        //DebugList();
-
-        // create looping feature
     }
-    //set sprite renderer to the current keyframe
     void DisplayFrame()
     {
-        //float frameTime;
-        //frameTime = clip.keyframePool.framePool[frameIndex].GetDuration();
-        //state = clip.keyframePool.framePool[frameIndex].GetHierarchyState();
-        state.SetTime(frameParameter);
-        //Debug.Log("FrameParam: " + frameParameter);
+        state.SetTime(frameParameter);  
     }
     public void Transition(bool isEnd)
     {
@@ -141,12 +133,10 @@ public class ClipController : MonoBehaviour
         if (isEnd)
         {
             Trans = clip.EndTransition;
-            
         }
         else // transition backwards
         {
             Trans = clip.ReverseTransition;
-            
         }
 
         // set controlled clip to transition clip
@@ -164,14 +154,15 @@ public class ClipController : MonoBehaviour
             else
                 frameIndex = clip.frameSequence.Length - 1;
 
-            clipTime = 0.0f;
-            frameTime = 0.0f;
-            frameParameter = 0.0f;
+            clipTime = frameOvershoot;
+            frameTime = frameOvershoot;
+            clipParameter = (clipParameter - 1) * clipDuration;
+            frameParameter = frameOvershoot / clip.frameSequence[frameIndex].duration;
             playDirection = Trans.playDirection;
 
             state.basePose = clip.frameSequence[0].basePose;
             state.newPose = clip.frameSequence[0].endPose;
-            state.SetTime(0);
+            state.SetTime(frameParameter);
 
         }
         else if (Trans.playDirection == Direction.reverse)
@@ -220,26 +211,19 @@ public class ClipController : MonoBehaviour
             //transition to new clip
             if (clipTime > clip.clipDuration)
             {
-                //FORWARD TRANSITION
-                //Debug.Log(clipTime);
-                //Debug.Log(frameIndex);
-                
                 Transition(true);
             }
             // move to next frame
             else
             {
-                //Debug.Log(frameIndex);
                 frameIndex++;
                 state.basePose = clip.frameSequence[frameIndex].basePose;
                 state.newPose = clip.frameSequence[frameIndex].endPose;
-                
-                frameTime = 0.0f; // frame condition fixed
-                frameTime += frameOvershoot;
-                
+       
+                frameTime = frameOvershoot;
+                frameParameter = frameOvershoot / clip.frameSequence[frameIndex].duration;
+                state.SetTime(frameParameter);
             }
-            //Debug.Log(frameOvershoot);
-            Debug.Log(frameOvershoot);
         }
 
         // if yes, the keyframe last (random) just ended in reverse
@@ -350,7 +334,6 @@ public class ClipController : MonoBehaviour
 
     public void ChangeClip(Clip newClip)
     {
-        clipIndex = 0;
         clip = newClip;
         frameIndex = 0;
         frameTime = 0f;
