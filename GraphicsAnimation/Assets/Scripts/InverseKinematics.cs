@@ -13,13 +13,16 @@ public class InverseKinematics : MonoBehaviour
 {
 
     Matrix4x4 rotationMatrix;
-    GameObject startJoint;
-    GameObject endJoint;
-    GameObject constantJoint;
+    public GameObject startJoint;
+    public GameObject endJoint;
+    public GameObject constantJoint;
+    public Vector3 Target;
     float x;
     float y;
     float z;
     float tan;
+
+    public float length;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,8 @@ public class InverseKinematics : MonoBehaviour
     void Update()
     {
 
+        constantJoint.transform.position = TrianglesIK();
+        //Invserse2();
     }
 
     public void FormMatrix()
@@ -51,7 +56,7 @@ public class InverseKinematics : MonoBehaviour
         tan = Mathf.Atan2(-1 * rotationMatrix[6], rotationMatrix[10]);
     }
 
-    public void TrianglesIK()
+    public Vector3 TrianglesIK()
     {
 
         Vector3 c = -startJoint.transform.position + constantJoint.transform.position;
@@ -62,5 +67,13 @@ public class InverseKinematics : MonoBehaviour
         Vector3 h = Vector3.Cross(nNormalize, dNormalize);
         float Distance = Mathf.Sqrt(c.x * c.x + h.y * h.y);
         Vector3 p = startJoint.transform.position + Distance * d + h.y * h;
+        Debug.Log(p);
+        return p;
+    }
+
+    public void Invserse2()
+    {
+
+        
     }
 }
