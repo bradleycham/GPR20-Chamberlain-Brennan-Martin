@@ -17,7 +17,7 @@ public class InverseKinematics : MonoBehaviour
     public GameObject endJoint;
     public GameObject middleJoint;
     public Vector3 constantEffector;
-    public Vector3 target;
+    public Transform target;
     float x;
     float y;
     float z;
@@ -29,14 +29,15 @@ public class InverseKinematics : MonoBehaviour
     public Transform[] joints;
 
     public Transform neckJoint;
+    public Transform headJoint;
 
     // Start is called before the first frame update
     void Start()
     {
 
-        joints[0] = startJoint.transform;
-        joints[1] = middleJoint.transform;
-        joints[2] = endJoint.transform;
+        //joints[0] = startJoint.transform;
+        //joints[1] = middleJoint.transform;
+        //joints[2] = endJoint.transform;
     }
 
     // Update is called once per frame
@@ -44,7 +45,7 @@ public class InverseKinematics : MonoBehaviour
     {
 
         //middleJoint.transform.position = TrianglesIK();
-        //Invserse2();
+        Invserse2();
     }
 
     public void FormMatrix()
@@ -91,8 +92,34 @@ public class InverseKinematics : MonoBehaviour
     public void Invserse2()
     {
 
-        Vector3 v = target - neckJoint.position;
+        Vector3 v = target.position - neckJoint.position;
         Vector3 z = v.normalized;
 
+        Vector3 u = headJoint.up;
+        Vector3 x = Vector3.Cross(u, z);
+        Vector3 xNormalized = x.normalized;
+
+        Vector3 y = Vector3.Cross(z, x);
+
+        Matrix4x4 m = new Matrix4x4();
+        m[0] = x.x;
+        m[1] = y.x;
+        m[2] = z.x;
+        m[3] = 0;
+
+        m[4] = x.y;
+        m[5] = y.y;
+        m[6] = z.y;
+        m[7] = 0;
+
+        m[8] = x.z;
+        m[9] = y.z;
+        m[10] = z.z;
+        m[11] = 0;
+
+        m[15] = 1;
+
+        headJoint.rotation = m.rotation;
+        headJoint.rotation = neckJoint.rotation * headJoint.rotation * Quaternion.Inverse(neckJoint.rotation);
     }
 }
