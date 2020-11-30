@@ -11,7 +11,6 @@ public class FABRIK : MonoBehaviour
     public float totalJointDistance = 0;
     public float tolerance = .05f;
     public Transform endJoint;
-    public Quaternion[] startRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +21,6 @@ public class FABRIK : MonoBehaviour
 
             totalJointDistance += jointDistance[i];
         }
-
-        startRotation[0] = jointPosition[0].rotation;
-        startRotation[1] = jointPosition[1].rotation;
-        startRotation[2] = jointPosition[2].rotation;
     }
 
     // Update is called once per frame
