@@ -1838,7 +1838,6 @@ GameObject:
   - component: {fileID: 988172233}
   - component: {fileID: 988172232}
   - component: {fileID: 988172231}
-  - component: {fileID: 988172235}
   m_Layer: 0
   m_Name: Sphere (2)
   m_TagString: Untagged
@@ -1916,33 +1915,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 363.45, y: 262.39, z: 4.383976}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1140539591}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &988172235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988172230}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42564a986019a954281d0979c09719e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jointPosition:
-  - {fileID: 988172234}
-  - {fileID: 1140539591}
-  - {fileID: 1252434977}
-  target: {fileID: 1169216523}
-  jointDistance:
-  - 3
-  - 3
-  totalJointDistance: 0
-  tolerance: 0.05
-  endJoint: {fileID: 1252434977}
 --- !u!1 &1056221511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,12 +2057,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140539587}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 363.45, y: 265.4861, z: 4.383976}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_Children:
+  - {fileID: 1252434977}
+  m_Father: {fileID: 988172234}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1169216519
 GameObject:
@@ -2174,11 +2152,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169216519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 374.49, y: 272.82, z: 4.383976}
+  m_LocalPosition: {x: 370.03, y: 269.29, z: 4.383976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1183745426
 GameObject:
@@ -3960,12 +3938,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252434973}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 366.1, y: 265.4861, z: 4.383976}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_Father: {fileID: 1140539591}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1252434978
 MonoBehaviour:
@@ -3974,24 +3952,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252434973}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f23c578e8267cc4caba23cf7d26dcce, type: 3}
+  m_Script: {fileID: 11500000, guid: 42564a986019a954281d0979c09719e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChainLength: 2
-  Target: {fileID: 1169216523}
-  Iterations: 10
-  Delta: 0.001
-  SnapBackStrength: 1
-  BonesLength: []
-  CompleteLength: 0
-  Bones: []
-  Positions: []
-  StartDirectionSucc: []
-  StartRotationBone: []
-  StartRotationTarget: {x: 0, y: 0, z: 0, w: 0}
-  Root: {fileID: 0}
+  jointPosition:
+  - {fileID: 988172234}
+  - {fileID: 1140539591}
+  - {fileID: 1252434977}
+  target: {fileID: 1169216523}
+  jointDistance:
+  - 3
+  - 3
+  totalJointDistance: 0
+  tolerance: 0.05
+  endJoint: {fileID: 1252434977}
 --- !u!1 &1256950856
 GameObject:
   m_ObjectHideFlags: 0
@@ -4016,7 +3992,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256950856}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0b19ad9495274c47bda4b9e85382e47, type: 3}
   m_Name: 
@@ -4029,6 +4005,7 @@ MonoBehaviour:
   error: 0.05
   length0: 3
   length1: 3
+  joints: []
 --- !u!4 &1256950858
 Transform:
   m_ObjectHideFlags: 0

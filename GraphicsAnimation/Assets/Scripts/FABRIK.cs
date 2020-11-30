@@ -55,12 +55,11 @@ public class FABRIK : MonoBehaviour
                 //forward reaching
                 jointPosition[jointPosition.Length - 1].position = target.position;
 
-                for(int i = jointPosition.Length - 1; i >= 0; i--)
+                for(int i = jointPosition.Length - 2; i >= 0; i--)
                 {
-
                     float length = Vector3.Distance(jointPosition[i + 1 ].position, jointPosition[i].position);
                     float lambda = jointDistance[i] / length;
-                    jointPosition[i].position = (1 - lambda) * jointPosition[i].position + lambda * jointPosition[i-1].position;
+                    jointPosition[i].position = (1 - lambda) * jointPosition[i + 1].position + lambda * jointPosition[i].position;
                 }
 
                 //backward reaching
@@ -88,4 +87,5 @@ public class FABRIK : MonoBehaviour
         
 
     }
+
 }
