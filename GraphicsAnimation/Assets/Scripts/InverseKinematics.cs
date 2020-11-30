@@ -1,6 +1,6 @@
 ﻿/*
 File name: InverseKinematics.cs
-Purpose:  This also for the use of inverse kinematics
+Purpose:  This is for the use of inverse kinematics
 Contributors: Nick Brennan-Martin and Bradley Chamberlain
 Collaborated on one PC
 */
@@ -17,28 +17,33 @@ public class InverseKinematics : MonoBehaviour
     public GameObject endJoint;
     public GameObject middleJoint;
     public Vector3 constantEffector;
-    public Vector3 Target;
+    public Vector3 target;
     float x;
     float y;
     float z;
     float tan;
 
-    public float length;
-
+    public float error;
     public float length0;
     public float length1;
+    public Transform[] joints;
+
+    public Transform neckJoint;
 
     // Start is called before the first frame update
     void Start()
     {
 
+        joints[0] = startJoint.transform;
+        joints[1] = middleJoint.transform;
+        joints[2] = endJoint.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        middleJoint.transform.position = TrianglesIK();
+        //middleJoint.transform.position = TrianglesIK();
         //Invserse2();
     }
 
@@ -86,6 +91,8 @@ public class InverseKinematics : MonoBehaviour
     public void Invserse2()
     {
 
-        
+        Vector3 v = target - neckJoint.position;
+        Vector3 z = v.normalized;
+
     }
 }

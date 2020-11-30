@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+File name: FABRIK.cs
+Purpose:  This is for the use of inverse kinematics
+Contributors: Nick Brennan-Martin and Bradley Chamberlain
+Collaborated on one PC
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -87,5 +94,4 @@ public class FABRIK : MonoBehaviour
         
 
     }
-
 }
