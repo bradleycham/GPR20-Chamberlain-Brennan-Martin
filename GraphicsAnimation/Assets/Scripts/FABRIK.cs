@@ -85,13 +85,6 @@ public class FABRIK : MonoBehaviour
                 difA = Vector3.Distance(jointPosition[jointPosition.Length - 1].position, target.position);
             }
 
-            InverseRotation();
         }
-    }
-
-    void InverseRotation()
-    {
-        
-
     }
 }
