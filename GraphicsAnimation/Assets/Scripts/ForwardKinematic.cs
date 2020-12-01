@@ -635,25 +635,25 @@ public class ForwardKinematic : MonoBehaviour
         if (thisWASD)
         {
 
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.D))
             {
 
                 player.transform.position += new Vector3(1,0,0);
             }
 
-            if (Input.GetKey(KeyCode.S))
+            if (Input.GetKey(KeyCode.A))
             {
 
                 player.transform.position += new Vector3(-1, 0, 0);
             }
 
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.S))
             {
 
                 player.transform.position += new Vector3(0, 0, -1);
             }
 
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.W))
             {
 
                 player.transform.position += new Vector3(0, 0, 1);

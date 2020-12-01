@@ -23,6 +23,11 @@ public class Conditional : MonoBehaviour
     public conditionType condition;
     public Clip mainClip;
     public Clip altClip;
+
+    bool moving;
+    public bool crouch;
+    public Clip crouchClip;
+
     public Clip currentClip;
     public float a;
     public float b;
@@ -57,10 +62,26 @@ public class Conditional : MonoBehaviour
             if (a <= b)
                 currentClip = altClip;
         }*/
+        /*
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            crouch = !crouch;
+            //currentClip = crouchClip;
+        }
         if (clipSwitch)
             currentClip = altClip;
         else
             currentClip = mainClip;
+        */
+        if(Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.D))
+        {
+            moving = true;
+        }
+        else { moving = false; }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            crouch = !crouch;
+        }
     }
 
     public Clip GetCurrentClip()
@@ -76,19 +97,38 @@ public class Conditional : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (Input.anyKey)
         {
             clipSwitch = true;
         }
-        if(!Input.anyKey)
+        else if(!Input.anyKey)
         {
             clipSwitch = false;
         }
         Clip temp = currentClip;
-        CheckClip();
+        
         if(currentClip != temp)
         {
-            controller.ChangeClip(currentClip);           
+             controller.ChangeClip(currentClip);
+        }
+        */
+        CheckClip();
+        if (moving && crouch)
+        {
+            if (controller.clip != crouchClip)
+                controller.ChangeClip(crouchClip);
+        }
+        if(moving && !crouch)
+        {
+            
+            if (controller.clip != altClip)
+                controller.ChangeClip(altClip);
+        }
+        if(!moving && !crouch)
+        {
+            if (controller.clip != mainClip)
+                controller.ChangeClip(mainClip);
         }
     }
 }
