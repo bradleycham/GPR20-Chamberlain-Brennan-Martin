@@ -48,6 +48,7 @@ public class InverseKinematics : MonoBehaviour
         Invserse2();
     }
 
+    //old attempt at inverse
     public void FormMatrix()
     {
 
@@ -66,6 +67,7 @@ public class InverseKinematics : MonoBehaviour
         tan = Mathf.Atan2(-1 * rotationMatrix[6], rotationMatrix[10]);
     }
 
+    //old attempt at inverse
     public Vector3 TrianglesIK()
     {
 
@@ -78,7 +80,7 @@ public class InverseKinematics : MonoBehaviour
 
         float s = .5f * (d.magnitude + length0 + length1);
         float v = s - d.magnitude;
-        float bigA = Mathf.Sqrt(s * (v) *(s - length0) *(s - length1));
+        float bigA = Mathf.Sqrt(s * (v) * (s - length0) * (s - length1));
         float bigH = 2 * bigA / d.magnitude;
         float bigD = Mathf.Sqrt(length0 * length0 - bigH * bigH);
         Vector3 p = startJoint.transform.position + bigD * d + bigH * h;
@@ -89,13 +91,14 @@ public class InverseKinematics : MonoBehaviour
         return p;
     }
 
+    //look at inverse
     public void Invserse2()
     {
 
         Vector3 v = target.position - neckJoint.position;
         Vector3 z = v.normalized;
 
-        Vector3 u = headJoint.up;
+        Vector3 u = neckJoint.up;
         Vector3 x = Vector3.Cross(u, z);
         Vector3 xNormalized = x.normalized;
 
@@ -105,21 +108,24 @@ public class InverseKinematics : MonoBehaviour
         m[0] = x.x;
         m[1] = y.x;
         m[2] = z.x;
-        m[3] = 0;
+        //m[3] = neckJoint.position.x;
 
         m[4] = x.y;
         m[5] = y.y;
         m[6] = z.y;
-        m[7] = 0;
+        //m[7] = neckJoint.position.y;
 
         m[8] = x.z;
         m[9] = y.z;
         m[10] = z.z;
-        m[11] = 0;
+        //m[11] = neckJoint.position.z;
 
+        m[12] = 0;
+        m[13] = 0;
+        m[14] = 0;
         m[15] = 1;
 
-        headJoint.rotation = m.rotation;
-        headJoint.rotation = neckJoint.rotation * headJoint.rotation * Quaternion.Inverse(neckJoint.rotation);
+        neckJoint.rotation = m.rotation;
+        neckJoint.rotation =  /*startJoint.transform.rotation * */  Quaternion.Inverse(startJoint.transform.rotation) * neckJoint.rotation;
     }
 }
