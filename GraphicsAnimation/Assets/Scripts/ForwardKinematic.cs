@@ -837,28 +837,28 @@ public class ForwardKinematic : MonoBehaviour
         if (thisWASD)
         {
 
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.D))
             {
 
                 EulerIntergration2(new Vector3(velocityF, 0, 0), thisWASD, false);
                 velocityF = InterpolationIntergration(new Vector3(velocityF, 0, 0), new Vector3(offsetF, 0, 0), t).x;
             }
 
-            if (Input.GetKey(KeyCode.S))
+            if (Input.GetKey(KeyCode.A))
             {
 
                 EulerIntergration2(new Vector3(-1 * velocityF, 0, 0), thisWASD, false);
                 velocityF = InterpolationIntergration(new Vector3(-1 * velocityF, 0, 0), new Vector3(-1 * offsetF, 0, 0), t).x;
             }
 
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.S))
             {
 
                 EulerIntergration2(new Vector3(0, 0, -1 * velocityF), thisWASD, false);
                 velocityF = InterpolationIntergration(new Vector3(0, 0, -1 * velocityF), new Vector3(0, 0, -1 * offsetF), t).z;
             }
 
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.W))
             {
 
                 EulerIntergration2(new Vector3(0, 0, velocityF), thisWASD, false);
