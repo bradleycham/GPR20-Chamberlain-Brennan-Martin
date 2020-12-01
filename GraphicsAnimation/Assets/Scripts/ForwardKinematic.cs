@@ -18,12 +18,15 @@ public class ForwardKinematic : MonoBehaviour
     public HierarchicalPose lhs;
     public HierarchicalPose rhs;
 
+    bool jumpPressed;
+    bool jumping;
+
     public HierarchicalPose previousPose;
     public HierarchicalPose nextNextPose;
     //----------------------------------------------
 
- 
 
+    public Rigidbody rb;
     public GameObject player;
     public bool thisWASD;
     public bool thisIKJL;
@@ -638,25 +641,25 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
 
-                player.transform.position += new Vector3(1,0,0);
+                player.transform.position += new Vector3(1 * offsetF,0,0);
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                player.transform.position += new Vector3(-1, 0, 0);
+                player.transform.position += new Vector3(-1 * offsetF, 0, 0);
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                player.transform.position += new Vector3(0, 0, -1);
+                player.transform.position += new Vector3(0, 0, -1*offsetF);
             }
 
             if (Input.GetKey(KeyCode.W))
             {
 
-                player.transform.position += new Vector3(0, 0, 1);
+                player.transform.position += new Vector3(0, 0, 1*offsetF);
             }
         }
 
@@ -707,6 +710,9 @@ public class ForwardKinematic : MonoBehaviour
 
                 EulerIntergration2( new Vector3(0, 0, 1), thisWASD, false);
             }
+
+           
+
         }
 
         if (thisIKJL)
@@ -888,7 +894,8 @@ public class ForwardKinematic : MonoBehaviour
     void Update()
     {
         
-        if(choice == integration.direct)
+       
+        if (choice == integration.direct)
         {
 
             Direct(true, true);
@@ -930,6 +937,16 @@ public class ForwardKinematic : MonoBehaviour
             velocityF = EulerIntergration(new Vector3(velocityF, 0, 0), new Vector3(accelerationF, 0, 0)).x;
             mode = "bonus demo";
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(new Vector3(0f, 500f, 0f));
+        }
+    }
 
+    private IEnumerator JumpRoutine(float jumpHeight)
+    {
+        player.transform.position = new Vector3(player.transform.position.x, Mathf.Sqrt(-2.0f * 9.8f * jumpHeight) * Time.deltaTime, player.transform.position.z);
+
+        yield return new WaitForEndOfFrame();
     }
 }
