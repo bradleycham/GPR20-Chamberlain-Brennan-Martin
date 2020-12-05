@@ -937,16 +937,9 @@ public class ForwardKinematic : MonoBehaviour
             velocityF = EulerIntergration(new Vector3(velocityF, 0, 0), new Vector3(accelerationF, 0, 0)).x;
             mode = "bonus demo";
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button0))
         {
-            rb.AddForce(new Vector3(0f, 500f, 0f));
+            rb.AddForce(new Vector3(0f, 500f, 0f));             
         }
-    }
-
-    private IEnumerator JumpRoutine(float jumpHeight)
-    {
-        player.transform.position = new Vector3(player.transform.position.x, Mathf.Sqrt(-2.0f * 9.8f * jumpHeight) * Time.deltaTime, player.transform.position.z);
-
-        yield return new WaitForEndOfFrame();
     }
 }

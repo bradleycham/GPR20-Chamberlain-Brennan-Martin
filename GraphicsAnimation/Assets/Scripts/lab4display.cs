@@ -13,10 +13,12 @@ using UnityEngine.UI;
 public class lab4display : MonoBehaviour
 {
 
+    public bool modeB;
     public Text mode;
     public Text conditional;
     public GameObject player;
-    public GameObject transition;
+    public ClipController controller;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +29,14 @@ public class lab4display : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        mode.text = player.GetComponent<ForwardKinematic>().mode;
-        conditional.text = transition.GetComponent<Conditional>().currentClip.clipName;
+        if(modeB)
+        {
+            mode.text = "Debug Mode";
+            conditional.text = controller.clip.ToString();
+        }
+        else
+        {
+            mode.text = "Normal Mode";
+        }
     }
 }

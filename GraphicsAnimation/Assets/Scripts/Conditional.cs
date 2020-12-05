@@ -10,6 +10,10 @@ using UnityEngine;
 
 public class Conditional : MonoBehaviour
 {
+    public ClipBlender blender;
+    public bool jumping;
+    public Clip jumpClip;
+
     public enum conditionType
     {
         greaterThan,
@@ -78,7 +82,7 @@ public class Conditional : MonoBehaviour
             moving = true;
         }
         else { moving = false; }
-        if(Input.GetKeyDown(KeyCode.C))
+        if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             crouch = !crouch;
         }
@@ -114,21 +118,29 @@ public class Conditional : MonoBehaviour
         }
         */
         CheckClip();
-        if (moving && crouch)
+
+
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button0))
+        {
+            if (controller.clip != mainClip)
+                controller.ChangeClip(jumpClip);
+        }
+        else if (moving && crouch)
         {
             if (controller.clip != crouchClip)
                 controller.ChangeClip(crouchClip);
         }
-        if(moving && !crouch)
+        else if(moving && !crouch)
         {
             
             if (controller.clip != altClip)
                 controller.ChangeClip(altClip);
         }
-        if(!moving && !crouch)
+        else if(!moving && !crouch)
         {
             if (controller.clip != mainClip)
                 controller.ChangeClip(mainClip);
         }
+        
     }
 }

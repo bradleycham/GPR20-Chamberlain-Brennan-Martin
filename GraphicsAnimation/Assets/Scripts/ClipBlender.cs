@@ -24,8 +24,6 @@ public class ClipBlender : MonoBehaviour
     public ClipController clip01;
     public ClipController clip02;
 
-    public Clip blendIn;
-
     public HierarchicalPose outPose;
     [Range(0, 1)]
     public float u;
