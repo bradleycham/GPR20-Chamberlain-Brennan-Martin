@@ -301,36 +301,39 @@ public class HierarchyState : MonoBehaviour
     }
 
 
-    //forward kinematic
+    // kinematic
     public void Kinematic()
     {
-        //for (int i = 0; i < samplePose.currentPose.Length; i++)
-        //{
-        //    if (hierarchy.treeDepth[i].parentIndex == -1)
-        //    {
-        //        //Debug.Log("0");
-        //        objectTransformList[i] = localTransformList[i];
-        //    }
-        //    else // forward kinematics
-        //    {
-        //        //Debug.Log("1");
-        //        objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i].transpose;
-        //    }
-        //}
 
+        //forward
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
             if (hierarchy.treeDepth[i].parentIndex == -1)
             {
-
-                localTransformList[i] = objectTransformList[i];
+                //Debug.Log("0");
+                objectTransformList[i] = localTransformList[i];
             }
             else // forward kinematics
             {
-
-                localTransformList[hierarchy.treeDepth[i].parentIndex] = localTransformList[i] * objectTransformList[i].transpose;
+                //Debug.Log("1");
+                objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i].transpose;
             }
         }
+
+        //inverse
+        //for (int i = 0; i < samplePose.currentPose.Length; i++)
+        //{
+        //    if (hierarchy.treeDepth[i].parentIndex == -1)
+        //    {
+
+        //        localTransformList[i] = objectTransformList[i];
+        //    }
+        //    else // forward kinematics
+        //    {
+
+        //        localTransformList[hierarchy.treeDepth[i].parentIndex] = localTransformList[i] * objectTransformList[i].transpose;
+        //    }
+        //}
     }
 
     public void Concat(HierarchicalPose poseIn, HierarchicalPose lhs, HierarchicalPose rhs)
