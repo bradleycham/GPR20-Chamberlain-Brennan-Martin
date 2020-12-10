@@ -304,17 +304,31 @@ public class HierarchyState : MonoBehaviour
     //forward kinematic
     public void Kinematic()
     {
+        //for (int i = 0; i < samplePose.currentPose.Length; i++)
+        //{
+        //    if (hierarchy.treeDepth[i].parentIndex == -1)
+        //    {
+        //        //Debug.Log("0");
+        //        objectTransformList[i] = localTransformList[i];
+        //    }
+        //    else // forward kinematics
+        //    {
+        //        //Debug.Log("1");
+        //        objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i].transpose;
+        //    }
+        //}
+
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
             if (hierarchy.treeDepth[i].parentIndex == -1)
             {
-                //Debug.Log("0");
-                objectTransformList[i] = localTransformList[i];
+
+                localTransformList[i] = objectTransformList[i];
             }
             else // forward kinematics
             {
-                //Debug.Log("1");
-                objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i].transpose;
+
+                localTransformList[hierarchy.treeDepth[i].parentIndex] = localTransformList[i] * objectTransformList[i].transpose;
             }
         }
     }

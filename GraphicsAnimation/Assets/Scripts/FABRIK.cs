@@ -18,6 +18,7 @@ public class FABRIK : MonoBehaviour
     public float totalJointDistance = 0;
     public float tolerance = .05f;
     public Transform endJoint;
+    public int interations;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +57,8 @@ public class FABRIK : MonoBehaviour
             Vector3 b = jointPosition[0].position;
             float difA = Vector3.Distance(jointPosition[jointPosition.Length - 1].position, target.position);
 
-            while(difA > tolerance)
+            //while(difA > tolerance)
+            for(int j = 0; j <= interations; j++)
             {
 
                 //forward reaching

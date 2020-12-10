@@ -31,6 +31,8 @@ public class InverseKinematics : MonoBehaviour
     public Transform neckJoint;
     public Transform headJoint;
 
+    public Hierarchy hierarchy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +47,8 @@ public class InverseKinematics : MonoBehaviour
     {
 
         //middleJoint.transform.position = TrianglesIK();
-        Invserse2();
+        //Invserse2();
+        FullBodyIK();
     }
 
     //old attempt at inverse
@@ -127,5 +130,11 @@ public class InverseKinematics : MonoBehaviour
 
         neckJoint.rotation = m.rotation;
         neckJoint.rotation =  /*startJoint.transform.rotation * */  Quaternion.Inverse(startJoint.transform.rotation) * neckJoint.rotation;
+    }
+
+    public void FullBodyIK()
+    {
+
+
     }
 }
