@@ -19,6 +19,7 @@ public class FABRIK : MonoBehaviour
     public float tolerance = .05f;
     public Transform endJoint;
     public int interations;
+    public string name;
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +88,38 @@ public class FABRIK : MonoBehaviour
                 difA = Vector3.Distance(jointPosition[jointPosition.Length - 1].position, target.position);
             }
 
+        }
+
+        Constrained();
+        LineDraw();
+    }
+
+    public void Constrained()
+    {
+
+        for(int i = jointPosition.Length - 1; i > 0; i--)
+        {
+
+            Vector3 relative = jointPosition[i].position - jointPosition[i - 1].position;
+            Vector3 forward = jointPosition[i].forward;
+
+            float angle = Vector3.Angle(forward, relative);
+
+            if(Mathf.Abs(angle) > 45)
+            {
+
+                jointPosition[i].rotation = Quaternion.LookRotation(relative);
+            }
+        }
+    }
+
+    public void LineDraw()
+    {
+
+        for(int i = 0; i < jointPosition.Length - 1; i++)
+        {
+
+            Debug.DrawLine(jointPosition[i].position, jointPosition[i + 1].position, Color.red);
         }
     }
 }

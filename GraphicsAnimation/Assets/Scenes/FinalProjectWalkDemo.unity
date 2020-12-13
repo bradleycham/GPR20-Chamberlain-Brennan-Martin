@@ -6908,6 +6908,7 @@ MonoBehaviour:
   tolerance: 0.05
   endJoint: {fileID: 1252434977}
   interations: 0
+  name: 
 --- !u!114 &1252434979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9702,6 +9703,7 @@ MonoBehaviour:
   tolerance: 0.05
   endJoint: {fileID: 1043323431}
   interations: 5
+  name: chest to left arm
 --- !u!114 &1519239628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9726,6 +9728,7 @@ MonoBehaviour:
   tolerance: 0.05
   endJoint: {fileID: 673778843}
   interations: 5
+  name: chest to right arm
 --- !u!114 &1519239629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9750,6 +9753,7 @@ MonoBehaviour:
   tolerance: 0.05
   endJoint: {fileID: 353411089}
   interations: 5
+  name: chest to pelvis
 --- !u!114 &1519239630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9774,6 +9778,7 @@ MonoBehaviour:
   tolerance: 0.05
   endJoint: {fileID: 1619631202}
   interations: 5
+  name: pelvis to foot left
 --- !u!114 &1519239631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9798,6 +9803,7 @@ MonoBehaviour:
   tolerance: 0.05
   endJoint: {fileID: 1761316821}
   interations: 5
+  name: pelvis to foot right
 --- !u!114 &1519239632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9805,21 +9811,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519239622}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42564a986019a954281d0979c09719e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   jointPosition:
-  - {fileID: 1519239626}
   - {fileID: 944038926}
+  - {fileID: 1519239626}
+  - {fileID: 679916734}
   target: {fileID: 1921849490}
   jointDistance:
   - 1
+  - 1
   totalJointDistance: 0
   tolerance: 0.05
-  endJoint: {fileID: 944038926}
+  endJoint: {fileID: 679916734}
   interations: 5
+  name: head to core
 --- !u!1 &1527901064
 GameObject:
   m_ObjectHideFlags: 0
@@ -10048,6 +10057,7 @@ MonoBehaviour:
   tolerance: 0.05
   endJoint: {fileID: 1609573685}
   interations: 0
+  name: 
 --- !u!135 &1609573688
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11662,7 +11672,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921849486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 379.04, y: 268.18, z: -5.72}
+  m_LocalPosition: {x: 379.04, y: 265.85, z: -5.72}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
