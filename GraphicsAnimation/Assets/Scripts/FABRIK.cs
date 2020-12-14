@@ -90,7 +90,7 @@ public class FABRIK : MonoBehaviour
 
         }
 
-        Constrained();
+        //Constrained();
         LineDraw();
     }
 
