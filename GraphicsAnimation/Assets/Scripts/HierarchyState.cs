@@ -62,7 +62,11 @@ public class HierarchyState : MonoBehaviour
     {
         if(isKinematic)
         {
+            //Kinematic();
+            for (int i =0; i < samplePose.currentPose.Length; i++)
+            {
 
+            }
             if (blend == Blend.identity)
             {
 
@@ -139,7 +143,7 @@ public class HierarchyState : MonoBehaviour
 
                 //BiCubic(previousPose, towardPose, newPose, nextNextPose, u);
             }
-            Kinematic();
+            
         }    
     }
 
@@ -304,19 +308,25 @@ public class HierarchyState : MonoBehaviour
     // kinematic
     public void Kinematic()
     {
-
+        //for(int j = 0; j < 3; j ++)
         //forward
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
             if (hierarchy.treeDepth[i].parentIndex == -1)
             {
-                //Debug.Log("0");
-                objectTransformList[i] = localTransformList[i];
+                //objectTransformList[i] = localTransformList[i];
+
+                samplePose.currentPose[i].transform.position += samplePose.currentPose[i].translation;
             }
             else // forward kinematics
             {
-                //Debug.Log("1");
-                objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i].transpose;
+
+                //objectTransformList[i] = objectTransformList[hierarchy.treeDepth[i].parentIndex] * localTransformList[i].transpose;
+                Vector3 newVec = samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].transform.position + samplePose.currentPose[i].translation;
+                Debug.Log(newVec);
+                samplePose.currentPose[i].transform.position = newVec;
+                Quaternion newRot = Quaternion.Euler(samplePose.currentPose[hierarchy.treeDepth[i].parentIndex].transform.rotation.eulerAngles + samplePose.currentPose[i].orientation);
+                samplePose.currentPose[i].transform.rotation = newRot;
             }
         }
 
