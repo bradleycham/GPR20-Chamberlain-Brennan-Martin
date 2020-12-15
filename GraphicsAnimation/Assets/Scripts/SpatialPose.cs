@@ -12,8 +12,8 @@ using UnityEngine;
 public class SpatialPose : MonoBehaviour
 {
 
-    public Matrix4x4 worldPose; //World Space
-
+    public Matrix4x4 worldTransform; //World Space
+    public Matrix4x4 localTransform;
     //object space
     public Vector3 translation;
     public Vector3 orientation;
@@ -24,7 +24,7 @@ public class SpatialPose : MonoBehaviour
     //defualt
     public SpatialPose()
     {
-        worldPose = Matrix4x4.identity;//should be pose = Transform.Identity
+        worldTransform = Matrix4x4.identity;//should be pose = Transform.Identity
         orientation = new Vector3(0f, 0f, 0f);
         scale = new Vector3(1f, 1f, 1f);
         translation = new Vector3(0f, 0f, 0f);
@@ -34,7 +34,7 @@ public class SpatialPose : MonoBehaviour
     public SpatialPose(Matrix4x4 p, Vector3 o, Vector3 s, Vector3 t)
     {
 
-        worldPose = p;
+        worldTransform = p;
         orientation = o;
         scale = s;
         translation = t;
@@ -49,6 +49,7 @@ public class SpatialPose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         transform.localPosition = translation;
         transform.localRotation = Quaternion.Euler(orientation);
     }
@@ -122,7 +123,7 @@ public class SpatialPose : MonoBehaviour
         SpatialPose temp = samplePose;
 
 
-            temp.worldPose = Matrix4x4.TRS(
+            temp.worldTransform = Matrix4x4.TRS(
                 samplePose.translation,
                 Quaternion.Euler(samplePose.orientation.x, samplePose.orientation.y, samplePose.orientation.z),
                 samplePose.scale);
@@ -138,9 +139,9 @@ public class SpatialPose : MonoBehaviour
         SpatialPose temp = samplePose;
 
 
-            temp.translation = new Vector3(samplePose.worldPose.m00, samplePose.worldPose.m01, samplePose.worldPose.m02);
-            temp.orientation = new Vector3(samplePose.worldPose.m10, samplePose.worldPose.m11, samplePose.worldPose.m12);
-            temp.scale = new Vector3(samplePose.worldPose.m20, samplePose.worldPose.m21, samplePose.worldPose.m22);
+            temp.translation = new Vector3(samplePose.worldTransform.m00, samplePose.worldTransform.m01, samplePose.worldTransform.m02);
+            temp.orientation = new Vector3(samplePose.worldTransform.m10, samplePose.worldTransform.m11, samplePose.worldTransform.m12);
+            temp.scale = new Vector3(samplePose.worldTransform.m20, samplePose.worldTransform.m21, samplePose.worldTransform.m22);
 
         return temp;
     }

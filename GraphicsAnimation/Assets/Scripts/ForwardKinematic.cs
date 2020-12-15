@@ -89,7 +89,7 @@ public class ForwardKinematic : MonoBehaviour
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
 
-            temp.currentPose[i].worldPose = Matrix4x4.TRS(
+            temp.currentPose[i].worldTransform = Matrix4x4.TRS(
                 samplePose.currentPose[i].translation,
                 Quaternion.Euler(samplePose.currentPose[i].orientation.x, samplePose.currentPose[i].orientation.y, samplePose.currentPose[i].orientation.z),
                 samplePose.currentPose[i].scale);
@@ -107,9 +107,9 @@ public class ForwardKinematic : MonoBehaviour
         for (int i = 0; i < samplePose.currentPose.Length; i++)
         {
 
-            temp.currentPose[i].translation = new Vector3(samplePose.currentPose[i].worldPose.m00, samplePose.currentPose[i].worldPose.m01, samplePose.currentPose[i].worldPose.m02);
-            temp.currentPose[i].orientation = new Vector3(samplePose.currentPose[i].worldPose.m10, samplePose.currentPose[i].worldPose.m11, samplePose.currentPose[i].worldPose.m12);
-            temp.currentPose[i].scale = new Vector3(samplePose.currentPose[i].worldPose.m20, samplePose.currentPose[i].worldPose.m21, samplePose.currentPose[i].worldPose.m22);
+            temp.currentPose[i].translation = new Vector3(samplePose.currentPose[i].worldTransform.m00, samplePose.currentPose[i].worldTransform.m01, samplePose.currentPose[i].worldTransform.m02);
+            temp.currentPose[i].orientation = new Vector3(samplePose.currentPose[i].worldTransform.m10, samplePose.currentPose[i].worldTransform.m11, samplePose.currentPose[i].worldTransform.m12);
+            temp.currentPose[i].scale = new Vector3(samplePose.currentPose[i].worldTransform.m20, samplePose.currentPose[i].worldTransform.m21, samplePose.currentPose[i].worldTransform.m22);
         }
 
         return temp;
