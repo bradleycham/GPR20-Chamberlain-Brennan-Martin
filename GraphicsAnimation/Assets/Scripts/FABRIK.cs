@@ -21,6 +21,8 @@ public class FABRIK : MonoBehaviour
     public int interations;
     public string name;
 
+    public bool rotate;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,7 +92,12 @@ public class FABRIK : MonoBehaviour
 
         }
 
-        //Constrained();
+        if (rotate)
+        {
+
+            Constrained();
+        }
+
         LineDraw();
     }
 
