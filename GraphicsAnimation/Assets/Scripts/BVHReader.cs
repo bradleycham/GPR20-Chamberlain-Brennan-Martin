@@ -46,7 +46,7 @@ public class BVHReader : MonoBehaviour
     // read through a joint and create thhe appropriate nodes and poses
     void ReadJoint(int index, int parentIndex)
     {
-        bool isEnd;
+        //bool isEnd;
         string Name = CreateString(ReturnNextBlock());
         string jointType = CreateString(ReturnNextBlock());
         string brackets = CreateString(ReturnNextBlock());
@@ -131,9 +131,9 @@ public class BVHReader : MonoBehaviour
         int periodPos = 0;
         int length = chars.Length;
         float returnFloat = 0f;
-        bool negative = false;
-        if (chars[0] == '-')
-            negative = true;
+        //bool negative = false;
+        //if (chars[0] == '-')
+            //negative = true;
         
         for(int i = 0; i < length; i ++)
         {

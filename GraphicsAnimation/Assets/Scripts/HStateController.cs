@@ -21,8 +21,8 @@ public class HStateController: MonoBehaviour
     public HierarchyState[] controllers;
 
     bool pauseOne;
-    bool pauseTwo;
-    bool pauseThree;
+    //bool pauseTwo;
+    //bool pauseThree;
 
     int currentHierarchyIndex;
     int currentClipIndex;
@@ -34,8 +34,8 @@ public class HStateController: MonoBehaviour
     {
 
         pauseOne = false;
-        pauseTwo = false;
-        pauseThree = false;
+        //pauseTwo = false;
+        //pauseThree = false;
         currentHierarchyIndex = 1;
         nodeIndex = 0;
         currentHierarchy.text = "Hierarchy 1 active";

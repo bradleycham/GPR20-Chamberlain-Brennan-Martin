@@ -19,7 +19,7 @@ public class FABRIK : MonoBehaviour
     public float tolerance = .05f;
     public Transform endJoint;
     public int interations;
-    public string name;
+    //public string name;
 
     // Start is called before the first frame update
     void Start()
