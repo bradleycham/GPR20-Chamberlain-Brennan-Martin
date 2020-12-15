@@ -641,38 +641,38 @@ public class ForwardKinematic : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
 
-                player.transform.position += new Vector3(1 * offsetF,0,0);
+                player.transform.position += offsetF * player.transform.right.normalized;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
 
-                player.transform.position += new Vector3(-1 * offsetF, 0, 0);
+                player.transform.position += -offsetF * player.transform.right.normalized;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
 
-                player.transform.position += new Vector3(0, 0, -1*offsetF);
+                player.transform.position += -offsetF * player.transform.forward.normalized;
             }
 
             if (Input.GetKey(KeyCode.W))
             {
 
-                player.transform.position += new Vector3(0, 0, 1*offsetF);
+                player.transform.position += offsetF * player.transform.forward.normalized;
             }
         }
 
         if (thisIKJL)
         {
 
-            if (Input.GetKey(KeyCode.J))
+            if (Input.GetKey(KeyCode.J)|| Input.GetKey(KeyCode.LeftArrow))
             {
 
                 player.transform.rotation *= Quaternion.Euler(new Vector3(0, -1, 0));
             }
 
-            if (Input.GetKey(KeyCode.L))
+            if (Input.GetKey(KeyCode.L)|| Input.GetKey(KeyCode.RightArrow))
             {
 
                 player.transform.rotation *= Quaternion.Euler(new Vector3(0, 1, 0));

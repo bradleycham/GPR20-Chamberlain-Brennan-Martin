@@ -162,7 +162,7 @@ public class ClipController : MonoBehaviour
 
             state.basePose = clip.frameSequence[0].basePose;
             state.newPose = clip.frameSequence[0].endPose;
-            state.SetTime(frameParameter);
+            state.SetTime(0);
 
         }
         else if (Trans.playDirection == Direction.reverse)
@@ -180,7 +180,7 @@ public class ClipController : MonoBehaviour
 
             state.basePose = clip.frameSequence[clip.frameSequence.Length - 1].basePose;
             state.newPose = clip.frameSequence[clip.frameSequence.Length - 1].endPose;
-            state.SetTime(1);
+            state.SetTime(clip.clipDuration);
 
         }
         else // Pause Transition
@@ -334,7 +334,11 @@ public class ClipController : MonoBehaviour
 
     public void ChangeClip(Clip newClip)
     {
+        newClip.CalculateDuration();
+        float newTime = (clip.clipDuration / newClip.clipDuration) * clipTime;
         clip = newClip;
+        state.SetTime(newTime);
+
         frameIndex = 0;
         frameTime = 0f;
         frameParameter = 0f;
@@ -342,7 +346,7 @@ public class ClipController : MonoBehaviour
 
         state.basePose = clip.frameSequence[0].basePose;
         state.newPose = clip.frameSequence[0].endPose;
-        state.SetTime(0);
+        
     }
 
 }
